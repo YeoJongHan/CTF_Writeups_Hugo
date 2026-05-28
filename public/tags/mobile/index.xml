@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Mobile on CTF Writeups</title><link>https://ctf.jonghan.xyz/tags/mobile/</link><description>Recent content in Mobile on CTF Writeups</description><generator>Hugo</generator><language>en</language><lastBuildDate>Tue, 24 May 2022 00:00:00 +0800</lastBuildDate><atom:link href="https://ctf.jonghan.xyz/tags/mobile/index.xml" rel="self" type="application/rss+xml"/><item><title>🔴 Got Any Games?</title><link>https://ctf.jonghan.xyz/posts/2022/nahamcon-eu-ctf-2022/mobile/got-any-games/</link><pubDate>Tue, 24 May 2022 00:00:00 +0800</pubDate><guid>https://ctf.jonghan.xyz/posts/2022/nahamcon-eu-ctf-2022/mobile/got-any-games/</guid><description>&lt;table&gt;
+	&lt;thead&gt;
+			&lt;tr&gt;
+					&lt;th&gt;Category&lt;/th&gt;
+					&lt;th&gt;Solves&lt;/th&gt;
+			&lt;/tr&gt;
+	&lt;/thead&gt;
+	&lt;tbody&gt;
+			&lt;tr&gt;
+					&lt;td&gt;Hard&lt;/td&gt;
+					&lt;td&gt;33&lt;/td&gt;
+			&lt;/tr&gt;
+	&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="description"&gt;Description&lt;a href="#description" class="heading-anchor" aria-label="Link to this section"&gt;&lt;svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"&gt;&lt;g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"&gt;&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/&gt;&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/&gt;&lt;/g&gt;&lt;/svg&gt;&lt;/a&gt;&lt;/h2&gt;
+ &lt;blockquote
+ class="border-primary bg-muted/30 hover:bg-muted/40 my-6 rounded-r-lg border-l-4 py-4 pr-4 pl-6 italic transition-all duration-200 ease-out hover:translate-x-1"
+ &gt;
+ &lt;div class="prose prose-sm max-w-none"&gt;
+ &lt;p&gt;&lt;em&gt;Author: @M_alpha#3534&lt;/em&gt;&lt;br&gt;
+&lt;br&gt;
+I created this new guessing game for Android. To deter cheaters, I made sure to include advanced &lt;em&gt;military grade&lt;/em&gt; encryption.&lt;br&gt;
+Please don&amp;rsquo;t cheat, Thanks!&lt;br&gt;
+&lt;br&gt;
+Download the files below.&lt;br&gt;
+&lt;br&gt;
+Special thank you to &lt;a
+ href="https://www.intigriti.com/"target="_blank"
+ class="inline-flex items-center gap-1"
+ &gt;INTIGRITI&lt;svg class="h-3 w-3 flex-shrink-0" id="external-link" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"&gt;&lt;path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 3h6v6m-11 5L21 3m-3 10v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/&gt;&lt;/svg&gt;
+ &lt;/a&gt; for sponsoring NahamCon EU CTF 2022! This challenge is dedicated to them as a token of gratitude.&lt;/p&gt;</description></item></channel></rss>

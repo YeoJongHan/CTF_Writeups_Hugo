@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Standcon 2022 on CTF Writeups</title><link>https://ctf.jonghan.xyz/series/standcon-2022/</link><description>Recent content in Standcon 2022 on CTF Writeups</description><generator>Hugo</generator><language>en</language><lastBuildDate>Mon, 27 Jun 2022 00:00:00 +0800</lastBuildDate><atom:link href="https://ctf.jonghan.xyz/series/standcon-2022/index.xml" rel="self" type="application/rss+xml"/><item><title>👾 STANDCON 2022</title><link>https://ctf.jonghan.xyz/posts/2022/standcon-2022/</link><pubDate>Mon, 27 Jun 2022 00:00:00 +0800</pubDate><guid>https://ctf.jonghan.xyz/posts/2022/standcon-2022/</guid><description>&lt;h1 id="-standcon-2022"&gt;👾 STANDCON 2022&lt;a href="#-standcon-2022" class="heading-anchor" aria-label="Link to this section"&gt;&lt;svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"&gt;&lt;g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"&gt;&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/&gt;&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/&gt;&lt;/g&gt;&lt;/svg&gt;&lt;/a&gt;&lt;/h1&gt;&lt;p&gt;Overall, this was one of the most unique CTFs I have participated in; it required the use of a game platform called &lt;a
+ href="https://app.gather.town/app"target="_blank"
+ class="inline-flex items-center gap-1"
+ &gt;Gather Town&lt;svg class="h-3 w-3 flex-shrink-0" id="external-link" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"&gt;&lt;path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 3h6v6m-11 5L21 3m-3 10v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/&gt;&lt;/svg&gt;
+ &lt;/a&gt; to gather keys to unlock the challenges, as well as &amp;lsquo;fishes&amp;rsquo; to unlock hints and other stuff.&lt;/p&gt;</description></item><item><title>Crypto</title><link>https://ctf.jonghan.xyz/posts/2022/standcon-2022/crypto/</link><pubDate>Mon, 27 Jun 2022 00:00:00 +0800</pubDate><guid>https://ctf.jonghan.xyz/posts/2022/standcon-2022/crypto/</guid><description>&lt;h1 id="crypto"&gt;Crypto&lt;a href="#crypto" class="heading-anchor" aria-label="Link to this section"&gt;&lt;svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"&gt;&lt;g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"&gt;&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/&gt;&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/&gt;&lt;/g&gt;&lt;/svg&gt;&lt;/a&gt;&lt;/h1&gt;</description></item><item><title>Asmuth Shares</title><link>https://ctf.jonghan.xyz/posts/2022/standcon-2022/crypto/asmuth-shares/</link><pubDate>Mon, 27 Jun 2022 00:00:00 +0800</pubDate><guid>https://ctf.jonghan.xyz/posts/2022/standcon-2022/crypto/asmuth-shares/</guid><description>&lt;h2 id="description"&gt;Description&lt;a href="#description" class="heading-anchor" aria-label="Link to this section"&gt;&lt;svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"&gt;&lt;g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"&gt;&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/&gt;&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/&gt;&lt;/g&gt;&lt;/svg&gt;&lt;/a&gt;&lt;/h2&gt;
+ &lt;blockquote
+ class="border-primary bg-muted/30 hover:bg-muted/40 my-6 rounded-r-lg border-l-4 py-4 pr-4 pl-6 italic transition-all duration-200 ease-out hover:translate-x-1"
+ &gt;
+ &lt;div class="prose prose-sm max-w-none"&gt;
+ &lt;p&gt;Asmuth wants to share something with you!&lt;/p&gt;
+
+ &lt;/div&gt;
+ &lt;/blockquote&gt;&lt;script&gt;
+ function toggleAlert(alertId) {
+ const content = document.getElementById(alertId + "-content");
+ const chevron = document.getElementById(alertId + "-chevron");
+ const header = content.previousElementSibling;
+
+ if (content.classList.contains("hidden")) {
+ content.classList.remove("hidden");
+ chevron.style.transform = "rotate(0deg)";
+ header.setAttribute("aria-expanded", "true");
+ } else {
+ content.classList.add("hidden");
+ chevron.style.transform = "rotate(-90deg)";
+ header.setAttribute("aria-expanded", "false");
+ }
+ }
+
+ 
+ document.addEventListener("DOMContentLoaded", function () {
+ const collapsedAlerts = document.querySelectorAll(".alert-content.hidden");
+ collapsedAlerts.forEach(function (content) {
+ const alertId = content.id.replace("-content", "");
+ const chevron = document.getElementById(alertId + "-chevron");
+ if (chevron) {
+ chevron.style.transform = "rotate(-90deg)";
+ }
+ });
+ });
+&lt;/script&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+ href="../../../challenge%5c_files/STANDCON%5c_2022/Crypto/Asmuth%20Shares/challenge/chal.py"&gt;chal.py&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a
+ href="../../../challenge%5c_files/STANDCON%5c_2022/Crypto/Asmuth%20Shares/challenge/out.txt"&gt;out.txt&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="tldr"&gt;TL;DR&lt;a href="#tldr" class="heading-anchor" aria-label="Link to this section"&gt;&lt;svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"&gt;&lt;g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"&gt;&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/&gt;&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/&gt;&lt;/g&gt;&lt;/svg&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Use &lt;code&gt;Chinese Remainder Theorem&lt;/code&gt; on all shares.&lt;/li&gt;
+&lt;li&gt;Use result from &lt;code&gt;CRT&lt;/code&gt; and perform &lt;code&gt;mod m0&lt;/code&gt; to get long value of &lt;code&gt;FLAG&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Stonks&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="solution"&gt;Solution&lt;a href="#solution" class="heading-anchor" aria-label="Link to this section"&gt;&lt;svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"&gt;&lt;g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"&gt;&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/&gt;&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/&gt;&lt;/g&gt;&lt;/svg&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3 id="analysis"&gt;Analysis&lt;a href="#analysis" class="heading-anchor" aria-label="Link to this section"&gt;&lt;svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"&gt;&lt;g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"&gt;&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/&gt;&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/&gt;&lt;/g&gt;&lt;/svg&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div
+ class="tabs-wrapper border-border bg-card text-foreground my-6 rounded-xl border shadow-sm"
+ id="tabs-0"
+ data-tabs
+&gt;
+ &lt;div class="tabs-panels px-3 pb-3 sm:px-4 sm:pb-4"&gt;
+&lt;section
+ id="tabs-0-panel-0"
+ class="tabs-panel outline-none"
+ role="tabpanel"
+ data-tabs-panel
+ data-tab-label="out.txt"
+ 
+&gt;
+ &lt;div
+ class="tabs-panel-content px-4 pt-4 *:first:mt-0 *:last:mb-0 [&amp;_.code-block-container:first-child]:mt-0 [&amp;_.code-block-container:last-child]:mb-0"
+ &gt;
+ &lt;div
+ class="code-block-container border-border bg-card my-6 overflow-hidden rounded-xl border shadow-sm transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md"
+ data-code-block
+ data-code-id="code-0"
+ data-collapsible="true"
+ data-default-state="expanded"
+ data-collapsed="false"
+ data-auto-collapse-lines="30"
+ data-auto-collapse-height="400"
+ data-collapsed-height="120"
+&gt;
+ 
+ &lt;div
+ class="code-block-header bg-muted/30 border-border flex items-center justify-between border-b px-4 py-3"
+ &gt;
+ 
+ &lt;div class="flex items-center gap-2"&gt;
+ &lt;div class="text-muted-foreground shrink-0"&gt;
+ &lt;svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"&gt;
+ &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /&gt;
+&lt;/svg&gt;
+ &lt;/div&gt;
+ &lt;span class="text-muted-foreground text-sm font-medium"&gt;
+ PLAINTEXT
+ &lt;/span&gt;
+ &lt;/div&gt;
+
+ 
+ &lt;div class="flex items-center gap-2"&gt;
+ &lt;button
+ class="collapse-code-btn text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium transition-all duration-200 ease-out focus:ring-2 focus:outline-none"
+ type="button"
+ data-code-action="toggle-collapse"
+ data-label-expand="Expand"
+ data-label-collapse="Collapse"
+ title="Collapse"
+ aria-label="Collapse"
+ aria-controls="code-0"
+ aria-expanded="true"
+ &gt;
+ &lt;span class="collapse-chevron transition-transform duration-200 ease-out"&gt;
+ &lt;svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"&gt;
+ &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /&gt;
+&lt;/svg&gt;
+ &lt;/span&gt;
+ &lt;span class="collapse-text hidden sm:inline"&gt;Collapse&lt;/span&gt;
+ &lt;/button&gt;
+ &lt;button
+ class="copy-code-btn text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium transition-all duration-200 ease-out focus:ring-2 focus:outline-none"
+ type="button"
+ data-code-action="copy"
+ data-label-copy="Copy"
+ data-label-copied="Copied"
+ title="Copy"
+ aria-label="Copy"
+ &gt;
+ &lt;span class="copy-icon"&gt;
+ &lt;svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"&gt;
+ &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /&gt;
+&lt;/svg&gt;
+ &lt;/span&gt;
+ &lt;span class="copy-text hidden sm:inline"&gt;Copy&lt;/span&gt;
+ &lt;/button&gt;
+ &lt;/div&gt;
+ &lt;/div&gt;
+
+ 
+ &lt;div class="code-block-content relative" id="code-0"&gt;
+ &lt;pre tabindex="0"&gt;&lt;code&gt;Public (m0): 0x61f42f24878101c5186ec677cd44a2b14071b9a69260a026fb385482123f2bd647f74e8c569d3cad1c2d48ad6da58ceddd021c5d
+
+Share 0 (s0, m1): (0x60ec3bb546f5905293052cc6154d632942ef447f3983665f34651637c34c384970abf40095368ffd426f5139ec3d1e07a868a830, 0x6307ff90da6fa375ccf1803b158219da8b9e44fb6859c2f18ce7095584136dfd805a5ac4ecea326c10863ed6e2e39ac82abc9c49)
+Share 1 (s1, m2): (0x58675225153f997cd4f4d5bcc0ec9febf60ca7e7aa1759ae8a7037ad0dc4ce45ec79e49c3a1f8bb011adadc57e7d8a39bb845cad, 0x6cdc758a8d408a4ef39acd33f9677c268d685c9ddb3276fb970ad6fe2ebe549daace27fd7b05ca495ba3fe7fef9f9bbd23baf44d)
+Share 2 (s2, m3): (0x3d045f39ea1b2f9a5486b16fef3b9a99fd68de9d2d9235c14b6254d3dedb40f7bc8f2087de7a111671426d83b6c9f1709ab90d89, 0x727113b40e9c974febb4e7cb2952083f96a97d1b17093963ee7c474fe780f5bf31241b540470c949593b363ca2c84d73584eb2f3)
+Share 3 (s3, m4): (0x3e27c86088d7c7725814c9efe17909c408a1ddca3f0397c81d142b03d6329ef30941b558f22dc8bc20e752e4a6088a7067e76565, 0x7739b291c0ba89eec860dc8a6b018acb5d05d879504285a079b2785edac2cd543c6a86589071835d74f63524952910944b0977e7)&lt;/code&gt;&lt;/pre&gt;
+ &lt;div hidden data-code-source&gt;Public (m0): 0x61f42f24878101c5186ec677cd44a2b14071b9a69260a026fb385482123f2bd647f74e8c569d3cad1c2d48ad6da58ceddd021c5d
+
+Share 0 (s0, m1): (0x60ec3bb546f5905293052cc6154d632942ef447f3983665f34651637c34c384970abf40095368ffd426f5139ec3d1e07a868a830, 0x6307ff90da6fa375ccf1803b158219da8b9e44fb6859c2f18ce7095584136dfd805a5ac4ecea326c10863ed6e2e39ac82abc9c49)
+Share 1 (s1, m2): (0x58675225153f997cd4f4d5bcc0ec9febf60ca7e7aa1759ae8a7037ad0dc4ce45ec79e49c3a1f8bb011adadc57e7d8a39bb845cad, 0x6cdc758a8d408a4ef39acd33f9677c268d685c9ddb3276fb970ad6fe2ebe549daace27fd7b05ca495ba3fe7fef9f9bbd23baf44d)
+Share 2 (s2, m3): (0x3d045f39ea1b2f9a5486b16fef3b9a99fd68de9d2d9235c14b6254d3dedb40f7bc8f2087de7a111671426d83b6c9f1709ab90d89, 0x727113b40e9c974febb4e7cb2952083f96a97d1b17093963ee7c474fe780f5bf31241b540470c949593b363ca2c84d73584eb2f3)
+Share 3 (s3, m4): (0x3e27c86088d7c7725814c9efe17909c408a1ddca3f0397c81d142b03d6329ef30941b558f22dc8bc20e752e4a6088a7067e76565, 0x7739b291c0ba89eec860dc8a6b018acb5d05d879504285a079b2785edac2cd543c6a86589071835d74f63524952910944b0977e7)&lt;/div&gt;
+ 
+ &lt;div
+ class="collapse-overlay to-card/90 pointer-events-none absolute inset-0 bg-linear-to-b from-transparent via-transparent opacity-0 transition-opacity duration-300"
+ hidden
+ &gt;
+ &lt;button
+ class="collapse-overlay-btn text-muted-foreground bg-card/80 border-border/50 hover:bg-primary/10 hover:text-primary hover:border-primary/30 absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center justify-center rounded-full border p-2 backdrop-blur-sm transition-all duration-200"
+ type="button"
+ data-code-action="expand"
+ aria-label="Expand"
+ title="Expand"
+ &gt;
+ &lt;svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"&gt;
+ &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /&gt;
+&lt;/svg&gt;
+ &lt;/button&gt;
+ &lt;/div&gt;
+ &lt;/div&gt;
+&lt;/div&gt;
+
+ &lt;/div&gt;
+&lt;/section&gt;
+
+
+&lt;section
+ id="tabs-0-panel-1"
+ class="tabs-panel outline-none"
+ role="tabpanel"
+ data-tabs-panel
+ data-tab-label="chal.py"
+ hidden
+&gt;
+ &lt;div
+ class="tabs-panel-content px-4 pt-4 *:first:mt-0 *:last:mb-0 [&amp;_.code-block-container:first-child]:mt-0 [&amp;_.code-block-container:last-child]:mb-0"
+ &gt;
+ &lt;div
+ class="code-block-container border-border bg-card my-6 overflow-hidden rounded-xl border shadow-sm transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md"
+ data-code-block
+ data-code-id="code-0"
+ data-collapsible="true"
+ data-default-state="expanded"
+ data-collapsed="false"
+ data-auto-collapse-lines="30"
+ data-auto-collapse-height="400"
+ data-collapsed-height="120"
+&gt;
+ 
+ &lt;div
+ class="code-block-header bg-muted/30 border-border flex items-center justify-between border-b px-4 py-3"
+ &gt;
+ 
+ &lt;div class="flex items-center gap-2"&gt;
+ &lt;div class="text-muted-foreground shrink-0"&gt;
+ &lt;svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"&gt;
+ &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /&gt;
+&lt;/svg&gt;
+ &lt;/div&gt;
+ &lt;span class="text-muted-foreground text-sm font-medium"&gt;
+ PYTHON
+ &lt;/span&gt;
+ &lt;/div&gt;
+
+ 
+ &lt;div class="flex items-center gap-2"&gt;
+ &lt;button
+ class="collapse-code-btn text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium transition-all duration-200 ease-out focus:ring-2 focus:outline-none"
+ type="button"
+ data-code-action="toggle-collapse"
+ data-label-expand="Expand"
+ data-label-collapse="Collapse"
+ title="Collapse"
+ aria-label="Collapse"
+ aria-controls="code-0"
+ aria-expanded="true"
+ &gt;
+ &lt;span class="collapse-chevron transition-transform duration-200 ease-out"&gt;
+ &lt;svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"&gt;
+ &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /&gt;
+&lt;/svg&gt;
+ &lt;/span&gt;
+ &lt;span class="collapse-text hidden sm:inline"&gt;Collapse&lt;/span&gt;
+ &lt;/button&gt;
+ &lt;button
+ class="copy-code-btn text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium transition-all duration-200 ease-out focus:ring-2 focus:outline-none"
+ type="button"
+ data-code-action="copy"
+ data-label-copy="Copy"
+ data-label-copied="Copied"
+ title="Copy"
+ aria-label="Copy"
+ &gt;
+ &lt;span class="copy-icon"&gt;
+ &lt;svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"&gt;
+ &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /&gt;
+&lt;/svg&gt;
+ &lt;/span&gt;
+ &lt;span class="copy-text hidden sm:inline"&gt;Copy&lt;/span&gt;
+ &lt;/button&gt;
+ &lt;/div&gt;
+ &lt;/div&gt;
+
+ 
+ &lt;div class="code-block-content relative" id="code-0"&gt;
+ &lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;Crypto.Util.number&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;getPrime&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;getRandomRange&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;bytes_to_long&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;FLAG&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;bytes_to_long&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;flag.txt&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;rb&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;N&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;FLAG&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bit_length&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="mi"&gt;7&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;sorted&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt; &lt;span class="n"&gt;getPrime&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;N&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;_&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;])&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;share&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;]):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;	&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;getPrime&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;N&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;M&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;alpha&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;getRandomRange&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;M&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;k&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;FLAG&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;alpha&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;share&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;out.txt&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;w&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;write&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;Public (m0): &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="nb"&gt;hex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="se"&gt;\n\n&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;share&lt;/span&gt;&lt;span class="p"&gt;)):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;write&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sa"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;Share &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt; (s&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;, m&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;): (&lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="nb"&gt;hex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;share&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;, &lt;/span&gt;&lt;span class="si"&gt;{&lt;/span&gt;&lt;span class="nb"&gt;hex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;)&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+ &lt;div hidden data-code-source&gt;from Crypto.Util.number import getPrime, getRandomRange, bytes_to_long
+
+FLAG = bytes_to_long(open(&amp;#34;flag.txt&amp;#34;, &amp;#34;rb&amp;#34;).read())
+N = FLAG.bit_length() &amp;#43; 2**7
+
+m = sorted([ getPrime(N) for _ in range(5) ])
+share = []
+
+while ((m[1]*m[2]*m[3] &amp;lt; m[0]*m[3]*m[4]) and m[4]&amp;lt;m[3]):
+	m[4] = getPrime(N)
+
+M = m[1]*m[2]
+alpha = getRandomRange(2, M)
+k = 4
+
+for i in range(k):
+ s = (FLAG &amp;#43; alpha*m[0]) % m[i&amp;#43;1]
+ share.append(s)
+
+with open(&amp;#34;out.txt&amp;#34;, &amp;#39;w&amp;#39;) as f:
+ f.write(f&amp;#34;Public (m0): {hex(m[0])}\n\n&amp;#34;)
+
+ for i in range(len(share)):
+ f.write(f&amp;#34;Share {i} (s{i}, m{i&amp;#43;1}): ({hex(share[i])}, {hex(m[i&amp;#43;1])})\n&amp;#34;)&lt;/div&gt;
+ 
+ &lt;div
+ class="collapse-overlay to-card/90 pointer-events-none absolute inset-0 bg-linear-to-b from-transparent via-transparent opacity-0 transition-opacity duration-300"
+ hidden
+ &gt;
+ &lt;button
+ class="collapse-overlay-btn text-muted-foreground bg-card/80 border-border/50 hover:bg-primary/10 hover:text-primary hover:border-primary/30 absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center justify-center rounded-full border p-2 backdrop-blur-sm transition-all duration-200"
+ type="button"
+ data-code-action="expand"
+ aria-label="Expand"
+ title="Expand"
+ &gt;
+ &lt;svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"&gt;
+ &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /&gt;
+&lt;/svg&gt;
+ &lt;/button&gt;
+ &lt;/div&gt;
+ &lt;/div&gt;
+&lt;/div&gt;
+
+ &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;We are given the values of quite a few variables in the &lt;a
+ href="../../../challenge%5c_files/STANDCON%5c_2022/Crypto/Asmuth%20Shares/challenge/out.txt"&gt;out.txt&lt;/a&gt; file.&lt;/p&gt;</description></item><item><title>OMG RNG!</title><link>https://ctf.jonghan.xyz/posts/2022/standcon-2022/crypto/omg-rng/</link><pubDate>Mon, 27 Jun 2022 00:00:00 +0800</pubDate><guid>https://ctf.jonghan.xyz/posts/2022/standcon-2022/crypto/omg-rng/</guid><description>&lt;h2 id="description"&gt;Description&lt;a href="#description" class="heading-anchor" aria-label="Link to this section"&gt;&lt;svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"&gt;&lt;g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"&gt;&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/&gt;&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/&gt;&lt;/g&gt;&lt;/svg&gt;&lt;/a&gt;&lt;/h2&gt;
+ &lt;blockquote
+ class="border-primary bg-muted/30 hover:bg-muted/40 my-6 rounded-r-lg border-l-4 py-4 pr-4 pl-6 italic transition-all duration-200 ease-out hover:translate-x-1"
+ &gt;
+ &lt;div class="prose prose-sm max-w-none"&gt;
+ &lt;p&gt;Gifts for everyone!&lt;/p&gt;
+
+ &lt;/div&gt;
+ &lt;/blockquote&gt;&lt;script&gt;
+ function toggleAlert(alertId) {
+ const content = document.getElementById(alertId + "-content");
+ const chevron = document.getElementById(alertId + "-chevron");
+ const header = content.previousElementSibling;
+
+ if (content.classList.contains("hidden")) {
+ content.classList.remove("hidden");
+ chevron.style.transform = "rotate(0deg)";
+ header.setAttribute("aria-expanded", "true");
+ } else {
+ content.classList.add("hidden");
+ chevron.style.transform = "rotate(-90deg)";
+ header.setAttribute("aria-expanded", "false");
+ }
+ }
+
+ 
+ document.addEventListener("DOMContentLoaded", function () {
+ const collapsedAlerts = document.querySelectorAll(".alert-content.hidden");
+ collapsedAlerts.forEach(function (content) {
+ const alertId = content.id.replace("-content", "");
+ const chevron = document.getElementById(alertId + "-chevron");
+ if (chevron) {
+ chevron.style.transform = "rotate(-90deg)";
+ }
+ });
+ });
+&lt;/script&gt;
+
+ &lt;blockquote
+ class="border-primary bg-muted/30 hover:bg-muted/40 my-6 rounded-r-lg border-l-4 py-4 pr-4 pl-6 italic transition-all duration-200 ease-out hover:translate-x-1"
+ &gt;
+ &lt;div class="prose prose-sm max-w-none"&gt;
+ &lt;p&gt;&lt;code&gt;nc lab-1.ctf.standcon.n0h4ts.com 7903&lt;/code&gt;&lt;/p&gt;</description></item><item><title>Reverse</title><link>https://ctf.jonghan.xyz/posts/2022/standcon-2022/reverse/</link><pubDate>Mon, 27 Jun 2022 00:00:00 +0800</pubDate><guid>https://ctf.jonghan.xyz/posts/2022/standcon-2022/reverse/</guid><description>&lt;h1 id="reverse"&gt;Reverse&lt;a href="#reverse" class="heading-anchor" aria-label="Link to this section"&gt;&lt;svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"&gt;&lt;g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"&gt;&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/&gt;&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/&gt;&lt;/g&gt;&lt;/svg&gt;&lt;/a&gt;&lt;/h1&gt;</description></item><item><title>Lost In the Deep</title><link>https://ctf.jonghan.xyz/posts/2022/standcon-2022/reverse/lost-in-the-deep/</link><pubDate>Mon, 27 Jun 2022 00:00:00 +0800</pubDate><guid>https://ctf.jonghan.xyz/posts/2022/standcon-2022/reverse/lost-in-the-deep/</guid><description>&lt;h2 id="description"&gt;Description&lt;a href="#description" class="heading-anchor" aria-label="Link to this section"&gt;&lt;svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"&gt;&lt;g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"&gt;&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/&gt;&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/&gt;&lt;/g&gt;&lt;/svg&gt;&lt;/a&gt;&lt;/h2&gt;
+ &lt;blockquote
+ class="border-primary bg-muted/30 hover:bg-muted/40 my-6 rounded-r-lg border-l-4 py-4 pr-4 pl-6 italic transition-all duration-200 ease-out hover:translate-x-1"
+ &gt;
+ &lt;div class="prose prose-sm max-w-none"&gt;
+ &lt;p&gt;You&amp;rsquo;ve been swimming, and encounter a submerged mangrove forest. You enter it to explore, and without knowing it, you&amp;rsquo;re lost. How do you escape?&lt;/p&gt;</description></item><item><title>New Math!</title><link>https://ctf.jonghan.xyz/posts/2022/standcon-2022/reverse/new-math/</link><pubDate>Mon, 27 Jun 2022 00:00:00 +0800</pubDate><guid>https://ctf.jonghan.xyz/posts/2022/standcon-2022/reverse/new-math/</guid><description>&lt;h2 id="description"&gt;Description&lt;a href="#description" class="heading-anchor" aria-label="Link to this section"&gt;&lt;svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"&gt;&lt;g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"&gt;&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/&gt;&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/&gt;&lt;/g&gt;&lt;/svg&gt;&lt;/a&gt;&lt;/h2&gt;
+ &lt;blockquote
+ class="border-primary bg-muted/30 hover:bg-muted/40 my-6 rounded-r-lg border-l-4 py-4 pr-4 pl-6 italic transition-all duration-200 ease-out hover:translate-x-1"
+ &gt;
+ &lt;div class="prose prose-sm max-w-none"&gt;
+ &lt;p&gt;Hooray for new math! New whoo hoo math!&lt;/p&gt;
+
+ &lt;/div&gt;
+ &lt;/blockquote&gt;&lt;script&gt;
+ function toggleAlert(alertId) {
+ const content = document.getElementById(alertId + "-content");
+ const chevron = document.getElementById(alertId + "-chevron");
+ const header = content.previousElementSibling;
+
+ if (content.classList.contains("hidden")) {
+ content.classList.remove("hidden");
+ chevron.style.transform = "rotate(0deg)";
+ header.setAttribute("aria-expanded", "true");
+ } else {
+ content.classList.add("hidden");
+ chevron.style.transform = "rotate(-90deg)";
+ header.setAttribute("aria-expanded", "false");
+ }
+ }
+
+ 
+ document.addEventListener("DOMContentLoaded", function () {
+ const collapsedAlerts = document.querySelectorAll(".alert-content.hidden");
+ collapsedAlerts.forEach(function (content) {
+ const alertId = content.id.replace("-content", "");
+ const chevron = document.getElementById(alertId + "-chevron");
+ if (chevron) {
+ chevron.style.transform = "rotate(-90deg)";
+ }
+ });
+ });
+&lt;/script&gt;
+
+ &lt;blockquote
+ class="border-primary bg-muted/30 hover:bg-muted/40 my-6 rounded-r-lg border-l-4 py-4 pr-4 pl-6 italic transition-all duration-200 ease-out hover:translate-x-1"
+ &gt;
+ &lt;div class="prose prose-sm max-w-none"&gt;
+ &lt;p&gt;Wrap the flag in STANDCON22{}&lt;/p&gt;</description></item><item><title>Wait For The Day</title><link>https://ctf.jonghan.xyz/posts/2022/standcon-2022/reverse/wait-for-the-day/</link><pubDate>Mon, 27 Jun 2022 00:00:00 +0800</pubDate><guid>https://ctf.jonghan.xyz/posts/2022/standcon-2022/reverse/wait-for-the-day/</guid><description>&lt;h2 id="description"&gt;Description&lt;a href="#description" class="heading-anchor" aria-label="Link to this section"&gt;&lt;svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"&gt;&lt;g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"&gt;&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/&gt;&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/&gt;&lt;/g&gt;&lt;/svg&gt;&lt;/a&gt;&lt;/h2&gt;
+ &lt;blockquote
+ class="border-primary bg-muted/30 hover:bg-muted/40 my-6 rounded-r-lg border-l-4 py-4 pr-4 pl-6 italic transition-all duration-200 ease-out hover:translate-x-1"
+ &gt;
+ &lt;div class="prose prose-sm max-w-none"&gt;
+ &lt;p&gt;Momma bought a Christmas gift for you. She says it&amp;rsquo;s something you love! But Christmas is like more than 6 months away :/ Try to peek in and find out what the gift is, before the Christmas eve ;)&lt;/p&gt;</description></item><item><title>Want a byte?</title><link>https://ctf.jonghan.xyz/posts/2022/standcon-2022/reverse/want-a-byte/</link><pubDate>Mon, 27 Jun 2022 00:00:00 +0800</pubDate><guid>https://ctf.jonghan.xyz/posts/2022/standcon-2022/reverse/want-a-byte/</guid><description>&lt;h2 id="description"&gt;Description&lt;a href="#description" class="heading-anchor" aria-label="Link to this section"&gt;&lt;svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"&gt;&lt;g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"&gt;&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/&gt;&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/&gt;&lt;/g&gt;&lt;/svg&gt;&lt;/a&gt;&lt;/h2&gt;
+ &lt;blockquote
+ class="border-primary bg-muted/30 hover:bg-muted/40 my-6 rounded-r-lg border-l-4 py-4 pr-4 pl-6 italic transition-all duration-200 ease-out hover:translate-x-1"
+ &gt;
+ &lt;div class="prose prose-sm max-w-none"&gt;
+ &lt;p&gt;Scrolling through my projects, I found some old project code. I remember this code had some &amp;ldquo;backdoors&amp;rdquo;. But since I mistakenly deleted utils.py, now I cannot understand my own code! Can you help me make sense out of it? You will be rewarded with a flag for your help.&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Cryptography on CTF Writeups</title><link>https://ctf.jonghan.xyz/posts/authored/nyp-infosec-ctf-december-2022/cryptography/</link><description>Recent content in Cryptography on CTF Writeups</description><generator>Hugo</generator><language>en</language><lastBuildDate>Fri, 06 Jan 2023 00:00:00 +0800</lastBuildDate><atom:link href="https://ctf.jonghan.xyz/posts/authored/nyp-infosec-ctf-december-2022/cryptography/index.xml" rel="self" type="application/rss+xml"/><item><title>ECB Xoracle</title><link>https://ctf.jonghan.xyz/posts/authored/nyp-infosec-ctf-december-2022/cryptography/ecb-xoracle/</link><pubDate>Fri, 06 Jan 2023 00:00:00 +0800</pubDate><guid>https://ctf.jonghan.xyz/posts/authored/nyp-infosec-ctf-december-2022/cryptography/ecb-xoracle/</guid><description>&lt;table&gt;
+	&lt;thead&gt;
+			&lt;tr&gt;
+					&lt;th&gt;Difficulty&lt;/th&gt;
+					&lt;th&gt;Points&lt;/th&gt;
+			&lt;/tr&gt;
+	&lt;/thead&gt;
+	&lt;tbody&gt;
+			&lt;tr&gt;
+					&lt;td&gt;Easy&lt;/td&gt;
+					&lt;td&gt;150&lt;/td&gt;
+			&lt;/tr&gt;
+	&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="description"&gt;Description&lt;a href="#description" class="heading-anchor" aria-label="Link to this section"&gt;&lt;svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"&gt;&lt;g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"&gt;&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/&gt;&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/&gt;&lt;/g&gt;&lt;/svg&gt;&lt;/a&gt;&lt;/h2&gt;
+ &lt;blockquote
+ class="border-primary bg-muted/30 hover:bg-muted/40 my-6 rounded-r-lg border-l-4 py-4 pr-4 pl-6 italic transition-all duration-200 ease-out hover:translate-x-1"
+ &gt;
+ &lt;div class="prose prose-sm max-w-none"&gt;
+ &lt;p&gt;I implemented an additional step in my encryption/decryption service and declare its name as &amp;ldquo;Xoracle&amp;rdquo;. It should be more secure, right?&lt;/p&gt;</description></item><item><title>Mathematics of Cryptography</title><link>https://ctf.jonghan.xyz/posts/authored/nyp-infosec-ctf-december-2022/cryptography/mathematics-of-cryptography/</link><pubDate>Fri, 06 Jan 2023 00:00:00 +0800</pubDate><guid>https://ctf.jonghan.xyz/posts/authored/nyp-infosec-ctf-december-2022/cryptography/mathematics-of-cryptography/</guid><description>&lt;table&gt;
+	&lt;thead&gt;
+			&lt;tr&gt;
+					&lt;th&gt;Difficulty&lt;/th&gt;
+					&lt;th&gt;Points&lt;/th&gt;
+			&lt;/tr&gt;
+	&lt;/thead&gt;
+	&lt;tbody&gt;
+			&lt;tr&gt;
+					&lt;td&gt;Easy&lt;/td&gt;
+					&lt;td&gt;150&lt;/td&gt;
+			&lt;/tr&gt;
+	&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="description"&gt;Description&lt;a href="#description" class="heading-anchor" aria-label="Link to this section"&gt;&lt;svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"&gt;&lt;g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"&gt;&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/&gt;&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/&gt;&lt;/g&gt;&lt;/svg&gt;&lt;/a&gt;&lt;/h2&gt;
+ &lt;blockquote
+ class="border-primary bg-muted/30 hover:bg-muted/40 my-6 rounded-r-lg border-l-4 py-4 pr-4 pl-6 italic transition-all duration-200 ease-out hover:translate-x-1"
+ &gt;
+ &lt;div class="prose prose-sm max-w-none"&gt;
+ &lt;p&gt;The Defenders heard that there are some Math legends among us and have reached out for assistance in breaking one of the Uprisers&amp;rsquo; security defenses.&lt;/p&gt;</description></item></channel></rss>

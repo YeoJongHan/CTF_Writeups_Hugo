@@ -1,0 +1,614 @@
+<!doctype html><html lang=en data-theme=default><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta http-equiv=X-UA-Compatible content="IE=edge"><title>Private Assertion Nexus |
+CTF Writeups</title><meta name=description content=" Difficulty Points Easy 150 DescriptionI&rsquo;ve heard talk about a simple method of communication, but I&rsquo;m not sure what it is. Luckily I..."><meta name=keywords content="Networking"><meta name=author content="Jong Han"><meta name=language content="en"><meta name=robots content="index, follow"><link rel=canonical href=https://ctf.jonghan.xyz/posts/authored/nyp-infosec-ctf-december-2022/networking/private-assertion-nexus/><link rel=icon type=image/svg+xml href=/favicon.svg><link rel=manifest href=/site.webmanifest><meta property="og:url" content="https://ctf.jonghan.xyz/posts/authored/nyp-infosec-ctf-december-2022/networking/private-assertion-nexus/"><meta property="og:site_name" content="CTF Writeups"><meta property="og:title" content="Private Assertion Nexus"><meta property="og:description" content="Difficulty Points Easy 150 DescriptionI’ve heard talk about a simple method of communication, but I’m not sure what it is. Luckily I found some traffic of the said communication, but I’m too noob to figure it out. Please help me crack this enigma of a transmission."><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2023-01-06T00:00:00+08:00"><meta property="article:modified_time" content="2023-01-06T00:00:00+08:00"><meta property="article:tag" content="Networking"><meta property="og:see_also" content="https://ctf.jonghan.xyz/posts/authored/nyp-infosec-ctf-december-2022/"><meta property="og:see_also" content="https://ctf.jonghan.xyz/posts/authored/nyp-infosec-ctf-december-2022/reverse/"><meta property="og:see_also" content="https://ctf.jonghan.xyz/posts/authored/nyp-infosec-ctf-december-2022/reverse/blendins-plain-plane/"><meta property="og:see_also" content="https://ctf.jonghan.xyz/posts/authored/nyp-infosec-ctf-december-2022/reverse/deobf-me/"><meta property="og:see_also" content="https://ctf.jonghan.xyz/posts/authored/nyp-infosec-ctf-december-2022/miscellaneous/"><meta property="og:see_also" content="https://ctf.jonghan.xyz/posts/authored/nyp-infosec-ctf-december-2022/miscellaneous/chilling-beat/"><meta property="og:see_also" content="https://ctf.jonghan.xyz/posts/authored/nyp-infosec-ctf-december-2022/miscellaneous/chilling-beat-2/"><meta name=twitter:card content="summary"><meta name=twitter:title content="Private Assertion Nexus"><meta name=twitter:description content="Difficulty Points Easy 150 DescriptionI’ve heard talk about a simple method of communication, but I’m not sure what it is. Luckily I found some traffic of the said communication, but I’m too noob to figure it out. Please help me crack this enigma of a transmission."><meta itemprop=name content="Private Assertion Nexus"><meta itemprop=description content="Difficulty Points Easy 150 DescriptionI’ve heard talk about a simple method of communication, but I’m not sure what it is. Luckily I found some traffic of the said communication, but I’m too noob to figure it out. Please help me crack this enigma of a transmission."><meta itemprop=datePublished content="2023-01-06T00:00:00+08:00"><meta itemprop=dateModified content="2023-01-06T00:00:00+08:00"><meta itemprop=wordCount content="2219"><meta itemprop=keywords content="Networking"><script id=search-config type=application/json>"{\"searchIndexURL\":\"/index.json\"}"</script><link rel=stylesheet href=/css/compiled.min.4a6fd33c0e2db207c1646e8a588be381fd817a1b0cd86004cbb040e8dcf50b31.css integrity="sha256-Sm/TPA4tsgfBZG6KWIvjgf2BehsM2GAEy7BA6Nz1CzE=" crossorigin=anonymous><link rel=stylesheet href=/css/chroma.min.491df36221f739b5948a747a0351f100ee7ccaaf466d9f46288bf06de1d59123.css integrity="sha256-SR3zYiH3ObWUinR6A1HxAO58yq9GbZ9GKIvwbeHVkSM=" crossorigin=anonymous><script src=/js/main.f482676046fba6a50f6e6580bd1306489d4fea5f7144231757bf01af2498b168.js integrity="sha256-9IJnYEb7pqUPbmWAvRMGSJ1P6l9xRCMXV78BrySYsWg=" crossorigin=anonymous defer></script><script src=/js/toc.3026ef97e410bb3e98d57739bcabc32ac568e9001b2e42385de731663378ae85.js integrity="sha256-MCbvl+QQuz6Y1Xc5vKvDKsVo6QAbLkI4XecxZjN4roU=" crossorigin=anonymous defer></script><script src=/js/search.33fef1d91398b17cbc46483d902493b800642d25754e7ff8e998b12499c7fde3.js integrity="sha256-M/7x2ROYsXy8Rkg9kCSTuABkLSV1Tn/46ZixJJnH/eM=" crossorigin=anonymous defer></script><script src=/js/dock.e64c343cfb2005ed990e1d3351817ee8732467879fb6c7f1e283abb31ffa975f.js integrity="sha256-5kw0PPsgBe2ZDh0zUYF+6HMkZ4eftsfx4oOrsx/6l18=" crossorigin=anonymous defer></script><script>(function(){const e=localStorage.getItem("theme")||"system",n=localStorage.getItem("colorScheme")||"default";document.documentElement.setAttribute("data-theme",n);function t(){e==="dark"||e==="system"&&window.matchMedia("(prefers-color-scheme: dark)").matches?document.documentElement.classList.add("dark"):document.documentElement.classList.remove("dark")}t(),e==="system"&&window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",t)})()</script></head><body class="bg-background text-foreground min-h-screen antialiased"><main class="mx-auto w-full" style=max-width:56rem><div id=reading-progress-bar class="from-primary to-primary/80 pointer-events-none fixed top-0 left-0 z-50 h-[3px] w-0 bg-linear-to-r transition-[width] duration-150 ease-out"></div><script>(function(){const t=document.getElementById("reading-progress-bar");if(!t)return;function n(){const n=window.scrollY,e=document.documentElement.scrollHeight-window.innerHeight;t.style.width=e>0?n/e*100+"%":"0%"}let e=!1;window.addEventListener("scroll",()=>{e||(requestAnimationFrame(()=>{n(),e=!1}),e=!0)},{passive:!0}),n()})()</script><header class="sticky top-0 z-50 px-4 py-6"><div class="border-border bg-card/80 flex items-center rounded-xl border px-6 py-4 shadow-sm backdrop-blur-sm"><div class="hidden w-full items-center md:flex md:min-w-0"><div class="flex items-center"><a href=/ class="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full transition-transform duration-200 hover:scale-105" aria-label="CTF Writeups"><img src=/images/logo.svg alt="CTF Writeups" class="h-full w-full object-cover"></a></div><nav class="mx-8 flex min-w-0 flex-1 items-center justify-center"><div class="flex flex-wrap items-center justify-center space-x-1"><a href=/posts/ class="nav-link
+text-muted-foreground hover:text-primary hover:bg-primary/10
+focus:ring-primary/20 relative flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all duration-300 ease-out hover:-translate-y-0.5 hover:scale-105 focus:ring-2 focus:outline-none"><svg class="h-5 w-5" aria-label="Writeups" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+<span>Writeups</span>
+</a><a href=/ class="nav-link
+text-muted-foreground hover:text-primary hover:bg-primary/10
+focus:ring-primary/20 relative flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all duration-300 ease-out hover:-translate-y-0.5 hover:scale-105 focus:ring-2 focus:outline-none"><svg class="h-5 w-5" aria-label="Archives" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
+<span>Archives</span>
+</a><a href=/categories/ class="nav-link
+text-muted-foreground hover:text-primary hover:bg-primary/10
+focus:ring-primary/20 relative flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all duration-300 ease-out hover:-translate-y-0.5 hover:scale-105 focus:ring-2 focus:outline-none"><svg class="h-5 w-5" aria-label="Categories" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+<span>Categories</span>
+</a><a href=/tags/ class="nav-link
+text-muted-foreground hover:text-primary hover:bg-primary/10
+focus:ring-primary/20 relative flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all duration-300 ease-out hover:-translate-y-0.5 hover:scale-105 focus:ring-2 focus:outline-none"><svg class="h-5 w-5" aria-label="Tags" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512.0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828.0l-7-7A1.994 1.994.0 013 12V7a4 4 0 014-4z"/></svg>
+<span>Tags</span></a></div></nav><div class="flex items-center space-x-2"><div class=relative><button id=color-scheme-toggle class="dropdown-toggle border-border bg-background text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 flex h-10 w-10 items-center justify-center rounded-lg border transition-all duration-300 ease-out hover:scale-105 focus:ring-2 focus:outline-none active:scale-95" data-dropdown-type=color-scheme aria-label="Toggle theme" aria-expanded=false aria-haspopup=true><svg class="h-5 w-5 relative z-10" aria-label="Toggle theme" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v6a2 2 0 002 2h4a2 2 0 002-2V5z"/></svg></button><div id=color-scheme-dropdown class="dropdown-menu border-border bg-popover/95 w-44 absolute top-12 right-0 z-60 hidden rounded-lg border p-1 shadow-lg backdrop-blur-sm transition-all duration-200 ease-out" data-dropdown-type=color-scheme></div></div><div class=relative><button id=theme-toggle class="dropdown-toggle border-border bg-background text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 flex h-10 w-10 items-center justify-center rounded-lg border transition-all duration-300 ease-out hover:scale-105 focus:ring-2 focus:outline-none active:scale-95" data-dropdown-type=theme aria-label="Toggle theme" aria-expanded=false aria-haspopup=true><svg class="h-5 w-5 sun-icon hidden relative z-10" aria-label="Light" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364-.707-.707M6.343 6.343l-.707-.707m12.728.0-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+<svg class="h-5 w-5 moon-icon hidden relative z-10" aria-label="Dark" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003.0 0012 21a9.003 9.003.0 008.354-5.646z"/></svg>
+<svg class="h-5 w-5 system-icon hidden relative z-10" aria-label="System" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17 9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5A2 2 0 003 5v10a2 2 0 002 2z"/></svg></button><div id=theme-dropdown class="dropdown-menu border-border bg-popover/95 w-40 absolute top-12 right-0 z-60 hidden rounded-lg border p-1 shadow-lg backdrop-blur-sm transition-all duration-200 ease-out" data-dropdown-type=theme><button data-theme=light class="text-accent-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground flex w-full items-center rounded-md px-4 py-2 text-sm transition-all duration-200 ease-out focus:outline-none"><svg class="h-5 w-5 mr-3 h-4 w-4" aria-label="Light" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364-.707-.707M6.343 6.343l-.707-.707m12.728.0-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+<span>Light</span></button><button data-theme=dark class="text-accent-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground flex w-full items-center rounded-md px-4 py-2 text-sm transition-all duration-200 ease-out focus:outline-none"><svg class="h-5 w-5 mr-3 h-4 w-4" aria-label="Dark" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003.0 0012 21a9.003 9.003.0 008.354-5.646z"/></svg>
+<span>Dark</span></button><button data-theme=system class="text-accent-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground flex w-full items-center rounded-md px-4 py-2 text-sm transition-all duration-200 ease-out focus:outline-none"><svg class="h-5 w-5 mr-3 h-4 w-4" aria-label="System" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17 9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5A2 2 0 003 5v10a2 2 0 002 2z"/></svg>
+<span>System</span></button></div></div></div></div><div class="flex w-full items-center justify-between md:hidden"><button id=mobile-nav-toggle class="nav-panel-toggle border-border bg-background text-muted-foreground hover:bg-accent hover:text-foreground flex h-10 w-10 items-center justify-center rounded-lg border transition-colors duration-200" aria-label=Menu aria-expanded=false aria-controls=mobile-nav-panel>
+<svg class="h-5 w-5" aria-label="Menu" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button><div class="flex items-center space-x-2"><div class=relative><button id=color-scheme-toggle class="dropdown-toggle border-border bg-background text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 flex h-10 w-10 items-center justify-center rounded-lg border transition-all duration-300 ease-out hover:scale-105 focus:ring-2 focus:outline-none active:scale-95" data-dropdown-type=color-scheme aria-label="Toggle theme" aria-expanded=false aria-haspopup=true><svg class="h-5 w-5 relative z-10" aria-label="Toggle theme" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v6a2 2 0 002 2h4a2 2 0 002-2V5z"/></svg></button><div id=color-scheme-dropdown class="dropdown-menu border-border bg-popover/95 w-44 absolute top-12 right-0 z-60 hidden rounded-lg border p-1 shadow-lg backdrop-blur-sm transition-all duration-200 ease-out" data-dropdown-type=color-scheme></div></div><div class=relative><button id=theme-toggle class="dropdown-toggle border-border bg-background text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 flex h-10 w-10 items-center justify-center rounded-lg border transition-all duration-300 ease-out hover:scale-105 focus:ring-2 focus:outline-none active:scale-95" data-dropdown-type=theme aria-label="Toggle theme" aria-expanded=false aria-haspopup=true><svg class="h-5 w-5 sun-icon hidden relative z-10" aria-label="Light" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364-.707-.707M6.343 6.343l-.707-.707m12.728.0-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+<svg class="h-5 w-5 moon-icon hidden relative z-10" aria-label="Dark" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003.0 0012 21a9.003 9.003.0 008.354-5.646z"/></svg>
+<svg class="h-5 w-5 system-icon hidden relative z-10" aria-label="System" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17 9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5A2 2 0 003 5v10a2 2 0 002 2z"/></svg></button><div id=theme-dropdown class="dropdown-menu border-border bg-popover/95 w-40 absolute top-12 right-0 z-60 hidden rounded-lg border p-1 shadow-lg backdrop-blur-sm transition-all duration-200 ease-out" data-dropdown-type=theme><button data-theme=light class="text-accent-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground flex w-full items-center rounded-md px-4 py-2 text-sm transition-all duration-200 ease-out focus:outline-none"><svg class="h-5 w-5 mr-3 h-4 w-4" aria-label="Light" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364-.707-.707M6.343 6.343l-.707-.707m12.728.0-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+<span>Light</span></button><button data-theme=dark class="text-accent-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground flex w-full items-center rounded-md px-4 py-2 text-sm transition-all duration-200 ease-out focus:outline-none"><svg class="h-5 w-5 mr-3 h-4 w-4" aria-label="Dark" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003.0 0012 21a9.003 9.003.0 008.354-5.646z"/></svg>
+<span>Dark</span></button><button data-theme=system class="text-accent-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground flex w-full items-center rounded-md px-4 py-2 text-sm transition-all duration-200 ease-out focus:outline-none"><svg class="h-5 w-5 mr-3 h-4 w-4" aria-label="System" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17 9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5A2 2 0 003 5v10a2 2 0 002 2z"/></svg>
+<span>System</span></button></div></div></div></div></div><div id=mobile-nav-panel class="mt-2 hidden md:hidden" role=navigation aria-label=Menu aria-hidden=true tabindex=-1><div class="border-border bg-popover/95 overflow-hidden rounded-xl border shadow-lg backdrop-blur-sm"><nav class="flex flex-col p-2"><a href=/posts/ class="nav-panel-link
+text-muted-foreground hover:text-primary hover:bg-primary/10
+focus:ring-primary/20 flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-all duration-200 ease-out focus:ring-2 focus:outline-none" role=menuitem><svg class="h-5 w-5" aria-label="Writeups" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+<span>Writeups</span>
+</a><a href=/ class="nav-panel-link
+text-muted-foreground hover:text-primary hover:bg-primary/10
+focus:ring-primary/20 flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-all duration-200 ease-out focus:ring-2 focus:outline-none" role=menuitem><svg class="h-5 w-5" aria-label="Archives" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
+<span>Archives</span>
+</a><a href=/categories/ class="nav-panel-link
+text-muted-foreground hover:text-primary hover:bg-primary/10
+focus:ring-primary/20 flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-all duration-200 ease-out focus:ring-2 focus:outline-none" role=menuitem><svg class="h-5 w-5" aria-label="Categories" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+<span>Categories</span>
+</a><a href=/tags/ class="nav-panel-link
+text-muted-foreground hover:text-primary hover:bg-primary/10
+focus:ring-primary/20 flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-all duration-200 ease-out focus:ring-2 focus:outline-none" role=menuitem><svg class="h-5 w-5" aria-label="Tags" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512.0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828.0l-7-7A1.994 1.994.0 013 12V7a4 4 0 014-4z"/></svg>
+<span>Tags</span></a></nav></div></div></header><div class="px-4 py-6"><nav class="breadcrumb mb-4 py-1 md:mb-6" aria-label=Breadcrumb><ol class="text-muted-foreground scrollbar-hide flex items-center space-x-1 overflow-x-auto py-1 text-sm whitespace-nowrap md:space-x-2"><li class=shrink-0><a href=/ class="text-muted-foreground hover:text-primary hover:bg-primary/10 flex items-center gap-1 rounded-lg px-1 py-0.5 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.02] md:py-1.5"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m3 12 2-2m0 0 7-7 7 7M5 10v10a1 1 0 001 1h3m10-11 2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+<span class="max-w-16 truncate md:max-w-none">Home</span></a></li><li class="flex min-w-0 items-center gap-1 md:gap-2"><span class="text-muted-foreground/50 shrink-0"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+</span><a href=/posts/ class="text-muted-foreground hover:text-primary hover:bg-primary/10 flex shrink-0 items-center gap-1 rounded-lg px-1 py-0.5 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.02] md:px-3 md:py-1.5"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5A2 2 0 003 7z"/></svg>
+<span class="max-w-16 truncate md:max-w-none">Posts</span></a></li><li class="flex min-w-0 items-center gap-1 md:gap-2"><span class="text-muted-foreground/50 shrink-0"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+</span><a href=/posts/authored/nyp-infosec-ctf-december-2022/ class="text-muted-foreground hover:text-primary hover:bg-primary/10 flex shrink-0 items-center gap-1 rounded-lg px-1 py-0.5 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.02] md:px-3 md:py-1.5"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5A2 2 0 003 7z"/></svg>
+<span class="max-w-16 truncate md:max-w-none">NYP Infosec CTF December 2022</span></a></li><li class="flex min-w-0 items-center gap-1 md:gap-2"><span class="text-muted-foreground/50 shrink-0"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+</span><a href=/posts/authored/nyp-infosec-ctf-december-2022/networking/ class="text-muted-foreground hover:text-primary hover:bg-primary/10 flex shrink-0 items-center gap-1 rounded-lg px-1 py-0.5 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.02] md:px-3 md:py-1.5"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5A2 2 0 003 7z"/></svg>
+<span class="max-w-16 truncate md:max-w-none">Networking</span></a></li><li class="flex min-w-0 items-center gap-1 md:gap-2"><span class="text-muted-foreground/50 shrink-0"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+</span><span class="text-foreground flex min-w-0 items-center gap-1 font-medium"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+<span class="max-w-32 truncate md:max-w-[16rem] lg:max-w-none">Private Assertion Nexus</span></span></li></ol></nav><header class=mb-8><div class="post-meta mb-8"><h1 class="text-foreground mb-6 text-3xl leading-tight font-bold md:text-4xl">Private Assertion Nexus</h1><div class="bg-card border-border rounded-xl border"><div class="flex flex-col lg:flex-row"><div class="shrink-0 lg:w-3/5 p-6 border-b lg:border-b-0 lg:border-r border-border"><div class="text-muted-foreground flex flex-wrap items-center gap-3 text-sm mb-4"><div class="flex items-center gap-2"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5A2 2 0 003 7v12a2 2 0 002 2z"/></svg>
+<time datetime=2023-01-06>January 6, 2023</time></div><div class="flex items-center gap-2"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3A9 9 0 113 12a9 9 0 0118 0z"/></svg>
+<span>11 min</span></div><div class="flex items-center gap-2"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/></svg>
+<span>2219 words</span></div></div><div class="text-muted-foreground space-y-3 pt-4 border-t border-border"><div class="flex items-center gap-2"><div class=shrink-0><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg></div><div class="flex-1 min-w-0"><div class="flex flex-wrap items-center gap-1.5"><span class="text-muted-foreground text-sm font-medium">Categories:
+</span><a href=/categories/authored/ class="inline-flex items-center rounded-full px-2.5 py-1 text-sm font-medium transition-all duration-200 bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground">Authored</a></div></div></div><div class="flex items-center gap-2"><div class=shrink-0><svg class="h-4 w-4" viewBox="0 0 24 24"><path fill="currentColor" d="M21 4H3A2 2 0 001 6v13a2 2 0 002 2h18a2 2 0 002-2V6a2 2 0 00-2-2M3 19V6h8v13zm18 0h-8V6h8zm-7-9.5h6V11h-6zm0 2.5h6v1.5h-6zm0 2.5h6V16h-6z"/></svg></div><div class="flex-1 min-w-0"><div class="flex flex-wrap items-center gap-1.5"><span class="text-muted-foreground text-sm font-medium">Series:
+</span><a href=/series/nyp-infosec-ctf-december-2022/ class="inline-flex items-center rounded-full px-2.5 py-1 text-sm font-medium transition-all duration-200 bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground">Nyp Infosec Ctf December 2022</a></div></div></div><div class="flex items-center gap-2"><div class=shrink-0><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512.0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828.0l-7-7A1.994 1.994.0 013 12V7a4 4 0 014-4z"/></svg></div><div class="flex-1 min-w-0"><div class="flex flex-wrap items-center gap-1.5"><span class="text-muted-foreground text-sm font-medium">Tags:
+</span><a href=/tags/networking/ class="inline-flex items-center rounded-full px-2.5 py-1 text-sm font-medium transition-all duration-200 bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground">Networking</a></div></div></div></div></div><div class="flex-1 lg:w-2/5 flex flex-col" id=series-container><div class="shrink-0 p-4 border-b border-border"><div class="flex items-center gap-2 overflow-x-auto no-scrollbar scroll-smooth" id=series-tabs><button onclick=switchSeries(0) class="series-tab-btn group flex items-center gap-2 px-3 py-2 rounded-lg transition-all border border-transparent bg-accent text-foreground border-border shadow-sm" data-index=0>
+<span class="text-sm font-semibold whitespace-nowrap max-w-[120px] truncate">Nyp Infosec Ctf December 2022
+</span><span class="bg-primary/10 text-primary rounded-full px-2 py-0.5 text-[10px] font-bold">14/14
+</span></button>
+<a href=# id=series-link-btn class="ml-auto shrink-0 p-2 rounded-lg text-muted-foreground hover:text-primary hover:bg-accent/50 transition-colors"><svg class="h-4 w-4" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 3h6v6m-11 5L21 3m-3 10v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/></svg></a></div></div><div class=flex-1><nav id=series-content-0 class="series-content overflow-y-auto max-h-32 p-4 transition-opacity duration-300 opacity-100 z-10 block" data-link=/series/nyp-infosec-ctf-december-2022/><ol class=space-y-1.5><li><a href=/posts/authored/nyp-infosec-ctf-december-2022/ class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-all group text-muted-foreground hover:text-foreground hover:bg-muted/50"><span class="font-mono text-xs shrink-0 opacity-50 group-hover:opacity-100 transition-opacity">01
+</span><span class="flex-1 truncate">NYP Infosec CTF December 2022</span></a></li><li><a href=/posts/authored/nyp-infosec-ctf-december-2022/reverse/ class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-all group text-muted-foreground hover:text-foreground hover:bg-muted/50"><span class="font-mono text-xs shrink-0 opacity-50 group-hover:opacity-100 transition-opacity">02
+</span><span class="flex-1 truncate">Reverse</span></a></li><li><a href=/posts/authored/nyp-infosec-ctf-december-2022/reverse/blendins-plain-plane/ class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-all group text-muted-foreground hover:text-foreground hover:bg-muted/50"><span class="font-mono text-xs shrink-0 opacity-50 group-hover:opacity-100 transition-opacity">03
+</span><span class="flex-1 truncate">Blendin's Plain Plane</span></a></li><li><a href=/posts/authored/nyp-infosec-ctf-december-2022/reverse/deobf-me/ class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-all group text-muted-foreground hover:text-foreground hover:bg-muted/50"><span class="font-mono text-xs shrink-0 opacity-50 group-hover:opacity-100 transition-opacity">04
+</span><span class="flex-1 truncate">Deobf Me</span></a></li><li><a href=/posts/authored/nyp-infosec-ctf-december-2022/miscellaneous/ class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-all group text-muted-foreground hover:text-foreground hover:bg-muted/50"><span class="font-mono text-xs shrink-0 opacity-50 group-hover:opacity-100 transition-opacity">05
+</span><span class="flex-1 truncate">Miscellaneous</span></a></li><li><a href=/posts/authored/nyp-infosec-ctf-december-2022/miscellaneous/chilling-beat/ class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-all group text-muted-foreground hover:text-foreground hover:bg-muted/50"><span class="font-mono text-xs shrink-0 opacity-50 group-hover:opacity-100 transition-opacity">06
+</span><span class="flex-1 truncate">Chilling Beat</span></a></li><li><a href=/posts/authored/nyp-infosec-ctf-december-2022/miscellaneous/chilling-beat-2/ class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-all group text-muted-foreground hover:text-foreground hover:bg-muted/50"><span class="font-mono text-xs shrink-0 opacity-50 group-hover:opacity-100 transition-opacity">07
+</span><span class="flex-1 truncate">Chilling Beat 2</span></a></li><li><a href=/posts/authored/nyp-infosec-ctf-december-2022/pwn/ class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-all group text-muted-foreground hover:text-foreground hover:bg-muted/50"><span class="font-mono text-xs shrink-0 opacity-50 group-hover:opacity-100 transition-opacity">08
+</span><span class="flex-1 truncate">Pwn</span></a></li><li><a href=/posts/authored/nyp-infosec-ctf-december-2022/pwn/flag-shop/ class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-all group text-muted-foreground hover:text-foreground hover:bg-muted/50"><span class="font-mono text-xs shrink-0 opacity-50 group-hover:opacity-100 transition-opacity">09
+</span><span class="flex-1 truncate">Flag Shop</span></a></li><li><a href=/posts/authored/nyp-infosec-ctf-december-2022/cryptography/ class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-all group text-muted-foreground hover:text-foreground hover:bg-muted/50"><span class="font-mono text-xs shrink-0 opacity-50 group-hover:opacity-100 transition-opacity">10
+</span><span class="flex-1 truncate">Cryptography</span></a></li><li><a href=/posts/authored/nyp-infosec-ctf-december-2022/cryptography/ecb-xoracle/ class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-all group text-muted-foreground hover:text-foreground hover:bg-muted/50"><span class="font-mono text-xs shrink-0 opacity-50 group-hover:opacity-100 transition-opacity">11
+</span><span class="flex-1 truncate">ECB Xoracle</span></a></li><li><a href=/posts/authored/nyp-infosec-ctf-december-2022/cryptography/mathematics-of-cryptography/ class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-all group text-muted-foreground hover:text-foreground hover:bg-muted/50"><span class="font-mono text-xs shrink-0 opacity-50 group-hover:opacity-100 transition-opacity">12
+</span><span class="flex-1 truncate">Mathematics of Cryptography</span></a></li><li><a href=/posts/authored/nyp-infosec-ctf-december-2022/networking/ class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-all group text-muted-foreground hover:text-foreground hover:bg-muted/50"><span class="font-mono text-xs shrink-0 opacity-50 group-hover:opacity-100 transition-opacity">13
+</span><span class="flex-1 truncate">Networking</span></a></li><li><a href=/posts/authored/nyp-infosec-ctf-december-2022/networking/private-assertion-nexus/ class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-all group bg-primary/15 text-primary font-medium shadow-sm" aria-current=page><span class="font-mono text-xs shrink-0 text-primary transition-opacity">14
+</span><span class="flex-1 truncate">Private Assertion Nexus</span>
+<svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414.0l4-4z" clip-rule="evenodd"/></svg></a></li></ol></nav></div><script>function switchSeries(e){document.querySelectorAll(".series-tab-btn").forEach(t=>{const n=parseInt(t.dataset.index)===e;n?(t.classList.add("bg-accent","text-foreground","border-border","shadow-sm"),t.classList.remove("hover:bg-accent/50","text-muted-foreground")):(t.classList.remove("bg-accent","text-foreground","border-border","shadow-sm"),t.classList.add("hover:bg-accent/50","text-muted-foreground"))}),document.querySelectorAll(".series-content").forEach(e=>{e.classList.add("hidden","opacity-0","z-0"),e.classList.remove("block","opacity-100","z-10")});const t=document.getElementById(`series-content-${e}`);if(t){t.classList.remove("hidden","opacity-0","z-0"),t.classList.add("block","opacity-100","z-10");const e=document.getElementById("series-link-btn");e&&(e.href=t.dataset.link)}}document.addEventListener("DOMContentLoaded",()=>{const e=document.querySelector(".series-content.block");if(e){const t=document.getElementById("series-link-btn");t&&(t.href=e.dataset.link)}})</script></div></div></div></div></header><article class="prose prose-neutral dark:prose-invert mb-12 max-w-none"><table><thead><tr><th>Difficulty</th><th>Points</th></tr></thead><tbody><tr><td>Easy</td><td>150</td></tr></tbody></table><h2 id=description>Description<a href=#description class=heading-anchor aria-label="Link to this section"><svg class="h-4 w-4" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></g></svg></a></h2><blockquote class="border-primary bg-muted/30 hover:bg-muted/40 my-6 rounded-r-lg border-l-4 py-4 pr-4 pl-6 italic transition-all duration-200 ease-out hover:translate-x-1"><div class="prose prose-sm max-w-none"><p>I&rsquo;ve heard talk about a simple method of communication, but I&rsquo;m not sure what it is. Luckily I found some traffic of the said communication, but I&rsquo;m too noob to figure it out. Please help me crack this enigma of a transmission.</p></div></blockquote><script>function toggleAlert(e){const t=document.getElementById(e+"-content"),n=document.getElementById(e+"-chevron"),s=t.previousElementSibling;t.classList.contains("hidden")?(t.classList.remove("hidden"),n.style.transform="rotate(0deg)",s.setAttribute("aria-expanded","true")):(t.classList.add("hidden"),n.style.transform="rotate(-90deg)",s.setAttribute("aria-expanded","false"))}document.addEventListener("DOMContentLoaded",function(){const e=document.querySelectorAll(".alert-content.hidden");e.forEach(function(e){const n=e.id.replace("-content",""),t=document.getElementById(n+"-chevron");t&&(t.style.transform="rotate(-90deg)")})})</script><p><a href=/gitbook/assets/traffic.pcap>Download traffic.pcap</a></p><h2 id=solution>Solution<a href=#solution class=heading-anchor aria-label="Link to this section"><svg class="h-4 w-4" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></g></svg></a></h2><h3 id=tldr>TL;DR<a href=#tldr class=heading-anchor aria-label="Link to this section"><svg class="h-4 w-4" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></g></svg></a></h3><ol><li>Find the correct sourcecode which leads to the key mappings.</li><li>Decrypt the l2cap packets.</li><li>Stonks</li></ol><h3 id=analysis>Analysis<a href=#analysis class=heading-anchor aria-label="Link to this section"><svg class="h-4 w-4" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></g></svg></a></h3><p>Viewing the packets captured, we mostly see garbage data that are not relevant to solving the challenge.</p><figure><img src="/gitbook/assets/image (5) (2) (1).png" alt><figcaption><p>Garbage Data 1</p></figcaption></figure><p>We can see that the first few packets are mostly configuration packets and can put these aside first.</p><figure><img src="/gitbook/assets/image (21) (1).png" alt><figcaption><p>Garbagde Data 2</p></figcaption></figure><p>Followed by these long chain of <code>USB_INTERRUPT</code> packets, which we can also put aside and come back to them later if needed.</p><p>Scrolling down, we suddenly see a bunch of <code>L2CAP</code> packets.</p><figure><img src="/gitbook/assets/image (10) (1) (1) (1).png" alt><figcaption><p>L2CAP Packets</p></figcaption></figure><p>We can filter to see only these packets by entering <code>btl2cap</code> in the filter bar.</p><figure><img src="/gitbook/assets/image (9) (1) (1) (1).png" alt><figcaption><p>Filtering L2CAP packets</p></figcaption></figure><p>Searching online, we can see that <code>L2CAP</code> packets are used for Bluetooth communication.</p><figure><img src="/gitbook/assets/image (11) (1) (1).png" alt><figcaption><p>Purpose of L2CAP Packets</p></figcaption></figure><p>This indicates that there may be potential data that we can decode in these packets, so let&rsquo;s spend some time looking into it.</p><p>Expanding the <code>Bluetooth L2CAP Protocol</code> field in Wireshark, we can see that every single <code>L2CAP</code> packet has the payload starting with <code>a1</code></p><figure><img src="/gitbook/assets/image (1) (2).png" alt><figcaption><p>L2CAP Protocol Field</p></figcaption></figure><p>This might be a header specific to this kind of Bluetooth device, so we can try looking it up.</p><h3 id=decoding-l2cap-packets>Decoding L2CAP Packets<a href=#decoding-l2cap-packets class=heading-anchor aria-label="Link to this section"><svg class="h-4 w-4" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></g></svg></a></h3><p>Searching for the keywords <code>bluetooth l2cap a1 payload</code> on Google, we come across a <a href=https://ctftime.org/writeup/33625 target=_blank class="inline-flex items-center gap-1">CTF writeup<svg class="h-3 w-3 flex-shrink-0" id="external-link" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 3h6v6m-11 5L21 3m-3 10v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/></svg>
+</a>on a similar challenge.</p><p>Taken from the writeup:</p><blockquote class="border-primary bg-muted/30 hover:bg-muted/40 my-6 rounded-r-lg border-l-4 py-4 pr-4 pl-6 italic transition-all duration-200 ease-out hover:translate-x-1"><div class="prose prose-sm max-w-none"><p>Let&rsquo;s look at one of the payloads from the pcap: <code>a10201ff0300</code></p><p>Comparing with the above code or image, we can decipher that the <code>a1</code> byte is the value denoting this is a data packet. <code>02</code> is the ID for a mouse&mldr;</p></div></blockquote><script>function toggleAlert(e){const t=document.getElementById(e+"-content"),n=document.getElementById(e+"-chevron"),s=t.previousElementSibling;t.classList.contains("hidden")?(t.classList.remove("hidden"),n.style.transform="rotate(0deg)",s.setAttribute("aria-expanded","true")):(t.classList.add("hidden"),n.style.transform="rotate(-90deg)",s.setAttribute("aria-expanded","false"))}document.addEventListener("DOMContentLoaded",function(){const e=document.querySelectorAll(".alert-content.hidden");e.forEach(function(e){const n=e.id.replace("-content",""),t=document.getElementById(n+"-chevron");t&&(t.style.transform="rotate(-90deg)")})})</script><p>An example payload we have is <code>a1010200000000000000</code>. We have the <code>a1</code> the same, but since the second byte they have is <code>02</code> which represents the ID for a mouse, our payload has <code>01</code>, which should represent the ID for a keyboard.</p><p>There is also a reference to a source code provided by the author of the writeup:</p><blockquote class="border-primary bg-muted/30 hover:bg-muted/40 my-6 rounded-r-lg border-l-4 py-4 pr-4 pl-6 italic transition-all duration-200 ease-out hover:translate-x-1"><div class="prose prose-sm max-w-none"><p>Another good place for packet structure is lines 174-182 of <a href=https://github.com/benizi/hidclient/blob/master/hidclient.c target=_blank class="inline-flex items-center gap-1">https://github.com/benizi/hidclient/blob/master/hidclient.c<svg class="h-3 w-3 flex-shrink-0" id="external-link" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 3h6v6m-11 5L21 3m-3 10v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/></svg></a></p></div></blockquote><script>function toggleAlert(e){const t=document.getElementById(e+"-content"),n=document.getElementById(e+"-chevron"),s=t.previousElementSibling;t.classList.contains("hidden")?(t.classList.remove("hidden"),n.style.transform="rotate(0deg)",s.setAttribute("aria-expanded","true")):(t.classList.add("hidden"),n.style.transform="rotate(-90deg)",s.setAttribute("aria-expanded","false"))}document.addEventListener("DOMContentLoaded",function(){const e=document.querySelectorAll(".alert-content.hidden");e.forEach(function(e){const n=e.id.replace("-content",""),t=document.getElementById(n+"-chevron");t&&(t.style.transform="rotate(-90deg)")})})</script><p>Looking at the source code on lines 184-190 for our keyboard payload struct, we can see that our payload matches the struct.</p><div class="code-block-container border-border bg-card my-6 overflow-hidden rounded-xl border shadow-sm transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md" data-code-block data-code-id=code-0 data-collapsible=true data-default-state=expanded data-collapsed=false data-auto-collapse-lines=30 data-auto-collapse-height=400 data-collapsed-height=120><div class="code-block-header bg-muted/30 border-border flex items-center justify-between border-b px-4 py-3"><div class="flex items-center gap-2"><div class="text-muted-foreground shrink-0"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4 4 4-4 4M6 16l-4-4 4-4"/></svg></div><span class="text-muted-foreground text-sm font-medium">C</span></div><div class="flex items-center gap-2"><button class="collapse-code-btn text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium transition-all duration-200 ease-out focus:ring-2 focus:outline-none" type=button data-code-action=toggle-collapse data-label-expand=Expand data-label-collapse=Collapse title=Collapse aria-label=Collapse aria-controls=code-0 aria-expanded=true>
+<span class="collapse-chevron transition-transform duration-200 ease-out"><svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+</span><span class="collapse-text hidden sm:inline">Collapse</span>
+</button>
+<button class="copy-code-btn text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium transition-all duration-200 ease-out focus:ring-2 focus:outline-none" type=button data-code-action=copy data-label-copy=Copy data-label-copied=Copied title=Copy aria-label=Copy>
+<span class=copy-icon><svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+</span><span class="copy-text hidden sm:inline">Copy</span></button></div></div><div class="code-block-content relative" id=code-0><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=k>struct</span> <span class=kt>hidrep_keyb_t</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=kt>unsigned</span> <span class=kt>char</span>	<span class=n>btcode</span><span class=p>;</span> <span class=c1>// Fixed value for &#34;Data Frame&#34;: 0xA1
+</span></span></span><span class=line><span class=cl>	<span class=kt>unsigned</span> <span class=kt>char</span>	<span class=n>rep_id</span><span class=p>;</span> <span class=c1>// Will be set to REPORTID_KEYBD for &#34;keyboard&#34;
+</span></span></span><span class=line><span class=cl>	<span class=kt>unsigned</span> <span class=kt>char</span>	<span class=n>modify</span><span class=p>;</span> <span class=c1>// Modifier keys (shift, alt, the like)
+</span></span></span><span class=line><span class=cl>	<span class=kt>unsigned</span> <span class=kt>char</span>	<span class=n>key</span><span class=p>[</span><span class=mi>8</span><span class=p>];</span> <span class=c1>// Currently pressed keys, max 8 at once
+</span></span></span><span class=line><span class=cl><span class=p>}</span> <span class=nf>__attribute</span><span class=p>((</span><span class=n>packed</span><span class=p>));</span></span></span></code></pre></div><div hidden data-code-source>struct hidrep_keyb_t
+{
+unsigned char btcode; // Fixed value for "Data Frame": 0xA1
+unsigned char rep_id; // Will be set to REPORTID_KEYBD for "keyboard"
+unsigned char modify; // Modifier keys (shift, alt, the like)
+unsigned char key[8]; // Currently pressed keys, max 8 at once
+} __attribute((packed));</div><div class="collapse-overlay to-card/90 pointer-events-none absolute inset-0 bg-linear-to-b from-transparent via-transparent opacity-0 transition-opacity duration-300" hidden><button class="collapse-overlay-btn text-muted-foreground bg-card/80 border-border/50 hover:bg-primary/10 hover:text-primary hover:border-primary/30 absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center justify-center rounded-full border p-2 backdrop-blur-sm transition-all duration-200" type=button data-code-action=expand aria-label=Expand title=Expand>
+<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button></div></div></div><p>I&rsquo;m not sure why but the source code defines the ID for keyboard as 2 instead (lines 139-141):</p><div class="code-block-container border-border bg-card my-6 overflow-hidden rounded-xl border shadow-sm transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md" data-code-block data-code-id=code-1 data-collapsible=true data-default-state=expanded data-collapsed=false data-auto-collapse-lines=30 data-auto-collapse-height=400 data-collapsed-height=120><div class="code-block-header bg-muted/30 border-border flex items-center justify-between border-b px-4 py-3"><div class="flex items-center gap-2"><div class="text-muted-foreground shrink-0"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4 4 4-4 4M6 16l-4-4 4-4"/></svg></div><span class="text-muted-foreground text-sm font-medium">C</span></div><div class="flex items-center gap-2"><button class="collapse-code-btn text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium transition-all duration-200 ease-out focus:ring-2 focus:outline-none" type=button data-code-action=toggle-collapse data-label-expand=Expand data-label-collapse=Collapse title=Collapse aria-label=Collapse aria-controls=code-1 aria-expanded=true>
+<span class="collapse-chevron transition-transform duration-200 ease-out"><svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+</span><span class="collapse-text hidden sm:inline">Collapse</span>
+</button>
+<button class="copy-code-btn text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium transition-all duration-200 ease-out focus:ring-2 focus:outline-none" type=button data-code-action=copy data-label-copy=Copy data-label-copied=Copied title=Copy aria-label=Copy>
+<span class=copy-icon><svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+</span><span class="copy-text hidden sm:inline">Copy</span></button></div></div><div class="code-block-content relative" id=code-1><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=c1>// These numbers must also be used in the HID descriptor binary file
+</span></span></span><span class=line><span class=cl><span class=cp>#define	REPORTID_MOUSE	1
+</span></span></span><span class=line><span class=cl><span class=cp>#define	REPORTID_KEYBD	2</span></span></span></code></pre></div><div hidden data-code-source>// These numbers must also be used in the HID descriptor binary file
+#define REPORTID_MOUSE 1
+#define REPORTID_KEYBD 2</div><div class="collapse-overlay to-card/90 pointer-events-none absolute inset-0 bg-linear-to-b from-transparent via-transparent opacity-0 transition-opacity duration-300" hidden><button class="collapse-overlay-btn text-muted-foreground bg-card/80 border-border/50 hover:bg-primary/10 hover:text-primary hover:border-primary/30 absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center justify-center rounded-full border p-2 backdrop-blur-sm transition-all duration-200" type=button data-code-action=expand aria-label=Expand title=Expand>
+<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button></div></div></div><p>Looking back at the keyboard struct, we see that the 3rd byte represents the <code>modifier keys</code>, then the rest of the bytes represents the keys pressed.</p><p>Scrolling down the source code to lines 826-956, we see that we have the modifier keys and values that represents the keys pressed:</p><div class="code-block-container border-border bg-card my-6 overflow-hidden rounded-xl border shadow-sm transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md" data-code-block data-code-id=code-2 data-collapsible=true data-default-state=expanded data-collapsed=false data-auto-collapse-lines=30 data-auto-collapse-height=400 data-collapsed-height=120><div class="code-block-header bg-muted/30 border-border flex items-center justify-between border-b px-4 py-3"><div class="flex items-center gap-2"><div class="text-muted-foreground shrink-0"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4 4 4-4 4M6 16l-4-4 4-4"/></svg></div><span class="text-muted-foreground text-sm font-medium">C</span></div><div class="flex items-center gap-2"><button class="collapse-code-btn text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium transition-all duration-200 ease-out focus:ring-2 focus:outline-none" type=button data-code-action=toggle-collapse data-label-expand=Expand data-label-collapse=Collapse title=Collapse aria-label=Collapse aria-controls=code-2 aria-expanded=true>
+<span class="collapse-chevron transition-transform duration-200 ease-out"><svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+</span><span class="collapse-text hidden sm:inline">Collapse</span>
+</button>
+<button class="copy-code-btn text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium transition-all duration-200 ease-out focus:ring-2 focus:outline-none" type=button data-code-action=copy data-label-copy=Copy data-label-copied=Copied title=Copy aria-label=Copy>
+<span class=copy-icon><svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+</span><span class="copy-text hidden sm:inline">Copy</span></button></div></div><div class="code-block-content relative" id=code-2><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>			  <span class=c1>// *** &#34;Modifier&#34; key events
+</span></span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_RIGHTMETA</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>				<span class=n>u</span> <span class=o>&lt;&lt;=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_RIGHTALT</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>				<span class=n>u</span> <span class=o>&lt;&lt;=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_RIGHTSHIFT</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>				<span class=n>u</span> <span class=o>&lt;&lt;=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_RIGHTCTRL</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>				<span class=n>u</span> <span class=o>&lt;&lt;=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_LEFTMETA</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>				<span class=n>u</span> <span class=o>&lt;&lt;=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_LEFTALT</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>				<span class=n>u</span> <span class=o>&lt;&lt;=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_LEFTSHIFT</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>				<span class=n>u</span> <span class=o>&lt;&lt;=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_LEFTCTRL</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>				<span class=n>evkeyb</span><span class=o>-&gt;</span><span class=n>btcode</span> <span class=o>=</span> <span class=mh>0xA1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>				<span class=n>evkeyb</span><span class=o>-&gt;</span><span class=n>rep_id</span> <span class=o>=</span> <span class=n>REPORTID_KEYBD</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>				<span class=nf>memcpy</span> <span class=p>(</span> <span class=n>evkeyb</span><span class=o>-&gt;</span><span class=n>key</span><span class=p>,</span> <span class=n>pressedkey</span><span class=p>,</span> <span class=mi>8</span> <span class=p>);</span>
+</span></span><span class=line><span class=cl>				<span class=n>modifierkeys</span> <span class=o>&amp;=</span> <span class=p>(</span> <span class=mh>0xff</span> <span class=o>-</span> <span class=n>u</span> <span class=p>);</span>
+</span></span><span class=line><span class=cl>				<span class=k>if</span> <span class=p>(</span> <span class=n>inevent</span><span class=o>-&gt;</span><span class=n>value</span> <span class=o>&gt;=</span> <span class=mi>1</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>				<span class=p>{</span>
+</span></span><span class=line><span class=cl>					<span class=n>modifierkeys</span> <span class=o>|=</span> <span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>				<span class=p>}</span>
+</span></span><span class=line><span class=cl>				<span class=n>evkeyb</span><span class=o>-&gt;</span><span class=n>modify</span> <span class=o>=</span> <span class=n>modifierkeys</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>				<span class=n>j</span> <span class=o>=</span> <span class=nf>send</span> <span class=p>(</span> <span class=n>sockdesc</span><span class=p>,</span> <span class=n>evkeyb</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>					<span class=k>sizeof</span><span class=p>(</span><span class=k>struct</span> <span class=kt>hidrep_keyb_t</span><span class=p>),</span>
+</span></span><span class=line><span class=cl>					<span class=n>MSG_NOSIGNAL</span> <span class=p>);</span>
+</span></span><span class=line><span class=cl>				<span class=k>if</span> <span class=p>(</span> <span class=mi>1</span> <span class=o>&gt;</span> <span class=n>j</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>				<span class=p>{</span>
+</span></span><span class=line><span class=cl>					<span class=k>return</span>	<span class=o>-</span><span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>				<span class=p>}</span>
+</span></span><span class=line><span class=cl>				<span class=k>break</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=c1>// *** Regular key events
+</span></span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_KPDOT</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span> <span class=c1>// Keypad Dot ~ 99
+</span></span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_KP0</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span> <span class=c1>// code 98...
+</span></span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_KP9</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span> <span class=c1>// countdown...
+</span></span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_KP8</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_KP7</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_KP6</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_KP5</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_KP4</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_KP3</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_KP2</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_KP1</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_KPENTER</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_KPPLUS</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_KPMINUS</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_KPASTERISK</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_KPSLASH</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_NUMLOCK</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_UP</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_DOWN</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_LEFT</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_RIGHT</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_PAGEDOWN</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_END</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_DELETE</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_PAGEUP</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_HOME</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_INSERT</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>						<span class=o>++</span><span class=n>u</span><span class=p>;</span> <span class=c1>//[Pause] key
+</span></span></span><span class=line><span class=cl>						<span class=c1>// - checked separately
+</span></span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_SCROLLLOCK</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_SYSRQ</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span> <span class=c1>//[printscr]
+</span></span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_F12</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span> <span class=c1>//F12=&gt; code 69
+</span></span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_F11</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_F10</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_F9</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_F8</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_F7</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_F6</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_F5</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_F4</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_F3</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_F2</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_F1</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_CAPSLOCK</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_SLASH</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_DOT</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_COMMA</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_GRAVE</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_APOSTROPHE</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_SEMICOLON</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_102ND</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_BACKSLASH</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_RIGHTBRACE</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_LEFTBRACE</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_EQUAL</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_MINUS</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_SPACE</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_TAB</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_BACKSPACE</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_ESC</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_ENTER</span><span class=p>:</span>	<span class=o>++</span><span class=n>u</span><span class=p>;</span> <span class=c1>//Return=&gt; code 40
+</span></span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_0</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_9</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_8</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_7</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_6</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_5</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_4</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_3</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_2</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_1</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_Z</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_Y</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_X</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_W</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_V</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_U</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_T</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_S</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_R</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_Q</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_P</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_O</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_N</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_M</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_L</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_K</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_J</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_I</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_H</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_G</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_F</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_E</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_D</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_C</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_B</span><span class=p>:</span>		<span class=o>++</span><span class=n>u</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>			  <span class=k>case</span>	<span class=nl>KEY_A</span><span class=p>:</span>		<span class=n>u</span> <span class=o>+=</span><span class=mi>3</span><span class=p>;</span>	<span class=c1>// A =&gt;  4
+</span></span></span></code></pre></div><div hidden data-code-source>// *** "Modifier" key events
+case KEY_RIGHTMETA:
+u &lt;&lt;= 1;
+case KEY_RIGHTALT:
+u &lt;&lt;= 1;
+case KEY_RIGHTSHIFT:
+u &lt;&lt;= 1;
+case KEY_RIGHTCTRL:
+u &lt;&lt;= 1;
+case KEY_LEFTMETA:
+u &lt;&lt;= 1;
+case KEY_LEFTALT:
+u &lt;&lt;= 1;
+case KEY_LEFTSHIFT:
+u &lt;&lt;= 1;
+case KEY_LEFTCTRL:
+evkeyb->btcode = 0xA1;
+evkeyb->rep_id = REPORTID_KEYBD;
+memcpy ( evkeyb->key, pressedkey, 8 );
+modifierkeys &= ( 0xff - u );
+if ( inevent->value >= 1 )
+{
+modifierkeys |= u;
+}
+evkeyb->modify = modifierkeys;
+j = send ( sockdesc, evkeyb,
+sizeof(struct hidrep_keyb_t),
+MSG_NOSIGNAL );
+if ( 1 > j )
+{
+return -1;
+}
+break;
+// *** Regular key events
+case KEY_KPDOT: ++u; // Keypad Dot ~ 99
+case KEY_KP0: ++u; // code 98...
+case KEY_KP9: ++u; // countdown...
+case KEY_KP8: ++u;
+case KEY_KP7: ++u;
+case KEY_KP6: ++u;
+case KEY_KP5: ++u;
+case KEY_KP4: ++u;
+case KEY_KP3: ++u;
+case KEY_KP2: ++u;
+case KEY_KP1: ++u;
+case KEY_KPENTER: ++u;
+case KEY_KPPLUS: ++u;
+case KEY_KPMINUS: ++u;
+case KEY_KPASTERISK: ++u;
+case KEY_KPSLASH: ++u;
+case KEY_NUMLOCK: ++u;
+case KEY_UP: ++u;
+case KEY_DOWN: ++u;
+case KEY_LEFT: ++u;
+case KEY_RIGHT: ++u;
+case KEY_PAGEDOWN: ++u;
+case KEY_END: ++u;
+case KEY_DELETE: ++u;
+case KEY_PAGEUP: ++u;
+case KEY_HOME: ++u;
+case KEY_INSERT: ++u;
+++u; //[Pause] key
+// - checked separately
+case KEY_SCROLLLOCK: ++u;
+case KEY_SYSRQ: ++u; //[printscr]
+case KEY_F12: ++u; //F12=> code 69
+case KEY_F11: ++u;
+case KEY_F10: ++u;
+case KEY_F9: ++u;
+case KEY_F8: ++u;
+case KEY_F7: ++u;
+case KEY_F6: ++u;
+case KEY_F5: ++u;
+case KEY_F4: ++u;
+case KEY_F3: ++u;
+case KEY_F2: ++u;
+case KEY_F1: ++u;
+case KEY_CAPSLOCK: ++u;
+case KEY_SLASH: ++u;
+case KEY_DOT: ++u;
+case KEY_COMMA: ++u;
+case KEY_GRAVE: ++u;
+case KEY_APOSTROPHE: ++u;
+case KEY_SEMICOLON: ++u;
+case KEY_102ND: ++u;
+case KEY_BACKSLASH: ++u;
+case KEY_RIGHTBRACE: ++u;
+case KEY_LEFTBRACE: ++u;
+case KEY_EQUAL: ++u;
+case KEY_MINUS: ++u;
+case KEY_SPACE: ++u;
+case KEY_TAB: ++u;
+case KEY_BACKSPACE: ++u;
+case KEY_ESC: ++u;
+case KEY_ENTER: ++u; //Return=> code 40
+case KEY_0: ++u;
+case KEY_9: ++u;
+case KEY_8: ++u;
+case KEY_7: ++u;
+case KEY_6: ++u;
+case KEY_5: ++u;
+case KEY_4: ++u;
+case KEY_3: ++u;
+case KEY_2: ++u;
+case KEY_1: ++u;
+case KEY_Z: ++u;
+case KEY_Y: ++u;
+case KEY_X: ++u;
+case KEY_W: ++u;
+case KEY_V: ++u;
+case KEY_U: ++u;
+case KEY_T: ++u;
+case KEY_S: ++u;
+case KEY_R: ++u;
+case KEY_Q: ++u;
+case KEY_P: ++u;
+case KEY_O: ++u;
+case KEY_N: ++u;
+case KEY_M: ++u;
+case KEY_L: ++u;
+case KEY_K: ++u;
+case KEY_J: ++u;
+case KEY_I: ++u;
+case KEY_H: ++u;
+case KEY_G: ++u;
+case KEY_F: ++u;
+case KEY_E: ++u;
+case KEY_D: ++u;
+case KEY_C: ++u;
+case KEY_B: ++u;
+case KEY_A: u +=3; // A => 4</div><div class="collapse-overlay to-card/90 pointer-events-none absolute inset-0 bg-linear-to-b from-transparent via-transparent opacity-0 transition-opacity duration-300" hidden><button class="collapse-overlay-btn text-muted-foreground bg-card/80 border-border/50 hover:bg-primary/10 hover:text-primary hover:border-primary/30 absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center justify-center rounded-full border p-2 backdrop-blur-sm transition-all duration-200" type=button data-code-action=expand aria-label=Expand title=Expand>
+<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button></div></div></div><p>We can automate this using a script to make things easier for us. We can do so using the <code>pyshark</code> library in Python.</p><p>Firstly, we need to extract the payload from the L2CAP packets.</p><details><summary>extract.py</summary><div class="code-block-container border-border bg-card my-6 overflow-hidden rounded-xl border shadow-sm transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md" data-code-block data-code-id=code-3 data-collapsible=true data-default-state=expanded data-collapsed=false data-auto-collapse-lines=30 data-auto-collapse-height=400 data-collapsed-height=120><div class="code-block-header bg-muted/30 border-border flex items-center justify-between border-b px-4 py-3"><div class="flex items-center gap-2"><div class="text-muted-foreground shrink-0"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4 4 4-4 4M6 16l-4-4 4-4"/></svg></div><span class="text-muted-foreground text-sm font-medium">PYTHON</span></div><div class="flex items-center gap-2"><button class="collapse-code-btn text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium transition-all duration-200 ease-out focus:ring-2 focus:outline-none" type=button data-code-action=toggle-collapse data-label-expand=Expand data-label-collapse=Collapse title=Collapse aria-label=Collapse aria-controls=code-3 aria-expanded=true>
+<span class="collapse-chevron transition-transform duration-200 ease-out"><svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+</span><span class="collapse-text hidden sm:inline">Collapse</span>
+</button>
+<button class="copy-code-btn text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium transition-all duration-200 ease-out focus:ring-2 focus:outline-none" type=button data-code-action=copy data-label-copy=Copy data-label-copied=Copied title=Copy aria-label=Copy>
+<span class=copy-icon><svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+</span><span class="copy-text hidden sm:inline">Copy</span></button></div></div><div class="code-block-content relative" id=code-3><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>pyshark</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>f</span> <span class=o>=</span> <span class=n>pyshark</span><span class=o>.</span><span class=n>FileCapture</span><span class=p>(</span><span class=s1>&#39;traffic.pcap&#39;</span><span class=p>,</span> <span class=n>display_filter</span><span class=o>=</span><span class=s2>&#34;btl2cap&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>keys</span> <span class=o>=</span> <span class=p>[]</span>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>p</span> <span class=ow>in</span> <span class=n>f</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>data</span> <span class=o>=</span> <span class=n>p</span><span class=p>[</span><span class=s1>&#39;btl2cap&#39;</span><span class=p>]</span><span class=o>.</span><span class=n>payload</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=s2>&#34;:&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=n>data</span><span class=p>)</span></span></span></code></pre></div><div hidden data-code-source>import pyshark
+f = pyshark.FileCapture('traffic.pcap', display_filter="btl2cap")
+keys = []
+for p in f:
+data = p['btl2cap'].payload.split(":")
+print(data)</div><div class="collapse-overlay to-card/90 pointer-events-none absolute inset-0 bg-linear-to-b from-transparent via-transparent opacity-0 transition-opacity duration-300" hidden><button class="collapse-overlay-btn text-muted-foreground bg-card/80 border-border/50 hover:bg-primary/10 hover:text-primary hover:border-primary/30 absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center justify-center rounded-full border p-2 backdrop-blur-sm transition-all duration-200" type=button data-code-action=expand aria-label=Expand title=Expand>
+<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button></div></div></div></details><figure><img src="/gitbook/assets/image (25) (1).png" alt><figcaption><p>Extracted output</p></figcaption></figure><p>We can then filter the packets where only our 2nd byte is equal to <code>01</code>, and then check if the 3rd byte is <code>02</code> as having the third byte as <code>02</code> means a <code>LEFT SHIFT</code> is pressed (according to the source code).</p><p>We then see that the other bytes are all null except for the 4th byte, so we can guess that that is our value representing the key pressed.</p><p>So we can grab the 4th byte, check what character it represents (A=4, B=5, C=6 and so on&mldr;), and substitute it for the corresponding character, and check the 2nd byte to see if the LEFT SHIFT key is pressed.</p><div class="tabs-wrapper border-border bg-card text-foreground my-6 rounded-xl border shadow-sm" id=tabs-0 data-tabs><div class="tabs-panels px-3 pb-3 sm:px-4 sm:pb-4"><section id=tabs-0-panel-0 class="tabs-panel outline-none" role=tabpanel data-tabs-panel data-tab-label=solve.py><div class="tabs-panel-content px-4 pt-4 *:first:mt-0 *:last:mb-0 [&_.code-block-container:first-child]:mt-0 [&_.code-block-container:last-child]:mb-0"><div class="code-block-container border-border bg-card my-6 overflow-hidden rounded-xl border shadow-sm transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md" data-code-block data-code-id=code-0 data-collapsible=true data-default-state=expanded data-collapsed=false data-auto-collapse-lines=30 data-auto-collapse-height=400 data-collapsed-height=120><div class="code-block-header bg-muted/30 border-border flex items-center justify-between border-b px-4 py-3"><div class="flex items-center gap-2"><div class="text-muted-foreground shrink-0"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4 4 4-4 4M6 16l-4-4 4-4"/></svg></div><span class="text-muted-foreground text-sm font-medium">PYTHON</span></div><div class="flex items-center gap-2"><button class="collapse-code-btn text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium transition-all duration-200 ease-out focus:ring-2 focus:outline-none" type=button data-code-action=toggle-collapse data-label-expand=Expand data-label-collapse=Collapse title=Collapse aria-label=Collapse aria-controls=code-0 aria-expanded=true>
+<span class="collapse-chevron transition-transform duration-200 ease-out"><svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+</span><span class="collapse-text hidden sm:inline">Collapse</span>
+</button>
+<button class="copy-code-btn text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium transition-all duration-200 ease-out focus:ring-2 focus:outline-none" type=button data-code-action=copy data-label-copy=Copy data-label-copied=Copied title=Copy aria-label=Copy>
+<span class=copy-icon><svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+</span><span class="copy-text hidden sm:inline">Copy</span></button></div></div><div class="code-block-content relative" id=code-0><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>pyshark</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Reference: https://github.com/benizi/hidclient/blob/master/hidclient.c#L811</span>
+</span></span><span class=line><span class=cl><span class=n>key_mappings</span> <span class=o>=</span> <span class=s1>&#39;&#39;&#39;case	KEY_F12:	++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_F11:	++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_F10:	++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_F9:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_F8:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_F7:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_F6:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_F5:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_F4:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_F3:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_F2:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_F1:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_CAPSLOCK:	++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_SLASH:	++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_DOT:	++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_COMMA:	++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_GRAVE:	++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_APOSTROPHE:	++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_SEMICOLON:	++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_102ND:	++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_BACKSLASH:	++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_RIGHTBRACE:	++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_LEFTBRACE:	++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_EQUAL:	++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_MINUS:	++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_SPACE:	++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_TAB:	++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_BACKSPACE:	++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_ESC:	++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_ENTER:	++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_0:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_9:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_8:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_7:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_6:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_5:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_4:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_3:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_2:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_1:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_Z:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_Y:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_X:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_W:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_V:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_U:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_T:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_S:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_R:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_Q:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_P:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_O:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_N:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_M:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_L:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_K:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_J:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_I:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_H:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_G:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_F:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_E:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_D:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_C:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_B:		++u;
+</span></span></span><span class=line><span class=cl><span class=s1>case	KEY_A:		u +=3;&#39;&#39;&#39;</span>
+</span></span><span class=line><span class=cl><span class=n>keymaps</span> <span class=o>=</span> <span class=p>{}</span>
+</span></span><span class=line><span class=cl><span class=n>key_mappings</span> <span class=o>=</span> <span class=n>key_mappings</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=s2>&#34;</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>)[::</span><span class=o>-</span><span class=mi>1</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>keys_found</span> <span class=o>=</span> <span class=p>[</span><span class=n>x</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=s2>&#34;_&#34;</span><span class=p>)[</span><span class=mi>1</span><span class=p>]</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=s2>&#34;:&#34;</span><span class=p>)[</span><span class=mi>0</span><span class=p>]</span> <span class=k>for</span> <span class=n>x</span> <span class=ow>in</span> <span class=n>key_mappings</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>i</span> <span class=ow>in</span> <span class=nb>range</span><span class=p>(</span><span class=mi>4</span><span class=p>,</span><span class=nb>len</span><span class=p>(</span><span class=n>key_mappings</span><span class=p>)</span><span class=o>+</span><span class=mi>4</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=n>keymaps</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>=</span> <span class=n>keys_found</span><span class=p>[</span><span class=n>i</span><span class=o>-</span><span class=mi>4</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>f</span> <span class=o>=</span> <span class=n>pyshark</span><span class=o>.</span><span class=n>FileCapture</span><span class=p>(</span><span class=s1>&#39;traffic.pcap&#39;</span><span class=p>,</span> <span class=n>display_filter</span><span class=o>=</span><span class=s2>&#34;btl2cap&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>keys</span> <span class=o>=</span> <span class=p>[]</span>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>p</span> <span class=ow>in</span> <span class=n>f</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>data</span> <span class=o>=</span> <span class=n>p</span><span class=p>[</span><span class=s1>&#39;btl2cap&#39;</span><span class=p>]</span><span class=o>.</span><span class=n>payload</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=s2>&#34;:&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>key</span> <span class=o>=</span> <span class=s2>&#34;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>data</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span> <span class=o>==</span> <span class=s2>&#34;01&#34;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=n>data</span><span class=p>[</span><span class=mi>4</span><span class=p>]</span> <span class=o>!=</span> <span class=s2>&#34;00&#34;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=n>data</span><span class=p>[</span><span class=mi>2</span><span class=p>]</span> <span class=o>==</span> <span class=s2>&#34;02&#34;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=n>key</span> <span class=o>+=</span> <span class=s2>&#34;SHIFT &#34;</span>
+</span></span><span class=line><span class=cl>            <span class=n>key</span> <span class=o>+=</span> <span class=n>keymaps</span><span class=p>[</span><span class=nb>int</span><span class=p>(</span><span class=n>data</span><span class=p>[</span><span class=mi>4</span><span class=p>],</span><span class=mi>16</span><span class=p>)]</span><span class=o>.</span><span class=n>lower</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>            <span class=n>keys</span><span class=o>.</span><span class=n>append</span><span class=p>(</span><span class=n>key</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>i</span><span class=p>,</span><span class=n>line</span> <span class=ow>in</span> <span class=nb>enumerate</span><span class=p>(</span><span class=n>keys</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=n>keys</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>=</span> <span class=n>line</span><span class=o>.</span><span class=n>split</span><span class=p>()[</span><span class=o>-</span><span class=mi>1</span><span class=p>]</span><span class=o>.</span><span class=n>upper</span><span class=p>()</span> <span class=k>if</span> <span class=s2>&#34;SHIFT&#34;</span> <span class=ow>in</span> <span class=n>line</span> <span class=k>else</span> <span class=n>line</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>keys</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>==</span> <span class=s2>&#34;LEFTBRACE&#34;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>keys</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>=</span> <span class=s2>&#34;{&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=k>elif</span> <span class=n>keys</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>==</span> <span class=s2>&#34;RIGHTBRACE&#34;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>keys</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>=</span> <span class=s2>&#34;}&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=k>elif</span> <span class=n>keys</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>==</span> <span class=s2>&#34;MINUS&#34;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>keys</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>=</span> <span class=s2>&#34;_&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=s1>&#39;&#39;</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=n>keys</span><span class=p>))</span></span></span></code></pre></div><div hidden data-code-source>import pyshark
+# Reference: https://github.com/benizi/hidclient/blob/master/hidclient.c#L811
+key_mappings = '''case KEY_F12: ++u;
+case KEY_F11: ++u;
+case KEY_F10: ++u;
+case KEY_F9: ++u;
+case KEY_F8: ++u;
+case KEY_F7: ++u;
+case KEY_F6: ++u;
+case KEY_F5: ++u;
+case KEY_F4: ++u;
+case KEY_F3: ++u;
+case KEY_F2: ++u;
+case KEY_F1: ++u;
+case KEY_CAPSLOCK: ++u;
+case KEY_SLASH: ++u;
+case KEY_DOT: ++u;
+case KEY_COMMA: ++u;
+case KEY_GRAVE: ++u;
+case KEY_APOSTROPHE: ++u;
+case KEY_SEMICOLON: ++u;
+case KEY_102ND: ++u;
+case KEY_BACKSLASH: ++u;
+case KEY_RIGHTBRACE: ++u;
+case KEY_LEFTBRACE: ++u;
+case KEY_EQUAL: ++u;
+case KEY_MINUS: ++u;
+case KEY_SPACE: ++u;
+case KEY_TAB: ++u;
+case KEY_BACKSPACE: ++u;
+case KEY_ESC: ++u;
+case KEY_ENTER: ++u;
+case KEY_0: ++u;
+case KEY_9: ++u;
+case KEY_8: ++u;
+case KEY_7: ++u;
+case KEY_6: ++u;
+case KEY_5: ++u;
+case KEY_4: ++u;
+case KEY_3: ++u;
+case KEY_2: ++u;
+case KEY_1: ++u;
+case KEY_Z: ++u;
+case KEY_Y: ++u;
+case KEY_X: ++u;
+case KEY_W: ++u;
+case KEY_V: ++u;
+case KEY_U: ++u;
+case KEY_T: ++u;
+case KEY_S: ++u;
+case KEY_R: ++u;
+case KEY_Q: ++u;
+case KEY_P: ++u;
+case KEY_O: ++u;
+case KEY_N: ++u;
+case KEY_M: ++u;
+case KEY_L: ++u;
+case KEY_K: ++u;
+case KEY_J: ++u;
+case KEY_I: ++u;
+case KEY_H: ++u;
+case KEY_G: ++u;
+case KEY_F: ++u;
+case KEY_E: ++u;
+case KEY_D: ++u;
+case KEY_C: ++u;
+case KEY_B: ++u;
+case KEY_A: u +=3;'''
+keymaps = {}
+key_mappings = key_mappings.split("\n")[::-1]
+keys_found = [x.split("_")[1].split(":")[0] for x in key_mappings]
+for i in range(4,len(key_mappings)+4):
+keymaps[i] = keys_found[i-4]
+f = pyshark.FileCapture('traffic.pcap', display_filter="btl2cap")
+keys = []
+for p in f:
+data = p['btl2cap'].payload.split(":")
+key = ""
+if data[1] == "01":
+if data[4] != "00":
+if data[2] == "02":
+key += "SHIFT "
+key += keymaps[int(data[4],16)].lower()
+keys.append(key)
+for i,line in enumerate(keys):
+keys[i] = line.split()[-1].upper() if "SHIFT" in line else line
+if keys[i] == "LEFTBRACE":
+keys[i] = "{"
+elif keys[i] == "RIGHTBRACE":
+keys[i] = "}"
+elif keys[i] == "MINUS":
+keys[i] = "_"
+print(''.join(keys))</div><div class="collapse-overlay to-card/90 pointer-events-none absolute inset-0 bg-linear-to-b from-transparent via-transparent opacity-0 transition-opacity duration-300" hidden><button class="collapse-overlay-btn text-muted-foreground bg-card/80 border-border/50 hover:bg-primary/10 hover:text-primary hover:border-primary/30 absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center justify-center rounded-full border p-2 backdrop-blur-sm transition-all duration-200" type=button data-code-action=expand aria-label=Expand title=Expand>
+<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button></div></div></div></div></section></div></div></article></div><footer class="px-4 py-6"><div class="flex flex-col items-center justify-between gap-4 md:flex-row"><div class="text-muted-foreground text-center text-sm md:text-left"><p class=mb-2>&copy;
+2026
+CTF Writeups</p><p class="flex flex-wrap items-center justify-center gap-1 md:justify-start"><span>Powered by</span>
+<a href=https://gohugo.io/ target=_blank rel="noopener noreferrer" class="text-primary hover:text-primary/80 font-medium transition-colors duration-200 hover:underline">Hugo
+</a><span>&</span>
+<a href=https://github.com/tom2almighty/hugo-narrow target=_blank rel="noopener noreferrer" class="text-primary hover:text-primary/80 font-medium transition-colors duration-200 hover:underline">Narrow</a></p></div><div class="flex items-center gap-3"><a href=https://github.com/yeojonghan target=_blank rel="noopener noreferrer" class="text-muted-foreground hover:text-primary focus:ring-primary/20 rounded-lg p-1 transition-all duration-300 ease-out hover:scale-110 focus:ring-2 focus:outline-none" title=GitHub aria-label=GitHub><svg class="h-6 w-6" aria-label="GitHub" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M15 22v-4a4.8 4.8.0 00-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35.0-3.5.0.0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35.0 3.5A5.4 5.4.0 004 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65S8.93 17.38 9 18v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></g></svg></a></div></div></footer><div id=dock class="pointer-events-none fixed bottom-4 left-1/2 z-9999 w-fit -translate-x-1/2 translate-y-24 opacity-0 transition-all duration-300 ease-out sm:right-0 sm:left-0 sm:mx-auto sm:translate-x-0" data-dock-mode=scroll role=toolbar aria-label="Quick actions toolbar"><nav class="border-border bg-card/80 scrollbar-hide xs:px-3 xs:py-2 mx-auto flex max-w-[calc(100vw-2rem)] min-w-fit items-center justify-center overflow-x-auto rounded-2xl border px-4 py-3 shadow-lg backdrop-blur-sm sm:px-4 sm:py-3"><button id=dock-back class="text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 xs:px-2 xs:py-1.5 flex shrink-0 items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-300 ease-out hover:-translate-y-0.5 hover:scale-105 focus:ring-2 focus:outline-none sm:px-3 sm:py-2" title=Back aria-label=Back>
+<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+<span class="hidden sm:inline">Back</span></button><div class="bg-border xs:mx-1 mx-2 h-6 w-px sm:mx-2"></div><button id=dock-search class="text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 xs:px-3 xs:py-1.5 flex shrink-0 items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all duration-300 ease-out hover:-translate-y-0.5 hover:scale-105 focus:ring-2 focus:outline-none sm:px-4 sm:py-2" title=Search aria-label=Search>
+<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-6-6m2-5A7 7 0 113 10a7 7 0 0114 0z"/></svg>
+<span class="hidden md:inline">Search</span></button><div class="bg-border xs:mx-1 mx-2 h-6 w-px sm:mx-2"></div><button id=dock-top class="text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 xs:px-2 xs:py-1.5 flex shrink-0 items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-300 ease-out hover:-translate-y-0.5 hover:scale-105 focus:ring-2 focus:outline-none sm:px-3 sm:py-2" title="Back to top" aria-label="Back to top">
+<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+<span class="hidden sm:inline">Top</span></button></nav></div><aside id=toc-container class=toc-center data-position=center><div id=toc-center class="pointer-events-none fixed top-28 right-0 left-0 z-40 mx-auto w-full max-w-4xl px-4 transition-all duration-300"><div class="pointer-events-auto relative mx-auto w-fit"><button id=toc-center-toggle class="bg-card/80 border-border text-muted-foreground hover:text-primary hover:bg-primary/10 ring-offset-background focus-visible:ring-ring flex cursor-pointer items-center gap-2 rounded-full border px-4 py-1.5 text-sm shadow-sm backdrop-blur-sm transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none">
+<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/></svg>
+<span id=toc-center-title class="max-w-[200px] truncate">Table of contents</span>
+<svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button><div id=toc-center-dropdown class="bg-card border-border scrollbar-hide absolute top-full left-1/2 mt-2 hidden max-h-[60vh] w-[280px] origin-top -translate-x-1/2 scale-95 overflow-y-auto rounded-xl border p-4 opacity-0 shadow-lg transition-all"><div id=toc-center-content class="[&_a]:text-muted-foreground [&_a:hover]:bg-primary/10 [&_a:hover]:text-primary [&_a.active]:bg-primary/10 [&_a.active]:text-primary text-sm [&_a]:block [&_a]:truncate [&_a]:rounded-md [&_a]:px-2 [&_a]:py-1 [&_a]:transition-colors [&_a.active]:font-medium [&_li]:my-1.5 [&_nav>ul]:pl-0 [&_ul]:list-none [&_ul]:pl-4"><nav id=TableOfContents><ul><li><a href=#description>Description</a></li><li><a href=#solution>Solution</a><ul><li><a href=#tldr>TL;DR</a></li><li><a href=#analysis>Analysis</a></li><li><a href=#decoding-l2cap-packets>Decoding L2CAP Packets</a></li></ul></li></ul></nav></div></div></div></div></aside><div id=search-overlay class="pointer-events-none fixed inset-0 z-40 bg-black/50 opacity-0 transition-opacity duration-300"></div><div id=search-modal class="bg-card border-border pointer-events-none fixed top-1/2 left-1/2 z-50 max-h-[80vh] w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 scale-95 transform overflow-hidden rounded-xl border opacity-0 shadow-xl transition-all duration-300" role=dialog aria-modal=true aria-hidden=true aria-labelledby=search-title tabindex=-1><div class="border-border flex items-center gap-3 border-b p-4"><div class="text-muted-foreground h-5 w-5 shrink-0"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-6-6m2-5A7 7 0 113 10a7 7 0 0114 0z"/></svg></div><h2 id=search-title class=sr-only>Search</h2><div class="relative flex-1"><button id=search-clear class="text-muted-foreground hover:text-foreground hover:bg-muted/50 pointer-events-none absolute top-1/2 left-0 z-10 h-5 w-5 -translate-y-1/2 rounded opacity-0 transition-all duration-200" title=Clear aria-label=Clear>
+<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 18 6M6 6l12 12"/></svg>
+</button>
+<input id=search-input type=text placeholder="Search posts..." class="text-foreground placeholder:text-muted-foreground w-full border-none bg-transparent pl-8 text-lg outline-none" autocomplete=off spellcheck=false></div><button id=search-close class="text-muted-foreground hover:text-foreground hover:bg-muted/50 flex h-6 w-6 items-center justify-center rounded-md p-0.5 transition-all duration-200" title=Close aria-label=Close>
+<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 18 6M6 6l12 12"/></svg></button></div><div id=search-results class="max-h-96 overflow-y-auto"><div id=search-empty class="flex flex-col items-center justify-center py-12 text-center"><div class="bg-muted/50 mb-4 flex h-16 w-16 items-center justify-center rounded-full"><svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-6-6m2-5A7 7 0 113 10a7 7 0 0114 0z"/></svg></div><h3 class="text-foreground mb-2 text-lg font-semibold">Start searching</h3></div><div id=search-loading class="flex items-center justify-center py-8" hidden><div class="mr-3 h-6 w-6 animate-spin rounded-full border-2 border-current border-t-transparent"></div><span class=text-muted-foreground>Searching...</span></div><div id=search-no-results class="flex flex-col items-center justify-center py-12 text-center" hidden><div class="bg-muted/50 mb-4 flex h-16 w-16 items-center justify-center rounded-full"><svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/></svg></div><h3 class="text-foreground mb-2 text-lg font-semibold">No results</h3></div><div id=search-results-list hidden><div id=search-stats class="text-muted-foreground border-border border-b px-4 py-3 text-sm" data-count-other="Found %d results"></div><div id=search-items class="divide-border divide-y" role=list></div></div></div><div class="border-border bg-muted/20 border-t px-4 py-3"><div class="text-muted-foreground flex items-center justify-between text-xs"><div class="flex items-center gap-2 md:gap-4"><div class="flex items-center gap-1"><kbd class="bg-muted border-border rounded border px-1.5 py-0.5 text-xs">↑↓</kbd>
+<span class="hidden sm:inline">Navigate</span></div><div class="flex items-center gap-1"><kbd class="bg-muted border-border rounded border px-1.5 py-0.5 text-xs">↵</kbd>
+<span class="hidden sm:inline">Select</span></div><div class="flex items-center gap-1"><kbd class="bg-muted border-border rounded border px-1.5 py-0.5 text-xs">ESC</kbd>
+<span class="hidden sm:inline">Close</span></div></div><div class="search-hint-desktop flex items-center gap-1"><kbd class="bg-muted border-border rounded border px-1.5 py-0.5 text-xs">⌘K</kbd>
+<span>Shortcut</span></div></div></div></div></main></body></html>

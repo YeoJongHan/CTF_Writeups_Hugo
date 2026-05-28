@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Flare on 12 on CTF Writeups</title><link>https://ctf.jonghan.xyz/series/flare-on-12/</link><description>Recent content in Flare on 12 on CTF Writeups</description><generator>Hugo</generator><language>en</language><lastBuildDate>Fri, 03 Oct 2025 00:00:00 +0800</lastBuildDate><atom:link href="https://ctf.jonghan.xyz/series/flare-on-12/index.xml" rel="self" type="application/rss+xml"/><item><title>🔥 Flare-On 12</title><link>https://ctf.jonghan.xyz/posts/2025/flare-on-12/</link><pubDate>Fri, 03 Oct 2025 00:00:00 +0800</pubDate><guid>https://ctf.jonghan.xyz/posts/2025/flare-on-12/</guid><description>&lt;h1 id="-flare-on-12"&gt;🔥 Flare-On 12&lt;a href="#-flare-on-12" class="heading-anchor" aria-label="Link to this section"&gt;&lt;svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"&gt;&lt;g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"&gt;&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/&gt;&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/&gt;&lt;/g&gt;&lt;/svg&gt;&lt;/a&gt;&lt;/h1&gt;&lt;h3 id="challenges"&gt;Challenges&lt;a href="#challenges" class="heading-anchor" aria-label="Link to this section"&gt;&lt;svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"&gt;&lt;g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"&gt;&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/&gt;&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/&gt;&lt;/g&gt;&lt;/svg&gt;&lt;/a&gt;&lt;/h3&gt;&lt;table&gt;
+	&lt;thead&gt;
+			&lt;tr&gt;
+					&lt;th&gt;Challenge&lt;/th&gt;
+					&lt;th&gt;Level&lt;/th&gt;
+			&lt;/tr&gt;
+	&lt;/thead&gt;
+	&lt;tbody&gt;
+			&lt;tr&gt;
+					&lt;td&gt;&lt;a
+ href="10000"&gt;10000&lt;/a&gt;&lt;/td&gt;
+					&lt;td&gt;Level 9&lt;/td&gt;
+			&lt;/tr&gt;
+	&lt;/tbody&gt;
+&lt;/table&gt;</description></item><item><title>10000</title><link>https://ctf.jonghan.xyz/posts/2025/flare-on-12/10000/</link><pubDate>Fri, 03 Oct 2025 00:00:00 +0800</pubDate><guid>https://ctf.jonghan.xyz/posts/2025/flare-on-12/10000/</guid><description>&lt;h2 id="description"&gt;Description&lt;a href="#description" class="heading-anchor" aria-label="Link to this section"&gt;&lt;svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"&gt;&lt;g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"&gt;&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/&gt;&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/&gt;&lt;/g&gt;&lt;/svg&gt;&lt;/a&gt;&lt;/h2&gt;
+ &lt;blockquote
+ class="border-primary bg-muted/30 hover:bg-muted/40 my-6 rounded-r-lg border-l-4 py-4 pr-4 pl-6 italic transition-all duration-200 ease-out hover:translate-x-1"
+ &gt;
+ &lt;div class="prose prose-sm max-w-none"&gt;
+ &lt;p&gt;Ok hotshot, this is it, the only thing standing between you and slightly less internet anonymity.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;7-zip password: flare&lt;/p&gt;</description></item></channel></rss>

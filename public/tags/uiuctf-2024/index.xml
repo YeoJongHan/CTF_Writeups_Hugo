@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Uiuctf 2024 on CTF Writeups</title><link>https://ctf.jonghan.xyz/tags/uiuctf-2024/</link><description>Recent content in Uiuctf 2024 on CTF Writeups</description><generator>Hugo</generator><language>en</language><lastBuildDate>Wed, 10 Jul 2024 00:00:00 +0800</lastBuildDate><atom:link href="https://ctf.jonghan.xyz/tags/uiuctf-2024/index.xml" rel="self" type="application/rss+xml"/><item><title>pwnymalloc</title><link>https://ctf.jonghan.xyz/posts/2024/uiuctf-2024/pwnymalloc/</link><pubDate>Wed, 10 Jul 2024 00:00:00 +0800</pubDate><guid>https://ctf.jonghan.xyz/posts/2024/uiuctf-2024/pwnymalloc/</guid><description>&lt;h2 id="description"&gt;Description&lt;a href="#description" class="heading-anchor" aria-label="Link to this section"&gt;&lt;svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"&gt;&lt;g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"&gt;&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/&gt;&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/&gt;&lt;/g&gt;&lt;/svg&gt;&lt;/a&gt;&lt;/h2&gt;
+ &lt;blockquote
+ class="border-primary bg-muted/30 hover:bg-muted/40 my-6 rounded-r-lg border-l-4 py-4 pr-4 pl-6 italic transition-all duration-200 ease-out hover:translate-x-1"
+ &gt;
+ &lt;div class="prose prose-sm max-w-none"&gt;
+ &lt;p&gt;Author: Akhil&lt;/p&gt;
+&lt;p&gt;i&amp;rsquo;m tired of hearing all your complaints. pwnymalloc never complains.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;ncat --ssl pwnymalloc.chal.uiuc.tf 1337&lt;/code&gt;&lt;/p&gt;
+
+ &lt;/div&gt;
+ &lt;/blockquote&gt;&lt;script&gt;
+ function toggleAlert(alertId) {
+ const content = document.getElementById(alertId + "-content");
+ const chevron = document.getElementById(alertId + "-chevron");
+ const header = content.previousElementSibling;
+
+ if (content.classList.contains("hidden")) {
+ content.classList.remove("hidden");
+ chevron.style.transform = "rotate(0deg)";
+ header.setAttribute("aria-expanded", "true");
+ } else {
+ content.classList.add("hidden");
+ chevron.style.transform = "rotate(-90deg)";
+ header.setAttribute("aria-expanded", "false");
+ }
+ }
+
+ 
+ document.addEventListener("DOMContentLoaded", function () {
+ const collapsedAlerts = document.querySelectorAll(".alert-content.hidden");
+ collapsedAlerts.forEach(function (content) {
+ const alertId = content.id.replace("-content", "");
+ const chevron = document.getElementById(alertId + "-chevron");
+ if (chevron) {
+ chevron.style.transform = "rotate(-90deg)";
+ }
+ });
+ });
+&lt;/script&gt;
+&lt;p&gt;&lt;a
+ href="https://ctf.jonghan.xyz/gitbook/assets/alloc.c"&gt;Download alloc.c&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

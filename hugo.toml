@@ -1,0 +1,164 @@
+baseURL = "https://ctf.jonghan.xyz/"
+title = "CTF Writeups"
+theme = "hugo-narrow"
+locale = "en"
+defaultContentLanguage = "en"
+enableEmoji = true
+mainSections = ["posts"]
+
+[pagination]
+  pagerSize = 10
+  path = "page"
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+  series = "series"
+
+[outputs]
+  home = ["HTML", "RSS", "JSON", "WebAppManifest"]
+
+[outputFormats]
+  [outputFormats.WebAppManifest]
+    mediaType = "application/manifest+json"
+    baseName = "site"
+    isPlainText = true
+
+[caches]
+  [caches.images]
+    dir = ":cacheDir/images"
+
+[markup]
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 4
+    ordered = false
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = false
+    lineNos = false
+    lineNumbersInTable = false
+    noClasses = false
+    style = "github"
+    tabWidth = 2
+
+[params]
+  description = "CTF writeups by Jong Han"
+  keywords = ["CTF", "writeups", "cybersecurity", "pwn", "reverse engineering", "cryptography"]
+  defaultAuthor = "Jong Han"
+  language = "en"
+  shortName = "CTF Writeups"
+  contentWidth = "56rem"
+  colorScheme = "default"
+  dock = "scroll"
+
+  [params.author]
+    name = "Jong Han"
+    title = "CTF Writeups"
+    description = "Capture the Flag writeups and challenge notes."
+    avatar = "/images/avatar.svg"
+
+    [[params.author.social]]
+      name = "GitHub"
+      url = "https://github.com/yeojonghan"
+      icon = "github"
+
+  [params.header]
+    sticky = true
+    showThemeSwitch = true
+    showDarkModeSwitch = true
+    showLanguageSwitch = false
+
+    [params.header.logo]
+      image = "/images/logo.svg"
+      link = "/"
+
+  [params.toc]
+    enabled = true
+    position = "center"
+
+  [params.home]
+    recentPostsCount = 10
+    contentOrder = ["author-section", "page-content", "recent-posts"]
+
+  [params.post]
+    showRelated = true
+    relatedPostsCount = 3
+
+    [params.post.license]
+      show = false
+
+  [params.comments]
+    enabled = false
+
+  [params.analytics]
+    enabled = false
+
+  [params.katex]
+    enabled = true
+
+  [params.mermaid]
+    enabled = true
+
+  [params.gallery]
+    enabled = true
+    defaultLayout = "justified"
+    gap = 10
+    targetRowHeight = 200
+    lastRowBehavior = "center"
+    columnWidth = 200
+    columns = 4
+
+  [params.lightbox]
+    enabled = true
+
+  [params.codeblock]
+    [params.codeblock.collapse]
+      enabled = true
+      defaultState = "expanded"
+      autoCollapseLines = 30
+      autoCollapseHeight = 400
+      collapsedHeight = 120
+
+  [params.readingProgress]
+    enabled = true
+    showOnHomepage = false
+
+[menus]
+  [[menus.main]]
+    name = "Writeups"
+    pageRef = "/posts"
+    weight = 10
+    [menus.main.params]
+      icon = "posts"
+
+  [[menus.main]]
+    name = "Archives"
+    pageRef = "/archives"
+    weight = 20
+    [menus.main.params]
+      icon = "archive"
+
+  [[menus.main]]
+    name = "Categories"
+    pageRef = "/categories"
+    weight = 30
+    [menus.main.params]
+      icon = "categories"
+
+  [[menus.main]]
+    name = "Tags"
+    pageRef = "/tags"
+    weight = 40
+    [menus.main.params]
+      icon = "tags"
+
+  [[menus.social]]
+    name = "GitHub"
+    url = "https://github.com/yeojonghan"
+    weight = 10
+    [menus.social.params]
+      icon = "github"

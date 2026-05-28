@@ -1,0 +1,77 @@
+{{ define "main" }}
+  {{ $mainSections := .Site.MainSections | default (slice "posts") }}
+  {{ $currentSection := .Section }}
+  {{ $isMainSection := in $mainSections $currentSection }}
+  {{ $pages := cond $isMainSection .RegularPagesRecursive .Pages }}
+  {{ $paginator := .Paginate $pages }}
+
+  <div class="mx-auto py-6">
+    <header class="mb-8">
+      <h1 class="text-foreground mb-4 text-3xl font-bold">
+        {{ .Title }}
+      </h1>
+
+      {{ if .Content }}
+        <div class="prose prose-neutral dark:prose-invert max-w-none">
+          {{ .Content }}
+        </div>
+      {{ else if .Description }}
+        <p class="text-muted-foreground">
+          {{ .Description }}
+        </p>
+      {{ end }}
+
+      <div class="text-muted-foreground mt-4 flex items-center gap-4 text-sm">
+        <div class="flex items-center gap-1">
+          {{ partial "features/icon.html" (dict "name" "folder" "size" "sm" "ariaLabel" "") }}
+          <span>
+            {{ if $isMainSection }}
+              {{ T "list.pages" (dict "count" $paginator.TotalNumberOfElements) }}
+            {{ end }}
+          </span>
+        </div>
+        {{ if gt $paginator.TotalPages 1 }}
+          <div class="flex items-center gap-1">
+            {{ partial "features/icon.html" (dict "name" "layers" "size" "sm" "ariaLabel" "") }}
+            <span>
+              {{ $paginator.PageNumber }} /
+              {{ $paginator.TotalPages }}
+            </span>
+          </div>
+        {{ end }}
+      </div>
+    </header>
+
+    {{ if $paginator.Pages }}
+      {{ if $isMainSection }}
+        <div class="space-y-4">
+          {{ range $paginator.Pages }}
+            {{ partial "content/card-base.html" (dict "page" .) }}
+          {{ end }}
+        </div>
+      {{ end }}
+    {{ else }}
+      <div class="py-16 text-center">
+        <div
+          class="bg-muted/50 mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full"
+        >
+          {{ partial "features/icon.html" (dict "name" "folder" "size" "xl" "ariaLabel" "") }}
+        </div>
+        <h2 class="text-foreground mb-3 text-xl font-medium">
+          {{ if $isMainSection }}
+            {{ T "article.empty" }}
+          {{ end }}
+        </h2>
+        <a
+          href="{{ `/` | relLangURL }}"
+          class="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center gap-2 rounded-xl px-6 py-3 font-medium transition-colors duration-300"
+        >
+          {{ partial "features/icon.html" (dict "name" "home" "size" "sm" "ariaLabel" "") }}
+          <span>{{ T "nav.backHome" }}</span>
+        </a>
+      </div>
+    {{ end }}
+
+    {{ partial "navigation/pagination.html" . }}
+  </div>
+{{ end }}

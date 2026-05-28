@@ -1,0 +1,945 @@
+<!doctype html><html lang=en data-theme=default><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta http-equiv=X-UA-Compatible content="IE=edge"><title>Decrypting Firmware |
+CTF Writeups</title><meta name=description content="DescriptionBootloader Base Address : 0x21000000
+Kernel Base Address : 0xc0008000
+Download chal.tar
+SolutionOnly looked at this when the CTF ended..."><meta name=keywords content="Cddc Finals"><meta name=author content="Jong Han"><meta name=language content="en"><meta name=robots content="index, follow"><link rel=canonical href=https://ctf.jonghan.xyz/posts/2025/cddc-finals/decrypting-firmware/><link rel=icon type=image/svg+xml href=/favicon.svg><link rel=manifest href=/site.webmanifest><meta property="og:url" content="https://ctf.jonghan.xyz/posts/2025/cddc-finals/decrypting-firmware/"><meta property="og:site_name" content="CTF Writeups"><meta property="og:title" content="Decrypting Firmware"><meta property="og:description" content="DescriptionBootloader Base Address : 0x21000000
+Kernel Base Address : 0xc0008000
+Download chal.tar"><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2025-09-04T00:00:00+08:00"><meta property="article:modified_time" content="2025-09-04T00:00:00+08:00"><meta property="article:tag" content="Cddc Finals"><meta property="og:see_also" content="https://ctf.jonghan.xyz/posts/2025/cddc-finals/"><meta property="og:see_also" content="https://ctf.jonghan.xyz/posts/2025/cddc-finals/ropvm/"><meta name=twitter:card content="summary"><meta name=twitter:title content="Decrypting Firmware"><meta name=twitter:description content="DescriptionBootloader Base Address : 0x21000000
+Kernel Base Address : 0xc0008000
+Download chal.tar"><meta itemprop=name content="Decrypting Firmware"><meta itemprop=description content="DescriptionBootloader Base Address : 0x21000000
+Kernel Base Address : 0xc0008000
+Download chal.tar"><meta itemprop=datePublished content="2025-09-04T00:00:00+08:00"><meta itemprop=dateModified content="2025-09-04T00:00:00+08:00"><meta itemprop=wordCount content="5244"><meta itemprop=keywords content="Cddc Finals"><script id=search-config type=application/json>"{\"searchIndexURL\":\"/index.json\"}"</script><link rel=stylesheet href=/css/compiled.min.4a6fd33c0e2db207c1646e8a588be381fd817a1b0cd86004cbb040e8dcf50b31.css integrity="sha256-Sm/TPA4tsgfBZG6KWIvjgf2BehsM2GAEy7BA6Nz1CzE=" crossorigin=anonymous><link rel=stylesheet href=/css/chroma.min.491df36221f739b5948a747a0351f100ee7ccaaf466d9f46288bf06de1d59123.css integrity="sha256-SR3zYiH3ObWUinR6A1HxAO58yq9GbZ9GKIvwbeHVkSM=" crossorigin=anonymous><script src=/js/main.f482676046fba6a50f6e6580bd1306489d4fea5f7144231757bf01af2498b168.js integrity="sha256-9IJnYEb7pqUPbmWAvRMGSJ1P6l9xRCMXV78BrySYsWg=" crossorigin=anonymous defer></script><script src=/js/toc.3026ef97e410bb3e98d57739bcabc32ac568e9001b2e42385de731663378ae85.js integrity="sha256-MCbvl+QQuz6Y1Xc5vKvDKsVo6QAbLkI4XecxZjN4roU=" crossorigin=anonymous defer></script><script src=/js/search.33fef1d91398b17cbc46483d902493b800642d25754e7ff8e998b12499c7fde3.js integrity="sha256-M/7x2ROYsXy8Rkg9kCSTuABkLSV1Tn/46ZixJJnH/eM=" crossorigin=anonymous defer></script><script src=/js/dock.e64c343cfb2005ed990e1d3351817ee8732467879fb6c7f1e283abb31ffa975f.js integrity="sha256-5kw0PPsgBe2ZDh0zUYF+6HMkZ4eftsfx4oOrsx/6l18=" crossorigin=anonymous defer></script><script>(function(){const e=localStorage.getItem("theme")||"system",n=localStorage.getItem("colorScheme")||"default";document.documentElement.setAttribute("data-theme",n);function t(){e==="dark"||e==="system"&&window.matchMedia("(prefers-color-scheme: dark)").matches?document.documentElement.classList.add("dark"):document.documentElement.classList.remove("dark")}t(),e==="system"&&window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",t)})()</script></head><body class="bg-background text-foreground min-h-screen antialiased"><main class="mx-auto w-full" style=max-width:56rem><div id=reading-progress-bar class="from-primary to-primary/80 pointer-events-none fixed top-0 left-0 z-50 h-[3px] w-0 bg-linear-to-r transition-[width] duration-150 ease-out"></div><script>(function(){const t=document.getElementById("reading-progress-bar");if(!t)return;function n(){const n=window.scrollY,e=document.documentElement.scrollHeight-window.innerHeight;t.style.width=e>0?n/e*100+"%":"0%"}let e=!1;window.addEventListener("scroll",()=>{e||(requestAnimationFrame(()=>{n(),e=!1}),e=!0)},{passive:!0}),n()})()</script><header class="sticky top-0 z-50 px-4 py-6"><div class="border-border bg-card/80 flex items-center rounded-xl border px-6 py-4 shadow-sm backdrop-blur-sm"><div class="hidden w-full items-center md:flex md:min-w-0"><div class="flex items-center"><a href=/ class="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full transition-transform duration-200 hover:scale-105" aria-label="CTF Writeups"><img src=/images/logo.svg alt="CTF Writeups" class="h-full w-full object-cover"></a></div><nav class="mx-8 flex min-w-0 flex-1 items-center justify-center"><div class="flex flex-wrap items-center justify-center space-x-1"><a href=/posts/ class="nav-link
+text-muted-foreground hover:text-primary hover:bg-primary/10
+focus:ring-primary/20 relative flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all duration-300 ease-out hover:-translate-y-0.5 hover:scale-105 focus:ring-2 focus:outline-none"><svg class="h-5 w-5" aria-label="Writeups" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+<span>Writeups</span>
+</a><a href=/ class="nav-link
+text-muted-foreground hover:text-primary hover:bg-primary/10
+focus:ring-primary/20 relative flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all duration-300 ease-out hover:-translate-y-0.5 hover:scale-105 focus:ring-2 focus:outline-none"><svg class="h-5 w-5" aria-label="Archives" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
+<span>Archives</span>
+</a><a href=/categories/ class="nav-link
+text-muted-foreground hover:text-primary hover:bg-primary/10
+focus:ring-primary/20 relative flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all duration-300 ease-out hover:-translate-y-0.5 hover:scale-105 focus:ring-2 focus:outline-none"><svg class="h-5 w-5" aria-label="Categories" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+<span>Categories</span>
+</a><a href=/tags/ class="nav-link
+text-muted-foreground hover:text-primary hover:bg-primary/10
+focus:ring-primary/20 relative flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all duration-300 ease-out hover:-translate-y-0.5 hover:scale-105 focus:ring-2 focus:outline-none"><svg class="h-5 w-5" aria-label="Tags" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512.0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828.0l-7-7A1.994 1.994.0 013 12V7a4 4 0 014-4z"/></svg>
+<span>Tags</span></a></div></nav><div class="flex items-center space-x-2"><div class=relative><button id=color-scheme-toggle class="dropdown-toggle border-border bg-background text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 flex h-10 w-10 items-center justify-center rounded-lg border transition-all duration-300 ease-out hover:scale-105 focus:ring-2 focus:outline-none active:scale-95" data-dropdown-type=color-scheme aria-label="Toggle theme" aria-expanded=false aria-haspopup=true><svg class="h-5 w-5 relative z-10" aria-label="Toggle theme" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v6a2 2 0 002 2h4a2 2 0 002-2V5z"/></svg></button><div id=color-scheme-dropdown class="dropdown-menu border-border bg-popover/95 w-44 absolute top-12 right-0 z-60 hidden rounded-lg border p-1 shadow-lg backdrop-blur-sm transition-all duration-200 ease-out" data-dropdown-type=color-scheme></div></div><div class=relative><button id=theme-toggle class="dropdown-toggle border-border bg-background text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 flex h-10 w-10 items-center justify-center rounded-lg border transition-all duration-300 ease-out hover:scale-105 focus:ring-2 focus:outline-none active:scale-95" data-dropdown-type=theme aria-label="Toggle theme" aria-expanded=false aria-haspopup=true><svg class="h-5 w-5 sun-icon hidden relative z-10" aria-label="Light" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364-.707-.707M6.343 6.343l-.707-.707m12.728.0-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+<svg class="h-5 w-5 moon-icon hidden relative z-10" aria-label="Dark" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003.0 0012 21a9.003 9.003.0 008.354-5.646z"/></svg>
+<svg class="h-5 w-5 system-icon hidden relative z-10" aria-label="System" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17 9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5A2 2 0 003 5v10a2 2 0 002 2z"/></svg></button><div id=theme-dropdown class="dropdown-menu border-border bg-popover/95 w-40 absolute top-12 right-0 z-60 hidden rounded-lg border p-1 shadow-lg backdrop-blur-sm transition-all duration-200 ease-out" data-dropdown-type=theme><button data-theme=light class="text-accent-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground flex w-full items-center rounded-md px-4 py-2 text-sm transition-all duration-200 ease-out focus:outline-none"><svg class="h-5 w-5 mr-3 h-4 w-4" aria-label="Light" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364-.707-.707M6.343 6.343l-.707-.707m12.728.0-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+<span>Light</span></button><button data-theme=dark class="text-accent-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground flex w-full items-center rounded-md px-4 py-2 text-sm transition-all duration-200 ease-out focus:outline-none"><svg class="h-5 w-5 mr-3 h-4 w-4" aria-label="Dark" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003.0 0012 21a9.003 9.003.0 008.354-5.646z"/></svg>
+<span>Dark</span></button><button data-theme=system class="text-accent-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground flex w-full items-center rounded-md px-4 py-2 text-sm transition-all duration-200 ease-out focus:outline-none"><svg class="h-5 w-5 mr-3 h-4 w-4" aria-label="System" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17 9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5A2 2 0 003 5v10a2 2 0 002 2z"/></svg>
+<span>System</span></button></div></div></div></div><div class="flex w-full items-center justify-between md:hidden"><button id=mobile-nav-toggle class="nav-panel-toggle border-border bg-background text-muted-foreground hover:bg-accent hover:text-foreground flex h-10 w-10 items-center justify-center rounded-lg border transition-colors duration-200" aria-label=Menu aria-expanded=false aria-controls=mobile-nav-panel>
+<svg class="h-5 w-5" aria-label="Menu" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button><div class="flex items-center space-x-2"><div class=relative><button id=color-scheme-toggle class="dropdown-toggle border-border bg-background text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 flex h-10 w-10 items-center justify-center rounded-lg border transition-all duration-300 ease-out hover:scale-105 focus:ring-2 focus:outline-none active:scale-95" data-dropdown-type=color-scheme aria-label="Toggle theme" aria-expanded=false aria-haspopup=true><svg class="h-5 w-5 relative z-10" aria-label="Toggle theme" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v6a2 2 0 002 2h4a2 2 0 002-2V5z"/></svg></button><div id=color-scheme-dropdown class="dropdown-menu border-border bg-popover/95 w-44 absolute top-12 right-0 z-60 hidden rounded-lg border p-1 shadow-lg backdrop-blur-sm transition-all duration-200 ease-out" data-dropdown-type=color-scheme></div></div><div class=relative><button id=theme-toggle class="dropdown-toggle border-border bg-background text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 flex h-10 w-10 items-center justify-center rounded-lg border transition-all duration-300 ease-out hover:scale-105 focus:ring-2 focus:outline-none active:scale-95" data-dropdown-type=theme aria-label="Toggle theme" aria-expanded=false aria-haspopup=true><svg class="h-5 w-5 sun-icon hidden relative z-10" aria-label="Light" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364-.707-.707M6.343 6.343l-.707-.707m12.728.0-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+<svg class="h-5 w-5 moon-icon hidden relative z-10" aria-label="Dark" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003.0 0012 21a9.003 9.003.0 008.354-5.646z"/></svg>
+<svg class="h-5 w-5 system-icon hidden relative z-10" aria-label="System" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17 9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5A2 2 0 003 5v10a2 2 0 002 2z"/></svg></button><div id=theme-dropdown class="dropdown-menu border-border bg-popover/95 w-40 absolute top-12 right-0 z-60 hidden rounded-lg border p-1 shadow-lg backdrop-blur-sm transition-all duration-200 ease-out" data-dropdown-type=theme><button data-theme=light class="text-accent-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground flex w-full items-center rounded-md px-4 py-2 text-sm transition-all duration-200 ease-out focus:outline-none"><svg class="h-5 w-5 mr-3 h-4 w-4" aria-label="Light" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364-.707-.707M6.343 6.343l-.707-.707m12.728.0-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+<span>Light</span></button><button data-theme=dark class="text-accent-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground flex w-full items-center rounded-md px-4 py-2 text-sm transition-all duration-200 ease-out focus:outline-none"><svg class="h-5 w-5 mr-3 h-4 w-4" aria-label="Dark" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003.0 0012 21a9.003 9.003.0 008.354-5.646z"/></svg>
+<span>Dark</span></button><button data-theme=system class="text-accent-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground flex w-full items-center rounded-md px-4 py-2 text-sm transition-all duration-200 ease-out focus:outline-none"><svg class="h-5 w-5 mr-3 h-4 w-4" aria-label="System" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17 9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5A2 2 0 003 5v10a2 2 0 002 2z"/></svg>
+<span>System</span></button></div></div></div></div></div><div id=mobile-nav-panel class="mt-2 hidden md:hidden" role=navigation aria-label=Menu aria-hidden=true tabindex=-1><div class="border-border bg-popover/95 overflow-hidden rounded-xl border shadow-lg backdrop-blur-sm"><nav class="flex flex-col p-2"><a href=/posts/ class="nav-panel-link
+text-muted-foreground hover:text-primary hover:bg-primary/10
+focus:ring-primary/20 flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-all duration-200 ease-out focus:ring-2 focus:outline-none" role=menuitem><svg class="h-5 w-5" aria-label="Writeups" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+<span>Writeups</span>
+</a><a href=/ class="nav-panel-link
+text-muted-foreground hover:text-primary hover:bg-primary/10
+focus:ring-primary/20 flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-all duration-200 ease-out focus:ring-2 focus:outline-none" role=menuitem><svg class="h-5 w-5" aria-label="Archives" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
+<span>Archives</span>
+</a><a href=/categories/ class="nav-panel-link
+text-muted-foreground hover:text-primary hover:bg-primary/10
+focus:ring-primary/20 flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-all duration-200 ease-out focus:ring-2 focus:outline-none" role=menuitem><svg class="h-5 w-5" aria-label="Categories" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+<span>Categories</span>
+</a><a href=/tags/ class="nav-panel-link
+text-muted-foreground hover:text-primary hover:bg-primary/10
+focus:ring-primary/20 flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-all duration-200 ease-out focus:ring-2 focus:outline-none" role=menuitem><svg class="h-5 w-5" aria-label="Tags" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512.0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828.0l-7-7A1.994 1.994.0 013 12V7a4 4 0 014-4z"/></svg>
+<span>Tags</span></a></nav></div></div></header><div class="px-4 py-6"><nav class="breadcrumb mb-4 py-1 md:mb-6" aria-label=Breadcrumb><ol class="text-muted-foreground scrollbar-hide flex items-center space-x-1 overflow-x-auto py-1 text-sm whitespace-nowrap md:space-x-2"><li class=shrink-0><a href=/ class="text-muted-foreground hover:text-primary hover:bg-primary/10 flex items-center gap-1 rounded-lg px-1 py-0.5 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.02] md:py-1.5"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m3 12 2-2m0 0 7-7 7 7M5 10v10a1 1 0 001 1h3m10-11 2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+<span class="max-w-16 truncate md:max-w-none">Home</span></a></li><li class="flex min-w-0 items-center gap-1 md:gap-2"><span class="text-muted-foreground/50 shrink-0"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+</span><a href=/posts/ class="text-muted-foreground hover:text-primary hover:bg-primary/10 flex shrink-0 items-center gap-1 rounded-lg px-1 py-0.5 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.02] md:px-3 md:py-1.5"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5A2 2 0 003 7z"/></svg>
+<span class="max-w-16 truncate md:max-w-none">Posts</span></a></li><li class="flex min-w-0 items-center gap-1 md:gap-2"><span class="text-muted-foreground/50 shrink-0"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+</span><a href=/posts/2025/cddc-finals/ class="text-muted-foreground hover:text-primary hover:bg-primary/10 flex shrink-0 items-center gap-1 rounded-lg px-1 py-0.5 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.02] md:px-3 md:py-1.5"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5A2 2 0 003 7z"/></svg>
+<span class="max-w-16 truncate md:max-w-none">💻 CDDC Finals</span></a></li><li class="flex min-w-0 items-center gap-1 md:gap-2"><span class="text-muted-foreground/50 shrink-0"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+</span><span class="text-foreground flex min-w-0 items-center gap-1 font-medium"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+<span class="max-w-32 truncate md:max-w-[16rem] lg:max-w-none">Decrypting Firmware</span></span></li></ol></nav><header class=mb-8><div class="post-meta mb-8"><h1 class="text-foreground mb-6 text-3xl leading-tight font-bold md:text-4xl">Decrypting Firmware</h1><div class="bg-card border-border rounded-xl border"><div class="flex flex-col lg:flex-row"><div class="shrink-0 lg:w-3/5 p-6 border-b lg:border-b-0 lg:border-r border-border"><div class="text-muted-foreground flex flex-wrap items-center gap-3 text-sm mb-4"><div class="flex items-center gap-2"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5A2 2 0 003 7v12a2 2 0 002 2z"/></svg>
+<time datetime=2025-09-04>September 4, 2025</time></div><div class="flex items-center gap-2"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3A9 9 0 113 12a9 9 0 0118 0z"/></svg>
+<span>25 min</span></div><div class="flex items-center gap-2"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/></svg>
+<span>5244 words</span></div></div><div class="text-muted-foreground space-y-3 pt-4 border-t border-border"><div class="flex items-center gap-2"><div class=shrink-0><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg></div><div class="flex-1 min-w-0"><div class="flex flex-wrap items-center gap-1.5"><span class="text-muted-foreground text-sm font-medium">Categories:
+</span><a href=/categories/2025/ class="inline-flex items-center rounded-full px-2.5 py-1 text-sm font-medium transition-all duration-200 bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground">2025</a></div></div></div><div class="flex items-center gap-2"><div class=shrink-0><svg class="h-4 w-4" viewBox="0 0 24 24"><path fill="currentColor" d="M21 4H3A2 2 0 001 6v13a2 2 0 002 2h18a2 2 0 002-2V6a2 2 0 00-2-2M3 19V6h8v13zm18 0h-8V6h8zm-7-9.5h6V11h-6zm0 2.5h6v1.5h-6zm0 2.5h6V16h-6z"/></svg></div><div class="flex-1 min-w-0"><div class="flex flex-wrap items-center gap-1.5"><span class="text-muted-foreground text-sm font-medium">Series:
+</span><a href=/series/cddc-finals/ class="inline-flex items-center rounded-full px-2.5 py-1 text-sm font-medium transition-all duration-200 bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground">Cddc Finals</a></div></div></div><div class="flex items-center gap-2"><div class=shrink-0><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512.0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828.0l-7-7A1.994 1.994.0 013 12V7a4 4 0 014-4z"/></svg></div><div class="flex-1 min-w-0"><div class="flex flex-wrap items-center gap-1.5"><span class="text-muted-foreground text-sm font-medium">Tags:
+</span><a href=/tags/cddc-finals/ class="inline-flex items-center rounded-full px-2.5 py-1 text-sm font-medium transition-all duration-200 bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground">Cddc Finals</a></div></div></div></div></div><div class="flex-1 lg:w-2/5 flex flex-col" id=series-container><div class="shrink-0 p-4 border-b border-border"><div class="flex items-center gap-2 overflow-x-auto no-scrollbar scroll-smooth" id=series-tabs><button onclick=switchSeries(0) class="series-tab-btn group flex items-center gap-2 px-3 py-2 rounded-lg transition-all border border-transparent bg-accent text-foreground border-border shadow-sm" data-index=0>
+<span class="text-sm font-semibold whitespace-nowrap max-w-[120px] truncate">Cddc Finals
+</span><span class="bg-primary/10 text-primary rounded-full px-2 py-0.5 text-[10px] font-bold">3/3
+</span></button>
+<a href=# id=series-link-btn class="ml-auto shrink-0 p-2 rounded-lg text-muted-foreground hover:text-primary hover:bg-accent/50 transition-colors"><svg class="h-4 w-4" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 3h6v6m-11 5L21 3m-3 10v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/></svg></a></div></div><div class=flex-1><nav id=series-content-0 class="series-content overflow-y-auto max-h-32 p-4 transition-opacity duration-300 opacity-100 z-10 block" data-link=/series/cddc-finals/><ol class=space-y-1.5><li><a href=/posts/2025/cddc-finals/ class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-all group text-muted-foreground hover:text-foreground hover:bg-muted/50"><span class="font-mono text-xs shrink-0 opacity-50 group-hover:opacity-100 transition-opacity">01
+</span><span class="flex-1 truncate">💻 CDDC Finals</span></a></li><li><a href=/posts/2025/cddc-finals/ropvm/ class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-all group text-muted-foreground hover:text-foreground hover:bg-muted/50"><span class="font-mono text-xs shrink-0 opacity-50 group-hover:opacity-100 transition-opacity">02
+</span><span class="flex-1 truncate">ropvm</span></a></li><li><a href=/posts/2025/cddc-finals/decrypting-firmware/ class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-all group bg-primary/15 text-primary font-medium shadow-sm" aria-current=page><span class="font-mono text-xs shrink-0 text-primary transition-opacity">03
+</span><span class="flex-1 truncate">Decrypting Firmware</span>
+<svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414.0l4-4z" clip-rule="evenodd"/></svg></a></li></ol></nav></div><script>function switchSeries(e){document.querySelectorAll(".series-tab-btn").forEach(t=>{const n=parseInt(t.dataset.index)===e;n?(t.classList.add("bg-accent","text-foreground","border-border","shadow-sm"),t.classList.remove("hover:bg-accent/50","text-muted-foreground")):(t.classList.remove("bg-accent","text-foreground","border-border","shadow-sm"),t.classList.add("hover:bg-accent/50","text-muted-foreground"))}),document.querySelectorAll(".series-content").forEach(e=>{e.classList.add("hidden","opacity-0","z-0"),e.classList.remove("block","opacity-100","z-10")});const t=document.getElementById(`series-content-${e}`);if(t){t.classList.remove("hidden","opacity-0","z-0"),t.classList.add("block","opacity-100","z-10");const e=document.getElementById("series-link-btn");e&&(e.href=t.dataset.link)}}document.addEventListener("DOMContentLoaded",()=>{const e=document.querySelector(".series-content.block");if(e){const t=document.getElementById("series-link-btn");t&&(t.href=e.dataset.link)}})</script></div></div></div></div></header><article class="prose prose-neutral dark:prose-invert mb-12 max-w-none"><h2 id=description>Description<a href=#description class=heading-anchor aria-label="Link to this section"><svg class="h-4 w-4" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></g></svg></a></h2><blockquote class="border-primary bg-muted/30 hover:bg-muted/40 my-6 rounded-r-lg border-l-4 py-4 pr-4 pl-6 italic transition-all duration-200 ease-out hover:translate-x-1"><div class="prose prose-sm max-w-none"><p>Bootloader Base Address : 0x21000000</p><p>Kernel Base Address : 0xc0008000</p></div></blockquote><script>function toggleAlert(e){const t=document.getElementById(e+"-content"),n=document.getElementById(e+"-chevron"),s=t.previousElementSibling;t.classList.contains("hidden")?(t.classList.remove("hidden"),n.style.transform="rotate(0deg)",s.setAttribute("aria-expanded","true")):(t.classList.add("hidden"),n.style.transform="rotate(-90deg)",s.setAttribute("aria-expanded","false"))}document.addEventListener("DOMContentLoaded",function(){const e=document.querySelectorAll(".alert-content.hidden");e.forEach(function(e){const n=e.id.replace("-content",""),t=document.getElementById(n+"-chevron");t&&(t.style.transform="rotate(-90deg)")})})</script><p><a href=/gitbook/assets/chal.tar>Download chal.tar</a></p><hr><h2 id=solution>Solution<a href=#solution class=heading-anchor aria-label="Link to this section"><svg class="h-4 w-4" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></g></svg></a></h2><p>Only looked at this when the CTF ended &#x1f950;</p><h3 id=tldr>TL;DR<a href=#tldr class=heading-anchor aria-label="Link to this section"><svg class="h-4 w-4" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></g></svg></a></h3><ul><li>Search for article on reversing u-boot IoT firmware</li><li>Copy paste emulator code, modify it accordingly, then run to decrypt the kernel image</li><li>Use <code>vmlinux-to-elf</code> to convert kernel to an elf file to reverse it</li><li>Discover <strong>block_aes_decrypt</strong> and other key initializing functions, run similar emulator to emulate the functions to:<ul><li>Get the aes key</li><li>Decrypt romfs using the aes key</li></ul></li></ul><h2 id=analysis>Analysis<a href=#analysis class=heading-anchor aria-label="Link to this section"><svg class="h-4 w-4" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></g></svg></a></h2><h3 id=getting-started-mapping-out-the-files>Getting Started: Mapping Out the Files<a href=#getting-started-mapping-out-the-files class=heading-anchor aria-label="Link to this section"><svg class="h-4 w-4" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></g></svg></a></h3><p>We are given 3 files:</p><ol><li><code>dhboot.bin.img</code> - U-boot bootloader</li><li><code>kernel.img</code> - Encrypted kernel image</li><li><code>romfs-x.squashfs.img</code> - Encrypt SquashFS root filesystem image</li></ol><p>Starting off without any knowledge on the boot up sequence of any firmware, we can guess that <code>dhboot.bin.img</code> would start executing first during boot up.</p><p>With the help of a friend, I was told to search up &ldquo;reversing uboot iot firmware&rdquo; and refer to this site to decrypt the firmware:</p><ul><li><a href=https://www.shielder.com/blog/2022/03/reversing-embedded-device-bootloader-u-boot-p.1/ target=_blank class="inline-flex items-center gap-1">https://www.shielder.com/blog/2022/03/reversing-embedded-device-bootloader-u-boot-p.1/<svg class="h-3 w-3 flex-shrink-0" id="external-link" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 3h6v6m-11 5L21 3m-3 10v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/></svg></a></li></ul><p>The article states to use <code>binwalk --entropy &lt;file></code> as to check whether the file has been encrypted or not. This is a check on how &ldquo;random&rdquo; the bytes are (less entropy mean several 0s in some areas or certain repeated patterns, for e.g.), encrypted files would have a high entropy due to their &ldquo;randomness&rdquo;.</p><figure><img src=/gitbook/assets/entropy.png alt><figcaption><p>File entropies</p></figcaption></figure><p>As seen above, both the <code>kernel</code> and <code>romfs</code> seems to have consistently <strong>high entropies</strong> throughout the file, highly indicating that they&rsquo;re encrypted. This is similar to what is shown in the article, where it indicates that <code>dhboot</code> is likely to not be encrypted.</p><p>The rest of the details can be read up on the article itself, where they nicely explain on how they reversed the u-boot, to how they managed to decrypt the kernel.</p><p>However, I will properly provide some details on how to load the u-boot into ghidra for static analysis as this can be useful for future challenges (custom u-boot perhaps?).</p><h3 id=peeling-back-u-boot-decompiling-the-bootloader>Peeling Back U-Boot: Decompiling the Bootloader<a href=#peeling-back-u-boot-decompiling-the-bootloader class=heading-anchor aria-label="Link to this section"><svg class="h-4 w-4" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></g></svg></a></h3><p>Opening the file in Ghidra, we first select the <code>Language</code> to be <code>ARMv7 Little Endian</code> (following the article).</p><figure><img src="/gitbook/assets/image (4) (1) (1).png" alt><figcaption><p>Selecting Language</p></figcaption></figure><p>Click OK to select the language, then click on the <code>Options...</code> button at the bottom right of the window, setting the <code>Block Name</code> to anything, the <code>Base Address</code> as <code>0x21000000</code> as per the challenge description, then the <code>File Offset</code> would be where the code starts.</p><p>To determine where the code starts, we can do a rough guess on where the entropy starts in the file, by running <code>hexdump -C ./dhboot.bin.img | head -n 50</code> and checking where the bunch of <code>00</code>s stop. (thank Jin Kai for this trick)</p><figure><img src="/gitbook/assets/image (1) (1) (1) (1).png" alt><figcaption></figcaption></figure><p>In the image above, we can guess that the code starts at the <code>0x840</code> offset of the file, so we set this in the <code>File Offset</code> and try to decompile it.</p><p>You will receive a message on setting the <code>Length</code> to some other value, so just set it according to the message.</p><figure><img src="/gitbook/assets/image (4) (1) (1) (1).png" alt><figcaption><p>Options</p></figcaption></figure><p>Afterwhich, the binary should be decompiled properly!</p><figure><img src="/gitbook/assets/image (5) (1) (1).png" alt><figcaption><p>Ghidra</p></figcaption></figure><h3 id=kernel-decryption-extracting-offsets>Kernel Decryption: Extracting Offsets<a href=#kernel-decryption-extracting-offsets class=heading-anchor aria-label="Link to this section"><svg class="h-4 w-4" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></g></svg></a></h3><p>Thankfully, there isn&rsquo;t a need for decompiling and reading code of the u-boot binary.</p><p>At the end of the article, a script is given to emulate the decryption function <code>block_aes_decrypt</code> of the bootloader:</p><details><summary>original_emulator.py</summary><div class="code-block-container border-border bg-card my-6 overflow-hidden rounded-xl border shadow-sm transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md" data-code-block data-code-id=code-0 data-collapsible=true data-default-state=expanded data-collapsed=false data-auto-collapse-lines=30 data-auto-collapse-height=400 data-collapsed-height=120><div class="code-block-header bg-muted/30 border-border flex items-center justify-between border-b px-4 py-3"><div class="flex items-center gap-2"><div class="text-muted-foreground shrink-0"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4 4 4-4 4M6 16l-4-4 4-4"/></svg></div><span class="text-muted-foreground text-sm font-medium">PYTHON</span></div><div class="flex items-center gap-2"><button class="collapse-code-btn text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium transition-all duration-200 ease-out focus:ring-2 focus:outline-none" type=button data-code-action=toggle-collapse data-label-expand=Expand data-label-collapse=Collapse title=Collapse aria-label=Collapse aria-controls=code-0 aria-expanded=true>
+<span class="collapse-chevron transition-transform duration-200 ease-out"><svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+</span><span class="collapse-text hidden sm:inline">Collapse</span>
+</button>
+<button class="copy-code-btn text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium transition-all duration-200 ease-out focus:ring-2 focus:outline-none" type=button data-code-action=copy data-label-copy=Copy data-label-copied=Copied title=Copy aria-label=Copy>
+<span class=copy-icon><svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+</span><span class="copy-text hidden sm:inline">Copy</span></button></div></div><div class="code-block-content relative" id=code-0><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>__future__</span> <span class=kn>import</span> <span class=n>print_function</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>ctypes</span> <span class=kn>import</span> <span class=n>sizeof</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>unicorn</span> <span class=kn>import</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>unicorn.arm_const</span> <span class=kn>import</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>unicorn.unicorn_const</span> <span class=kn>import</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>capstone</span> <span class=kn>import</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>struct</span><span class=o>,</span> <span class=nn>binascii</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#callback of the code hook</span>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>hook_code</span><span class=p>(</span><span class=n>uc</span><span class=p>,</span> <span class=n>addr</span><span class=p>,</span> <span class=n>size</span><span class=p>,</span> <span class=n>user_data</span><span class=p>):</span> 
+</span></span><span class=line><span class=cl>	<span class=n>mem</span> <span class=o>=</span> <span class=n>uc</span><span class=o>.</span><span class=n>mem_read</span><span class=p>(</span><span class=n>addr</span><span class=p>,</span> <span class=n>size</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=n>disas_single</span><span class=p>(</span><span class=nb>bytes</span><span class=p>(</span><span class=n>mem</span><span class=p>),</span><span class=n>addr</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#disassembly each istruction and print the mnemonic name</span>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>disas_single</span><span class=p>(</span><span class=n>data</span><span class=p>,</span><span class=n>addr</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>		<span class=k>for</span> <span class=n>i</span> <span class=ow>in</span> <span class=n>capmd</span><span class=o>.</span><span class=n>disasm</span><span class=p>(</span><span class=n>data</span><span class=p>,</span><span class=n>addr</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>			<span class=nb>print</span><span class=p>(</span><span class=s2>&#34;0x</span><span class=si>%x</span><span class=s2>:</span><span class=se>\t</span><span class=si>%s</span><span class=se>\t</span><span class=si>%s</span><span class=s2>&#34;</span> <span class=o>%</span> <span class=p>(</span><span class=n>i</span><span class=o>.</span><span class=n>address</span><span class=p>,</span> <span class=n>i</span><span class=o>.</span><span class=n>mnemonic</span><span class=p>,</span> <span class=n>i</span><span class=o>.</span><span class=n>op_str</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>			<span class=k>break</span>
+</span></span><span class=line><span class=cl>			
+</span></span><span class=line><span class=cl><span class=c1>#create a new instance of capstone</span>
+</span></span><span class=line><span class=cl><span class=n>capmd</span> <span class=o>=</span> <span class=n>Cs</span><span class=p>(</span><span class=n>UC_ARCH_ARM</span><span class=p>,</span> <span class=n>UC_MODE_ARM</span><span class=p>)</span> 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#code to be emulated</span>
+</span></span><span class=line><span class=cl><span class=n>in_file</span> <span class=o>=</span> <span class=nb>open</span><span class=p>(</span><span class=s2>&#34;u-boot.bin&#34;</span><span class=p>,</span> <span class=s2>&#34;rb&#34;</span><span class=p>)</span> <span class=c1># opening for [r]eading as [b]inary</span>
+</span></span><span class=line><span class=cl><span class=n>ARM_CODE32</span> <span class=o>=</span> <span class=n>in_file</span><span class=o>.</span><span class=n>read</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=n>in_file</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># file to be decrypted</span>
+</span></span><span class=line><span class=cl><span class=n>in_file</span> <span class=o>=</span> <span class=nb>open</span><span class=p>(</span><span class=s2>&#34;kernel.img.raw&#34;</span><span class=p>,</span> <span class=s2>&#34;rb&#34;</span><span class=p>)</span> <span class=c1># opening for [r]eading as [b]inary</span>
+</span></span><span class=line><span class=cl><span class=n>FILE_TOBE_DEC</span> <span class=o>=</span> <span class=n>in_file</span><span class=o>.</span><span class=n>read</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=n>in_file</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># U-Boot base address</span>
+</span></span><span class=line><span class=cl><span class=c1># we have seen this in the previous article (DDR start at 8000_0000)</span>
+</span></span><span class=line><span class=cl><span class=n>ADDRESS</span> <span class=o>=</span> <span class=mh>0x80800000</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=s2>&#34;Emulate ARM code&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=s2>&#34;Shielder&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=k>try</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=c1># Initialize emulator in ARM-32bit mode</span>
+</span></span><span class=line><span class=cl>    <span class=c1># with &#34;ARM&#34; ARM instruction set</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span> <span class=o>=</span> <span class=n>Uc</span><span class=p>(</span><span class=n>UC_ARCH_ARM</span><span class=p>,</span> <span class=n>UC_MODE_ARM</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># map U-boot in memory for this emulation</span>
+</span></span><span class=line><span class=cl>    <span class=c1># &#34;// (1024 * 1024)&#34; for memory allign pourses</span>
+</span></span><span class=line><span class=cl>    <span class=n>i</span> <span class=o>=</span> <span class=nb>len</span><span class=p>(</span><span class=n>ARM_CODE32</span><span class=p>)</span> <span class=o>//</span> <span class=p>(</span><span class=mi>1024</span> <span class=o>*</span> <span class=mi>1024</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>mem_size</span> <span class=o>=</span> <span class=p>(</span><span class=mi>1024</span> <span class=o>*</span> <span class=mi>1024</span><span class=p>)</span> <span class=o>+</span> <span class=p>(</span><span class=n>i</span> <span class=o>*</span> <span class=p>(</span><span class=mi>1024</span> <span class=o>*</span> <span class=mi>1024</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>mem_map</span><span class=p>(</span><span class=n>ADDRESS</span><span class=p>,</span> <span class=n>mem_size</span><span class=p>,</span> <span class=n>perms</span><span class=o>=</span><span class=n>UC_PROT_ALL</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=c1># write machine code to be emulated to memory</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>mem_write</span><span class=p>(</span><span class=n>ADDRESS</span><span class=p>,</span> <span class=n>ARM_CODE32</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=c1># map STACK</span>
+</span></span><span class=line><span class=cl>    <span class=n>stack_address</span> <span class=o>=</span> <span class=n>ADDRESS</span> <span class=o>+</span> <span class=n>mem_size</span>
+</span></span><span class=line><span class=cl>    <span class=c1># 2MB </span>
+</span></span><span class=line><span class=cl>    <span class=n>stack_size</span> <span class=o>=</span> <span class=p>(</span><span class=mi>1024</span> <span class=o>*</span> <span class=mi>1024</span><span class=p>)</span> <span class=o>*</span> <span class=mi>2</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>mem_map</span><span class=p>(</span><span class=n>stack_address</span><span class=p>,</span> <span class=n>stack_size</span><span class=p>,</span> <span class=n>perms</span><span class=o>=</span><span class=n>UC_PROT_ALL</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=c1># map the Kernel in RAM memory for this emulation</span>
+</span></span><span class=line><span class=cl>    <span class=c1># remember that RAM starts at 8000_0000</span>
+</span></span><span class=line><span class=cl>    <span class=c1># there we call RAM a sub-region of memory inside the RAM itself </span>
+</span></span><span class=line><span class=cl>    <span class=n>ram_address</span> <span class=o>=</span> <span class=n>ADDRESS</span> <span class=o>+</span> <span class=n>mem_size</span> <span class=o>+</span> <span class=n>stack_size</span>
+</span></span><span class=line><span class=cl>    <span class=n>ram_size</span> <span class=o>=</span> <span class=p>(</span><span class=mi>1024</span> <span class=o>*</span> <span class=mi>1024</span><span class=p>)</span> <span class=o>*</span> <span class=mi>8</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>mem_map</span><span class=p>(</span><span class=n>ram_address</span><span class=p>,</span> <span class=n>ram_size</span><span class=p>,</span> <span class=n>perms</span><span class=o>=</span><span class=n>UC_PROT_ALL</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=c1># write file to be decrypted to memory</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>mem_write</span><span class=p>(</span><span class=n>ram_address</span><span class=p>,</span> <span class=n>FILE_TOBE_DEC</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># initialize machine registries</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>reg_write</span><span class=p>(</span><span class=n>UC_ARM_REG_SP</span><span class=p>,</span> <span class=n>stack_address</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=c1># first argument, memory pointer to the location of the file</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>reg_write</span><span class=p>(</span><span class=n>UC_ARM_REG_R0</span><span class=p>,</span> <span class=n>ram_address</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=c1># second argument, memory pointer to the location on which write the file</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>reg_write</span><span class=p>(</span><span class=n>UC_ARM_REG_R1</span><span class=p>,</span> <span class=n>ram_address</span><span class=p>)</span> 
+</span></span><span class=line><span class=cl>    <span class=c1># third argument, block size to be read from memory pointed by r0</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>reg_write</span><span class=p>(</span><span class=n>UC_ARM_REG_R2</span><span class=p>,</span> <span class=mi>512</span><span class=p>)</span> 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># hook any instruction and disassembly them with capstone</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>hook_add</span><span class=p>(</span><span class=n>UC_HOOK_CODE</span><span class=p>,</span> <span class=n>hook_code</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># emulate code in infinite time</span>
+</span></span><span class=line><span class=cl>    <span class=c1># Address + start/end of the block_aes_decrypt function</span>
+</span></span><span class=line><span class=cl>    <span class=c1># this trick save much headaches</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>emu_start</span><span class=p>(</span><span class=n>ADDRESS</span><span class=o>+</span><span class=mh>0x8c40</span><span class=p>,</span> <span class=n>ADDRESS</span><span class=o>+</span><span class=mh>0x8c44</span><span class=p>)</span> 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># now print out some registers</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;Emulation done. Below is the CPU context&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>r_r0</span> <span class=o>=</span> <span class=n>mu</span><span class=o>.</span><span class=n>reg_read</span><span class=p>(</span><span class=n>UC_ARM_REG_R0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>r_r1</span> <span class=o>=</span> <span class=n>mu</span><span class=o>.</span><span class=n>reg_read</span><span class=p>(</span><span class=n>UC_ARM_REG_R1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>r_r2</span> <span class=o>=</span> <span class=n>mu</span><span class=o>.</span><span class=n>reg_read</span><span class=p>(</span><span class=n>UC_ARM_REG_R2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>r_pc</span> <span class=o>=</span> <span class=n>mu</span><span class=o>.</span><span class=n>reg_read</span><span class=p>(</span><span class=n>UC_ARM_REG_PC</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;&gt;&gt;&gt; r0 = 0x</span><span class=si>%x</span><span class=s2>&#34;</span> <span class=o>%</span><span class=n>r_r0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;&gt;&gt;&gt; r1 = 0x</span><span class=si>%x</span><span class=s2>&#34;</span> <span class=o>%</span><span class=n>r_r1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;&gt;&gt;&gt; r2 = 0x</span><span class=si>%x</span><span class=s2>&#34;</span> <span class=o>%</span><span class=n>r_r2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;&gt;&gt;&gt; pc = 0x</span><span class=si>%x</span><span class=s2>&#34;</span> <span class=o>%</span><span class=n>r_pc</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;</span><span class=se>\n</span><span class=s2>Reading data from first 512byte of the RAM at: &#34;</span><span class=o>+</span><span class=nb>hex</span><span class=p>(</span><span class=n>ram_address</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;==== BEGIN ====&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>ram_data</span> <span class=o>=</span> <span class=n>mu</span><span class=o>.</span><span class=n>mem_read</span><span class=p>(</span><span class=n>ram_address</span><span class=p>,</span> <span class=mi>512</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=nb>str</span><span class=p>(</span><span class=n>binascii</span><span class=o>.</span><span class=n>hexlify</span><span class=p>(</span><span class=n>ram_data</span><span class=p>)))</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;==== END ====&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># from the reversed binary, we know which are the magic bytes</span>
+</span></span><span class=line><span class=cl>    <span class=c1># at the beginning of the kernel</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=sa>b</span><span class=s2>&#34;27051956&#34;</span> <span class=o>==</span> <span class=n>binascii</span><span class=o>.</span><span class=n>hexlify</span><span class=p>(</span><span class=nb>bytearray</span><span class=p>(</span><span class=n>ram_data</span><span class=p>[:</span><span class=mi>4</span><span class=p>])):</span>
+</span></span><span class=line><span class=cl>        <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;</span><span class=se>\n</span><span class=s2>Magic Bytes match :)</span><span class=se>\n\n</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>with</span> <span class=nb>open</span><span class=p>(</span><span class=s2>&#34;test.bin&#34;</span><span class=p>,</span> <span class=s2>&#34;wb&#34;</span><span class=p>)</span> <span class=k>as</span> <span class=n>f</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=n>f</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=n>ram_data</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>except</span> <span class=n>UcError</span> <span class=k>as</span> <span class=n>e</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;ERROR: </span><span class=si>%s</span><span class=s2>&#34;</span> <span class=o>%</span> <span class=n>e</span><span class=p>)</span></span></span></code></pre></div><div hidden data-code-source>from __future__ import print_function
+from ctypes import sizeof
+from unicorn import *
+from unicorn.arm_const import *
+from unicorn.unicorn_const import *
+from capstone import *
+import struct, binascii
+#callback of the code hook
+def hook_code(uc, addr, size, user_data):
+mem = uc.mem_read(addr, size)
+disas_single(bytes(mem),addr)
+#disassembly each istruction and print the mnemonic name
+def disas_single(data,addr):
+for i in capmd.disasm(data,addr):
+print("0x%x:\t%s\t%s" % (i.address, i.mnemonic, i.op_str))
+break
+#create a new instance of capstone
+capmd = Cs(UC_ARCH_ARM, UC_MODE_ARM)
+#code to be emulated
+in_file = open("u-boot.bin", "rb") # opening for [r]eading as [b]inary
+ARM_CODE32 = in_file.read()
+in_file.close()
+# file to be decrypted
+in_file = open("kernel.img.raw", "rb") # opening for [r]eading as [b]inary
+FILE_TOBE_DEC = in_file.read()
+in_file.close()
+# U-Boot base address
+# we have seen this in the previous article (DDR start at 8000_0000)
+ADDRESS = 0x80800000
+print("Emulate ARM code")
+print("Shielder")
+try:
+# Initialize emulator in ARM-32bit mode
+# with "ARM" ARM instruction set
+mu = Uc(UC_ARCH_ARM, UC_MODE_ARM)
+# map U-boot in memory for this emulation
+# "// (1024 * 1024)" for memory allign pourses
+i = len(ARM_CODE32) // (1024 * 1024)
+mem_size = (1024 * 1024) + (i * (1024 * 1024))
+mu.mem_map(ADDRESS, mem_size, perms=UC_PROT_ALL)
+# write machine code to be emulated to memory
+mu.mem_write(ADDRESS, ARM_CODE32)
+# map STACK
+stack_address = ADDRESS + mem_size
+# 2MB
+stack_size = (1024 * 1024) * 2
+mu.mem_map(stack_address, stack_size, perms=UC_PROT_ALL)
+# map the Kernel in RAM memory for this emulation
+# remember that RAM starts at 8000_0000
+# there we call RAM a sub-region of memory inside the RAM itself
+ram_address = ADDRESS + mem_size + stack_size
+ram_size = (1024 * 1024) * 8
+mu.mem_map(ram_address, ram_size, perms=UC_PROT_ALL)
+# write file to be decrypted to memory
+mu.mem_write(ram_address, FILE_TOBE_DEC)
+# initialize machine registries
+mu.reg_write(UC_ARM_REG_SP, stack_address)
+# first argument, memory pointer to the location of the file
+mu.reg_write(UC_ARM_REG_R0, ram_address)
+# second argument, memory pointer to the location on which write the file
+mu.reg_write(UC_ARM_REG_R1, ram_address)
+# third argument, block size to be read from memory pointed by r0
+mu.reg_write(UC_ARM_REG_R2, 512)
+# hook any instruction and disassembly them with capstone
+mu.hook_add(UC_HOOK_CODE, hook_code)
+# emulate code in infinite time
+# Address + start/end of the block_aes_decrypt function
+# this trick save much headaches
+mu.emu_start(ADDRESS+0x8c40, ADDRESS+0x8c44)
+# now print out some registers
+print("Emulation done. Below is the CPU context")
+r_r0 = mu.reg_read(UC_ARM_REG_R0)
+r_r1 = mu.reg_read(UC_ARM_REG_R1)
+r_r2 = mu.reg_read(UC_ARM_REG_R2)
+r_pc = mu.reg_read(UC_ARM_REG_PC)
+print(">>> r0 = 0x%x" %r_r0)
+print(">>> r1 = 0x%x" %r_r1)
+print(">>> r2 = 0x%x" %r_r2)
+print(">>> pc = 0x%x" %r_pc)
+print("\nReading data from first 512byte of the RAM at: "+hex(ram_address))
+print("==== BEGIN ====")
+ram_data = mu.mem_read(ram_address, 512)
+print(str(binascii.hexlify(ram_data)))
+print("==== END ====")
+# from the reversed binary, we know which are the magic bytes
+# at the beginning of the kernel
+if b"27051956" == binascii.hexlify(bytearray(ram_data[:4])):
+print("\nMagic Bytes match :)\n\n")
+with open("test.bin", "wb") as f:
+f.write(ram_data)
+except UcError as e:
+print("ERROR: %s" % e)</div><div class="collapse-overlay to-card/90 pointer-events-none absolute inset-0 bg-linear-to-b from-transparent via-transparent opacity-0 transition-opacity duration-300" hidden><button class="collapse-overlay-btn text-muted-foreground bg-card/80 border-border/50 hover:bg-primary/10 hover:text-primary hover:border-primary/30 absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center justify-center rounded-full border p-2 backdrop-blur-sm transition-all duration-200" type=button data-code-action=expand aria-label=Expand title=Expand>
+<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button></div></div></div></details><p>To decrypt the kernel that we have, we have to modify the code to work on our kernel image.</p><p>We have to modify</p><ul><li><code>ARM_CODE32</code> to contain just the u-boot code, which as we found before is at the <code>0x840</code> offset.</li><li><code>FILE_TOBE_DEC</code> also have to be changed to only include the encrypted part of the kernel image, so we can skip past the 64 bytes header.</li><li><code>ADDRESS</code> to start at <code>0x21000000</code></li><li>Add a <code>SIZE</code> to calculate the <strong>size of the kernel image file - 0x40 bytes for header</strong>. Use this <code>SIZE</code> to be placed into the <code>R2</code> register, and also to be read from <code>ram_address</code>.</li></ul><p>Lastly, we have to modify the <code>start</code> and <code>end</code> addresses of the emulator according to the <strong>block_aes_decrypt</strong> function call address. We can find this address by searching for the string &ldquo;decrypt&rdquo; in Ghidra, and cross referencing the article&rsquo;s screenshot of the decompiled code.</p><figure><img src="/gitbook/assets/image (6) (1) (1).png" alt><figcaption><p>Finding "decrypt" string</p></figcaption></figure><p>Jumping to the address of this function in IDA (0x2101305c), we can see a cleaner decompiled code (as compared to Ghidra). Using the strings as context clues, we can guess what each function represents, and so we find the <strong>block_aes_decrypt</strong> function based on the error message.</p><figure><img src="/gitbook/assets/image (7) (1).png" alt><figcaption><p>Decompiled code in IDA</p></figcaption></figure><p>We can then use the address that call this function, following the article!</p><figure><img src="/gitbook/assets/image (8).png" alt><figcaption><p>Addresses for block_aes_decrypt call</p></figcaption></figure><h3 id=kernel-decryption-script>Kernel Decryption Script<a href=#kernel-decryption-script class=heading-anchor aria-label="Link to this section"><svg class="h-4 w-4" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></g></svg></a></h3><div class="tabs-wrapper border-border bg-card text-foreground my-6 rounded-xl border shadow-sm" id=tabs-0 data-tabs><div class="tabs-panels px-3 pb-3 sm:px-4 sm:pb-4"><section id=tabs-0-panel-0 class="tabs-panel outline-none" role=tabpanel data-tabs-panel data-tab-label=decrypt_kernel.py><div class="tabs-panel-content px-4 pt-4 *:first:mt-0 *:last:mb-0 [&_.code-block-container:first-child]:mt-0 [&_.code-block-container:last-child]:mb-0"><div class="code-block-container border-border bg-card my-6 overflow-hidden rounded-xl border shadow-sm transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md" data-code-block data-code-id=code-0 data-collapsible=true data-default-state=expanded data-collapsed=false data-auto-collapse-lines=30 data-auto-collapse-height=400 data-collapsed-height=120><div class="code-block-header bg-muted/30 border-border flex items-center justify-between border-b px-4 py-3"><div class="flex items-center gap-2"><div class="text-muted-foreground shrink-0"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4 4 4-4 4M6 16l-4-4 4-4"/></svg></div><span class="text-muted-foreground text-sm font-medium">PYTHON</span></div><div class="flex items-center gap-2"><button class="collapse-code-btn text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium transition-all duration-200 ease-out focus:ring-2 focus:outline-none" type=button data-code-action=toggle-collapse data-label-expand=Expand data-label-collapse=Collapse title=Collapse aria-label=Collapse aria-controls=code-0 aria-expanded=true>
+<span class="collapse-chevron transition-transform duration-200 ease-out"><svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+</span><span class="collapse-text hidden sm:inline">Collapse</span>
+</button>
+<button class="copy-code-btn text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium transition-all duration-200 ease-out focus:ring-2 focus:outline-none" type=button data-code-action=copy data-label-copy=Copy data-label-copied=Copied title=Copy aria-label=Copy>
+<span class=copy-icon><svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+</span><span class="copy-text hidden sm:inline">Copy</span></button></div></div><div class="code-block-content relative" id=code-0><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>__future__</span> <span class=kn>import</span> <span class=n>print_function</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>ctypes</span> <span class=kn>import</span> <span class=n>sizeof</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>unicorn</span> <span class=kn>import</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>unicorn.arm_const</span> <span class=kn>import</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>unicorn.unicorn_const</span> <span class=kn>import</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>capstone</span> <span class=kn>import</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>struct</span><span class=o>,</span> <span class=nn>binascii</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#callback of the code hook</span>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>hook_code</span><span class=p>(</span><span class=n>uc</span><span class=p>,</span> <span class=n>addr</span><span class=p>,</span> <span class=n>size</span><span class=p>,</span> <span class=n>user_data</span><span class=p>):</span> 
+</span></span><span class=line><span class=cl>	<span class=n>mem</span> <span class=o>=</span> <span class=n>uc</span><span class=o>.</span><span class=n>mem_read</span><span class=p>(</span><span class=n>addr</span><span class=p>,</span> <span class=n>size</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=n>disas_single</span><span class=p>(</span><span class=nb>bytes</span><span class=p>(</span><span class=n>mem</span><span class=p>),</span><span class=n>addr</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#disassembly each istruction and print the mnemonic name</span>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>disas_single</span><span class=p>(</span><span class=n>data</span><span class=p>,</span><span class=n>addr</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>		<span class=k>for</span> <span class=n>i</span> <span class=ow>in</span> <span class=n>capmd</span><span class=o>.</span><span class=n>disasm</span><span class=p>(</span><span class=n>data</span><span class=p>,</span><span class=n>addr</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>			<span class=nb>print</span><span class=p>(</span><span class=s2>&#34;0x</span><span class=si>%x</span><span class=s2>:</span><span class=se>\t</span><span class=si>%s</span><span class=se>\t</span><span class=si>%s</span><span class=s2>&#34;</span> <span class=o>%</span> <span class=p>(</span><span class=n>i</span><span class=o>.</span><span class=n>address</span><span class=p>,</span> <span class=n>i</span><span class=o>.</span><span class=n>mnemonic</span><span class=p>,</span> <span class=n>i</span><span class=o>.</span><span class=n>op_str</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>			<span class=k>break</span>
+</span></span><span class=line><span class=cl>			
+</span></span><span class=line><span class=cl><span class=c1>#create a new instance of capstone</span>
+</span></span><span class=line><span class=cl><span class=n>capmd</span> <span class=o>=</span> <span class=n>Cs</span><span class=p>(</span><span class=n>UC_ARCH_ARM</span><span class=p>,</span> <span class=n>UC_MODE_ARM</span><span class=p>)</span> 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#code to be emulated</span>
+</span></span><span class=line><span class=cl><span class=n>in_file</span> <span class=o>=</span> <span class=nb>open</span><span class=p>(</span><span class=s2>&#34;dhboot.bin.img&#34;</span><span class=p>,</span> <span class=s2>&#34;rb&#34;</span><span class=p>)</span> <span class=c1># opening for [r]eading as [b]inary</span>
+</span></span><span class=line><span class=cl><span class=n>ARM_CODE32</span> <span class=o>=</span> <span class=n>in_file</span><span class=o>.</span><span class=n>read</span><span class=p>()[</span><span class=mh>0x840</span><span class=p>:]</span>
+</span></span><span class=line><span class=cl><span class=n>in_file</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># file to be decrypted</span>
+</span></span><span class=line><span class=cl><span class=n>in_file</span> <span class=o>=</span> <span class=nb>open</span><span class=p>(</span><span class=s2>&#34;kernel.img&#34;</span><span class=p>,</span> <span class=s2>&#34;rb&#34;</span><span class=p>)</span> <span class=c1># opening for [r]eading as [b]inary</span>
+</span></span><span class=line><span class=cl><span class=n>FILE_TOBE_DEC</span> <span class=o>=</span> <span class=n>in_file</span><span class=o>.</span><span class=n>read</span><span class=p>()[</span><span class=mh>0x40</span><span class=p>:]</span>
+</span></span><span class=line><span class=cl><span class=n>in_file</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># U-Boot base address</span>
+</span></span><span class=line><span class=cl><span class=c1># we have seen this in the previous article (DDR start at 8000_0000)</span>
+</span></span><span class=line><span class=cl><span class=n>ADDRESS</span> <span class=o>=</span> <span class=mh>0x21000000</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>KERNEL_START</span> <span class=o>=</span> <span class=mh>0x40</span>
+</span></span><span class=line><span class=cl><span class=n>KERNEL_SIZE</span> <span class=o>=</span> <span class=mh>0x2792f8</span> <span class=c1># total size of kernel image file</span>
+</span></span><span class=line><span class=cl><span class=n>SIZE</span> <span class=o>=</span> <span class=n>KERNEL_SIZE</span> <span class=o>-</span> <span class=n>KERNEL_START</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=s2>&#34;Emulate ARM code&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=s2>&#34;Shielder&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=k>try</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=c1># Initialize emulator in ARM-32bit mode</span>
+</span></span><span class=line><span class=cl>    <span class=c1># with &#34;ARM&#34; ARM instruction set</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span> <span class=o>=</span> <span class=n>Uc</span><span class=p>(</span><span class=n>UC_ARCH_ARM</span><span class=p>,</span> <span class=n>UC_MODE_ARM</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># map U-boot in memory for this emulation</span>
+</span></span><span class=line><span class=cl>    <span class=c1># &#34;// (1024 * 1024)&#34; for memory allign pourses</span>
+</span></span><span class=line><span class=cl>    <span class=n>i</span> <span class=o>=</span> <span class=nb>len</span><span class=p>(</span><span class=n>ARM_CODE32</span><span class=p>)</span> <span class=o>//</span> <span class=p>(</span><span class=mi>1024</span> <span class=o>*</span> <span class=mi>1024</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>mem_size</span> <span class=o>=</span> <span class=p>(</span><span class=mi>1024</span> <span class=o>*</span> <span class=mi>1024</span><span class=p>)</span> <span class=o>+</span> <span class=p>(</span><span class=n>i</span> <span class=o>*</span> <span class=p>(</span><span class=mi>1024</span> <span class=o>*</span> <span class=mi>1024</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>mem_map</span><span class=p>(</span><span class=n>ADDRESS</span><span class=p>,</span> <span class=n>mem_size</span><span class=p>,</span> <span class=n>perms</span><span class=o>=</span><span class=n>UC_PROT_ALL</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=c1># write machine code to be emulated to memory</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>mem_write</span><span class=p>(</span><span class=n>ADDRESS</span><span class=p>,</span> <span class=n>ARM_CODE32</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=c1># map STACK</span>
+</span></span><span class=line><span class=cl>    <span class=n>stack_address</span> <span class=o>=</span> <span class=n>ADDRESS</span> <span class=o>+</span> <span class=n>mem_size</span>
+</span></span><span class=line><span class=cl>    <span class=c1># 2MB </span>
+</span></span><span class=line><span class=cl>    <span class=n>stack_size</span> <span class=o>=</span> <span class=p>(</span><span class=mi>1024</span> <span class=o>*</span> <span class=mi>1024</span><span class=p>)</span> <span class=o>*</span> <span class=mi>2</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>mem_map</span><span class=p>(</span><span class=n>stack_address</span><span class=p>,</span> <span class=n>stack_size</span><span class=p>,</span> <span class=n>perms</span><span class=o>=</span><span class=n>UC_PROT_ALL</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=c1># map the Kernel in RAM memory for this emulation</span>
+</span></span><span class=line><span class=cl>    <span class=c1># remember that RAM starts at 8000_0000</span>
+</span></span><span class=line><span class=cl>    <span class=c1># there we call RAM a sub-region of memory inside the RAM itself </span>
+</span></span><span class=line><span class=cl>    <span class=n>ram_address</span> <span class=o>=</span> <span class=n>ADDRESS</span> <span class=o>+</span> <span class=n>mem_size</span> <span class=o>+</span> <span class=n>stack_size</span>
+</span></span><span class=line><span class=cl>    <span class=n>ram_size</span> <span class=o>=</span> <span class=p>(</span><span class=mi>1024</span> <span class=o>*</span> <span class=mi>1024</span><span class=p>)</span> <span class=o>*</span> <span class=mi>8</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>mem_map</span><span class=p>(</span><span class=n>ram_address</span><span class=p>,</span> <span class=n>ram_size</span><span class=p>,</span> <span class=n>perms</span><span class=o>=</span><span class=n>UC_PROT_ALL</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=c1># write file to be decrypted to memory</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>mem_write</span><span class=p>(</span><span class=n>ram_address</span><span class=p>,</span> <span class=n>FILE_TOBE_DEC</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># initialize machine registries</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>reg_write</span><span class=p>(</span><span class=n>UC_ARM_REG_SP</span><span class=p>,</span> <span class=n>stack_address</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=c1># first argument, memory pointer to the location of the file</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>reg_write</span><span class=p>(</span><span class=n>UC_ARM_REG_R0</span><span class=p>,</span> <span class=n>ram_address</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=c1># second argument, memory pointer to the location on which write the file</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>reg_write</span><span class=p>(</span><span class=n>UC_ARM_REG_R1</span><span class=p>,</span> <span class=n>ram_address</span><span class=p>)</span> 
+</span></span><span class=line><span class=cl>    <span class=c1># third argument, block size to be read from memory pointed by r0</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>reg_write</span><span class=p>(</span><span class=n>UC_ARM_REG_R2</span><span class=p>,</span> <span class=n>SIZE</span><span class=p>)</span> 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># hook any instruction and disassembly them with capstone</span>
+</span></span><span class=line><span class=cl>    <span class=c1># mu.hook_add(UC_HOOK_CODE, hook_code)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># emulate code in infinite time</span>
+</span></span><span class=line><span class=cl>    <span class=c1># Address + start/end of the block_aes_decrypt function</span>
+</span></span><span class=line><span class=cl>    <span class=c1># this trick save much headaches</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>emu_start</span><span class=p>(</span><span class=mh>0x210130CC</span><span class=p>,</span> <span class=mh>0x210130D0</span><span class=p>)</span> 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># now print out some registers</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;Emulation done. Below is the CPU context&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>r_r0</span> <span class=o>=</span> <span class=n>mu</span><span class=o>.</span><span class=n>reg_read</span><span class=p>(</span><span class=n>UC_ARM_REG_R0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>r_r1</span> <span class=o>=</span> <span class=n>mu</span><span class=o>.</span><span class=n>reg_read</span><span class=p>(</span><span class=n>UC_ARM_REG_R1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>r_r2</span> <span class=o>=</span> <span class=n>mu</span><span class=o>.</span><span class=n>reg_read</span><span class=p>(</span><span class=n>UC_ARM_REG_R2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>r_pc</span> <span class=o>=</span> <span class=n>mu</span><span class=o>.</span><span class=n>reg_read</span><span class=p>(</span><span class=n>UC_ARM_REG_PC</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;&gt;&gt;&gt; r0 = 0x</span><span class=si>%x</span><span class=s2>&#34;</span> <span class=o>%</span><span class=n>r_r0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;&gt;&gt;&gt; r1 = 0x</span><span class=si>%x</span><span class=s2>&#34;</span> <span class=o>%</span><span class=n>r_r1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;&gt;&gt;&gt; r2 = 0x</span><span class=si>%x</span><span class=s2>&#34;</span> <span class=o>%</span><span class=n>r_r2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;&gt;&gt;&gt; pc = 0x</span><span class=si>%x</span><span class=s2>&#34;</span> <span class=o>%</span><span class=n>r_pc</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># print(&#34;\nReading data from first 512byte of the RAM at: &#34;+hex(ram_address))</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;==== BEGIN ====&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>ram_data</span> <span class=o>=</span> <span class=n>mu</span><span class=o>.</span><span class=n>mem_read</span><span class=p>(</span><span class=n>ram_address</span><span class=p>,</span> <span class=n>SIZE</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=c1># print(str(binascii.hexlify(ram_data)))</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;==== END ====&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># from the reversed binary, we know which are the magic bytes</span>
+</span></span><span class=line><span class=cl>    <span class=c1># at the beginning of the kernel</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=sa>b</span><span class=s2>&#34;27051956&#34;</span> <span class=o>==</span> <span class=n>binascii</span><span class=o>.</span><span class=n>hexlify</span><span class=p>(</span><span class=nb>bytearray</span><span class=p>(</span><span class=n>ram_data</span><span class=p>[:</span><span class=mi>4</span><span class=p>])):</span>
+</span></span><span class=line><span class=cl>        <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;</span><span class=se>\n</span><span class=s2>Magic Bytes match :)</span><span class=se>\n\n</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>with</span> <span class=nb>open</span><span class=p>(</span><span class=s2>&#34;kernel.bin&#34;</span><span class=p>,</span> <span class=s2>&#34;wb&#34;</span><span class=p>)</span> <span class=k>as</span> <span class=n>f</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=n>f</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=n>ram_data</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>except</span> <span class=n>UcError</span> <span class=k>as</span> <span class=n>e</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;ERROR: </span><span class=si>%s</span><span class=s2>&#34;</span> <span class=o>%</span> <span class=n>e</span><span class=p>)</span></span></span></code></pre></div><div hidden data-code-source>from __future__ import print_function
+from ctypes import sizeof
+from unicorn import *
+from unicorn.arm_const import *
+from unicorn.unicorn_const import *
+from capstone import *
+import struct, binascii
+#callback of the code hook
+def hook_code(uc, addr, size, user_data):
+mem = uc.mem_read(addr, size)
+disas_single(bytes(mem),addr)
+#disassembly each istruction and print the mnemonic name
+def disas_single(data,addr):
+for i in capmd.disasm(data,addr):
+print("0x%x:\t%s\t%s" % (i.address, i.mnemonic, i.op_str))
+break
+#create a new instance of capstone
+capmd = Cs(UC_ARCH_ARM, UC_MODE_ARM)
+#code to be emulated
+in_file = open("dhboot.bin.img", "rb") # opening for [r]eading as [b]inary
+ARM_CODE32 = in_file.read()[0x840:]
+in_file.close()
+# file to be decrypted
+in_file = open("kernel.img", "rb") # opening for [r]eading as [b]inary
+FILE_TOBE_DEC = in_file.read()[0x40:]
+in_file.close()
+# U-Boot base address
+# we have seen this in the previous article (DDR start at 8000_0000)
+ADDRESS = 0x21000000
+KERNEL_START = 0x40
+KERNEL_SIZE = 0x2792f8 # total size of kernel image file
+SIZE = KERNEL_SIZE - KERNEL_START
+print("Emulate ARM code")
+print("Shielder")
+try:
+# Initialize emulator in ARM-32bit mode
+# with "ARM" ARM instruction set
+mu = Uc(UC_ARCH_ARM, UC_MODE_ARM)
+# map U-boot in memory for this emulation
+# "// (1024 * 1024)" for memory allign pourses
+i = len(ARM_CODE32) // (1024 * 1024)
+mem_size = (1024 * 1024) + (i * (1024 * 1024))
+mu.mem_map(ADDRESS, mem_size, perms=UC_PROT_ALL)
+# write machine code to be emulated to memory
+mu.mem_write(ADDRESS, ARM_CODE32)
+# map STACK
+stack_address = ADDRESS + mem_size
+# 2MB
+stack_size = (1024 * 1024) * 2
+mu.mem_map(stack_address, stack_size, perms=UC_PROT_ALL)
+# map the Kernel in RAM memory for this emulation
+# remember that RAM starts at 8000_0000
+# there we call RAM a sub-region of memory inside the RAM itself
+ram_address = ADDRESS + mem_size + stack_size
+ram_size = (1024 * 1024) * 8
+mu.mem_map(ram_address, ram_size, perms=UC_PROT_ALL)
+# write file to be decrypted to memory
+mu.mem_write(ram_address, FILE_TOBE_DEC)
+# initialize machine registries
+mu.reg_write(UC_ARM_REG_SP, stack_address)
+# first argument, memory pointer to the location of the file
+mu.reg_write(UC_ARM_REG_R0, ram_address)
+# second argument, memory pointer to the location on which write the file
+mu.reg_write(UC_ARM_REG_R1, ram_address)
+# third argument, block size to be read from memory pointed by r0
+mu.reg_write(UC_ARM_REG_R2, SIZE)
+# hook any instruction and disassembly them with capstone
+# mu.hook_add(UC_HOOK_CODE, hook_code)
+# emulate code in infinite time
+# Address + start/end of the block_aes_decrypt function
+# this trick save much headaches
+mu.emu_start(0x210130CC, 0x210130D0)
+# now print out some registers
+print("Emulation done. Below is the CPU context")
+r_r0 = mu.reg_read(UC_ARM_REG_R0)
+r_r1 = mu.reg_read(UC_ARM_REG_R1)
+r_r2 = mu.reg_read(UC_ARM_REG_R2)
+r_pc = mu.reg_read(UC_ARM_REG_PC)
+print(">>> r0 = 0x%x" %r_r0)
+print(">>> r1 = 0x%x" %r_r1)
+print(">>> r2 = 0x%x" %r_r2)
+print(">>> pc = 0x%x" %r_pc)
+# print("\nReading data from first 512byte of the RAM at: "+hex(ram_address))
+print("==== BEGIN ====")
+ram_data = mu.mem_read(ram_address, SIZE)
+# print(str(binascii.hexlify(ram_data)))
+print("==== END ====")
+# from the reversed binary, we know which are the magic bytes
+# at the beginning of the kernel
+if b"27051956" == binascii.hexlify(bytearray(ram_data[:4])):
+print("\nMagic Bytes match :)\n\n")
+with open("kernel.bin", "wb") as f:
+f.write(ram_data)
+except UcError as e:
+print("ERROR: %s" % e)</div><div class="collapse-overlay to-card/90 pointer-events-none absolute inset-0 bg-linear-to-b from-transparent via-transparent opacity-0 transition-opacity duration-300" hidden><button class="collapse-overlay-btn text-muted-foreground bg-card/80 border-border/50 hover:bg-primary/10 hover:text-primary hover:border-primary/30 absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center justify-center rounded-full border p-2 backdrop-blur-sm transition-all duration-200" type=button data-code-action=expand aria-label=Expand title=Expand>
+<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button></div></div></div></div></section></div></div><figure><img src="/gitbook/assets/image (10).png" alt><figcaption><p>Decrypted kernel header</p></figcaption></figure><h3 id=dissecting-kernel-elf-understanding-the-decryption>Dissecting Kernel ELF: Understanding the Decryption<a href=#dissecting-kernel-elf-understanding-the-decryption class=heading-anchor aria-label="Link to this section"><svg class="h-4 w-4" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></g></svg></a></h3><p>We can convert the decrypted kernel image into an elf file using <a href=https://github.com/marin-m/vmlinux-to-elf target=_blank class="inline-flex items-center gap-1">vmlinux-to-elf<svg class="h-3 w-3 flex-shrink-0" id="external-link" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 3h6v6m-11 5L21 3m-3 10v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/></svg>
+</a>so that we can reverse the decryption process. As there is no write-ups or articles on how to reverse the decryption of the file system, we will have to reverse it ourselves :disappointed_relieved:. We run <code>vmlinux-to-elf kernel.bin kernel.elf --e-machine 40 --bit-size 32</code> (searching up ARM e machine gives us the number 40).</p><p>Loading the binary up in IDA Pro, we are given this message that indicates there are ARM and THUMB instructions that can be switched back and forth. The instruction can be changed from ARM to THUMB in IDA by using <code>Alt-G</code> and changing the <code>T</code> register value from <code>0</code> to <code>1</code>.</p><figure><img src="/gitbook/assets/image (7).png" alt><figcaption></figcaption></figure><p>Looking through the functions, we can spot some function names containing &ldquo;dahua&rdquo; and back in the bootloader, we can find several strings (e.g. <em>DH-DVR-LBX</em>) that indicates that we are looking at a &ldquo;Dahua IP Camera&rdquo; Firmware.</p><p>Searching for &ldquo;dahua ip camera reversing&rdquo; on google, we can find a talk on Dahua IP Camera reversing made at OFFZONE 2022 <a href=https://2022.offzone.moscow/report/dahua-ip-camera-where-to-look-what-to-poke/ target=_blank class="inline-flex items-center gap-1">https://2022.offzone.moscow/report/dahua-ip-camera-where-to-look-what-to-poke/<svg class="h-3 w-3 flex-shrink-0" id="external-link" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 3h6v6m-11 5L21 3m-3 10v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/></svg>
+</a>. This includes a slide on the broad overview on how the kernel decrypts the romfs.</p><figure><img src="/gitbook/assets/image (2) (1) (1).png" alt><figcaption><p>Kernel romfs decryption</p></figcaption></figure><p>This talk is pretty old, so we can assume that the method of decryption is different for the firmware we have, but we can guess that some aspects of the decryption is similar, like how it uses <code>AES CBC</code>.</p><p>We can see that the binary is thankfully not stripped so we can start off by searching for functions with &ldquo;decrypt&rdquo; in the name.</p><figure><img src="/gitbook/assets/image (1) (1) (1).png" alt><figcaption></figcaption></figure><p>We only see 2 functions that uses AES, so we can look into those and find out where those functions are called from. Looking at <strong>SecUnit_AES_decrypt</strong>, we find the call <mark style=background-color:blue>SecUnit_EncryptFirmware ⇒ SecUnit_FirmwareAesCBCDecode ⇒ SecUnit_AES_decrypt, SecUnit_EncryptFirmware</mark> also calls <strong>SecUnit_AES_set_decrypt_key</strong>, which we can assume just sets the AES key for decryption.</p><p>However, we can&rsquo;t seem to find any references to <strong>SecUnit_EncryptFirmware</strong> by default. Remember that the binary uses both ARM and THUMB instructions? The reason the reference cannot be found is because the call was made by a THUMB instruction and IDA doesn&rsquo;t know that the function is in THUMB, so no reference. This can be resolved by spinning up another IDA instance and viewing it entirely in THUMB instructions.</p><figure><img src="/gitbook/assets/image (3) (1) (1).png" alt><figcaption><p>Set ARM off</p></figcaption></figure><p>After IDA finishes analyzing the binary, we can go the <strong>SecUnit_EncryptFirmware</strong> and check the references, and it seems like <strong>block_aes_decrypt</strong> calls it!</p><figure><img src="/gitbook/assets/image (42).png" alt><figcaption><p>SecUnit_EncryptFirmware References</p></figcaption></figure><p>By doing this, we can find out that the function calls are <mark style=background-color:blue>mtdblock_readsect ⇒ block_aes_decrypt ⇒ SecUnit_EncryptFirmware ⇒ SecUnit_FirmwareAesCBCDecode</mark>. From reversing these functions, we discover a few things that can aid us in emulating the decryption:</p><ol><li>AES CBC 512 is used</li><li>AES key is retrieved and used in the <strong>SecUnit_EncryptFirmware</strong> function</li><li>Function prototype <mark style=color:#ff0>SecUnit_EncryptFirmware(char *srcbuf, uint32_t size, char *dstbuf, uint32_t size2, uint8_t cryptoflags, int sector_skip, int* pCounter)</mark></li><li>For <strong>SecUnit_EncryptFirmware</strong>, there are hardcoded parameters to decrypt a sector, which is <code>cryptoflags = 0x11</code> and <code>sector_skip = 2</code>. These hardcoded parameters are passed in when <strong>block_aes_decrypt</strong> is called.</li></ol><p>With these information, we can pretty much emulate the <strong>SecUnit_EncryptFirmware</strong> function and decrypt the romfs right? Well, not quite&mldr;</p><p>In order to find if the file decrypted properly, we have to find what to look out for in a properly decrypted squashfs image. In a normal unencrypted squashfs image, the data past the romfs header would still have a valid header starting with <code>hsqs8</code>, which represents a squashfs filesystem. We can get an example <code>romfs-x.squashfs.img</code> from <a href="https://snr.systems/site/data-files/Dahua/Firmware/NVR4216-4232-16P-4KS2/DH_NVR4XXX-4KS2_Eng_V3.216.0000000.0.R.180605/?utm_source=chatgpt.com" target=_blank class="inline-flex items-center gap-1">https://snr.systems/site/data-files/Dahua/Firmware/NVR4216-4232-16P-4KS2/DH_NVR4XXX-4KS2_Eng_V3.216.0000000.0.R.180605/?utm_source=chatgpt.com<svg class="h-3 w-3 flex-shrink-0" id="external-link" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 3h6v6m-11 5L21 3m-3 10v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/></svg>
+</a>as a reference.</p><figure><img src="/gitbook/assets/image (44).png" alt><figcaption><p>Example of unencrypted romfs</p></figcaption></figure><p>However, if we run the emulator, we still get an unidentifiable file.</p><figure><img src="/gitbook/assets/image (43).png" alt><figcaption><p>Wrongly decrypted romfs</p></figcaption></figure><blockquote class="border-primary bg-muted/30 hover:bg-muted/40 my-6 rounded-r-lg border-l-4 py-4 pr-4 pl-6 italic transition-all duration-200 ease-out hover:translate-x-1"><div class="prose prose-sm max-w-none"><p><strong>WARNING</strong></p></div></blockquote><script>function toggleAlert(e){const t=document.getElementById(e+"-content"),n=document.getElementById(e+"-chevron"),s=t.previousElementSibling;t.classList.contains("hidden")?(t.classList.remove("hidden"),n.style.transform="rotate(0deg)",s.setAttribute("aria-expanded","true")):(t.classList.add("hidden"),n.style.transform="rotate(-90deg)",s.setAttribute("aria-expanded","false"))}document.addEventListener("DOMContentLoaded",function(){const e=document.querySelectorAll(".alert-content.hidden");e.forEach(function(e){const n=e.id.replace("-content",""),t=document.getElementById(n+"-chevron");t&&(t.style.transform="rotate(-90deg)")})})</script><p>One thing to note is that in <strong>SecUnit_EncryptFirmware</strong>, there are mmioset function calls at <strong>0xC0280C04</strong>, <strong>0xC0280C14</strong>, and <strong>0xC0280C24</strong>. The function mainly runs on ARM instructions, but mmioset runs on THUMB instructions.</p><p>If unicorn cannot switch from ARM to THUMB instructions, then we can circumvent this by patching these function calls out with NOPs <mark style=background-color:red>00 F0 20 E2</mark>. (it should run fine without patching)</p><p>So what can be the issue? At this point I was puzzled. I read over the functions and understood that the decryption is performed on every 3rd sector, because the sector_skip was set to 2. Running binwalk showed that some sectors were still identifiable as &ldquo;xz compressed data&rdquo;, diffing the result to the original also showed that it tries to decrypt every 3rd sector.</p><p>This can only mean that one or some of my parameters to the AES decryption is incorrect. AES decryption only has 2 important values other than the source buffer and destination buffer. It&rsquo;s either the IV or the KEY that is wrong. Since I know the IV starts from 0 from a buffer on the stack in the <strong>mtdblock_readsect</strong>, then sure only the KEY is wrong.</p><p>The AES key can be seen taken from a global variable <code>g_secUnitKey</code> and based on the cryptoflags passed into the function, there can be encryption and decryption and the use of 3 different AES key offset from <code>g_secUnitKey</code>. However, our cryptoflags have to be fixed to 0x11 based on the arguments passed into <strong>block_aes_decrypt</strong>.</p><h3 id=deriving-the-aes-key-tracing-key-initialization>Deriving the AES Key: Tracing Key Initialization<a href=#deriving-the-aes-key-tracing-key-initialization class=heading-anchor aria-label="Link to this section"><svg class="h-4 w-4" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></g></svg></a></h3><p>Trying to see references to the AES key <code>g_secUnitkey</code>, we see one especially noteworthy.</p><figure><img src="/gitbook/assets/image (45).png" alt><figcaption><p>SecUnit_SetKeyFactor</p></figcaption></figure><p>The function name seems to set the SecUnit key and we can see that this is called by <mark style=background-color:blue>prepare_namespace ⇒ block_aes_set_keyfactor</mark>. Now, this <strong>block_aes_set_keyfactor</strong> seems to be what we are finding because when we reverse it, we can determine how the key is initialized.</p><p>The <strong>block_aes_set_keyfactor</strong> first initializes an intermediary 16 byte buffer for the key on the stack.</p><figure><img src="/gitbook/assets/image (47).png" alt><figcaption><p>block_aes_set_keyfactor</p></figcaption></figure><p>It then calls <strong>firmware_get_key_constprop_0</strong>, which grabs data from several global variables like <code>AES_KEY_N</code> and a reference to a string &ldquo;ssc325&rdquo;.</p><p>It then uses these to hash the original key with SHA256, then perform some XOR and store the resulting value in <code>keybuf</code>.</p><figure><img src="/gitbook/assets/image (49).png" alt><figcaption><p>firmware_get_key_constprop_0</p></figcaption></figure><p>After this is done, <strong>block_aes_set_keyfactor</strong> calls <strong>SecUnit_SetKeyFactor</strong> with the <code>keybuf</code>, the size of the key, and a <code>keyid</code> which is a offset to the <code>g_secUnitKey</code>, which is hardcoded as the value <code>1</code>. This aligns with the key offset that is used during decryption (0x11 &amp;0xF as cryptoflags)!</p><p>The function calls <strong>SecUnit_FirmwareFactors</strong> which is a confusing function to look through. But note that if the function completes without any errors, then memcpy is performed from the <code>keybuf</code> into the <code>g_secUnitKey</code> global variable at the offset of <code>keyid</code>.</p><figure><img src="/gitbook/assets/image (52).png" alt><figcaption><p>SecUnit_SetKeyFactor</p></figcaption></figure><p>This means that we can emulate both functions to get the correct AES key in order for the decryption to properly decrypt the romfs!</p><h3 id=emulating-kernel-decryption-romfs-decryption>Emulating Kernel Decryption: RomFS Decryption<a href=#emulating-kernel-decryption-romfs-decryption class=heading-anchor aria-label="Link to this section"><svg class="h-4 w-4" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></g></svg></a></h3><p>I had to emulate the functions individually because of how <strong>firmware_get_key_constprop_0</strong> runs on THUMB instructions, while <strong>SecUnit_SetKeyFactor</strong> runs on ARM instructions.</p><p>We first emulate <strong>firmware_get_key_constprop_0</strong> and retrieve the key in keybuf, then pass that key value to our other emulator that emulates <strong>SecUnit_SetKeyFactor</strong>. Emulating the function, we then read the value where the key was memcpy&rsquo;ed to, then we pass this key into the correct address where <strong>SecUnit_EncryptFirmware</strong> would retrieve it from (an offset from <code>g_secUnitKey</code>)!</p><p>Putting these all together, we can successfully decrypt the romfs, and then run unsquashfs to extract the files and find the flag &#9786;&#xfe0f;</p><figure><img src="/gitbook/assets/image (50).png" alt><figcaption><p>Decrypting and Extracting files</p></figcaption></figure><figure><img src="/gitbook/assets/image (51).png" alt><figcaption><p>Flag captured :)</p></figcaption></figure><hr><h3 id=romfs-decryption-scripts>Romfs Decryption Scripts<a href=#romfs-decryption-scripts class=heading-anchor aria-label="Link to this section"><svg class="h-4 w-4" aria-hidden="true" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></g></svg></a></h3><div class="tabs-wrapper border-border bg-card text-foreground my-6 rounded-xl border shadow-sm" id=tabs-1 data-tabs><div class="tabs-panels px-3 pb-3 sm:px-4 sm:pb-4"><section id=tabs-1-panel-0 class="tabs-panel outline-none" role=tabpanel data-tabs-panel data-tab-label=getkey.py><div class="tabs-panel-content px-4 pt-4 *:first:mt-0 *:last:mb-0 [&_.code-block-container:first-child]:mt-0 [&_.code-block-container:last-child]:mb-0"><div class="code-block-container border-border bg-card my-6 overflow-hidden rounded-xl border shadow-sm transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md" data-code-block data-code-id=code-0 data-collapsible=true data-default-state=expanded data-collapsed=false data-auto-collapse-lines=30 data-auto-collapse-height=400 data-collapsed-height=120><div class="code-block-header bg-muted/30 border-border flex items-center justify-between border-b px-4 py-3"><div class="flex items-center gap-2"><div class="text-muted-foreground shrink-0"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4 4 4-4 4M6 16l-4-4 4-4"/></svg></div><span class="text-muted-foreground text-sm font-medium">PYTHON</span></div><div class="flex items-center gap-2"><button class="collapse-code-btn text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium transition-all duration-200 ease-out focus:ring-2 focus:outline-none" type=button data-code-action=toggle-collapse data-label-expand=Expand data-label-collapse=Collapse title=Collapse aria-label=Collapse aria-controls=code-0 aria-expanded=true>
+<span class="collapse-chevron transition-transform duration-200 ease-out"><svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+</span><span class="collapse-text hidden sm:inline">Collapse</span>
+</button>
+<button class="copy-code-btn text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium transition-all duration-200 ease-out focus:ring-2 focus:outline-none" type=button data-code-action=copy data-label-copy=Copy data-label-copied=Copied title=Copy aria-label=Copy>
+<span class=copy-icon><svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+</span><span class="copy-text hidden sm:inline">Copy</span></button></div></div><div class="code-block-content relative" id=code-0><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>__future__</span> <span class=kn>import</span> <span class=n>print_function</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>ctypes</span> <span class=kn>import</span> <span class=n>sizeof</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>unicorn</span> <span class=kn>import</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>unicorn.arm_const</span> <span class=kn>import</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>unicorn.unicorn_const</span> <span class=kn>import</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>capstone</span> <span class=kn>import</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>struct</span><span class=o>,</span> <span class=nn>binascii</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>capstone.arm</span> <span class=kn>import</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>capmd</span> <span class=o>=</span> <span class=n>Cs</span><span class=p>(</span><span class=n>CS_ARCH_ARM</span><span class=p>,</span> <span class=n>CS_MODE_THUMB</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>in_file</span> <span class=o>=</span> <span class=nb>open</span><span class=p>(</span><span class=s2>&#34;kernel.elf&#34;</span><span class=p>,</span> <span class=s2>&#34;rb&#34;</span><span class=p>)</span> <span class=c1># opening for [r]eading as [b]inary</span>
+</span></span><span class=line><span class=cl><span class=n>ARM_CODE32</span> <span class=o>=</span> <span class=n>in_file</span><span class=o>.</span><span class=n>read</span><span class=p>()[</span><span class=mh>0x124</span><span class=p>:]</span>
+</span></span><span class=line><span class=cl><span class=n>in_file</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>ADDRESS</span> <span class=o>=</span> <span class=mh>0xc0008000</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=s2>&#34;Emulate ARM code&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=s2>&#34;Shielder&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=k>try</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span> <span class=o>=</span> <span class=n>Uc</span><span class=p>(</span><span class=n>UC_ARCH_ARM</span><span class=p>,</span> <span class=n>UC_MODE_THUMB</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>i</span> <span class=o>=</span> <span class=nb>len</span><span class=p>(</span><span class=n>ARM_CODE32</span><span class=p>)</span> <span class=o>//</span> <span class=p>(</span><span class=mi>1024</span> <span class=o>*</span> <span class=mi>1024</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>mem_size</span> <span class=o>=</span> <span class=p>(</span><span class=mi>1024</span> <span class=o>*</span> <span class=mi>1024</span><span class=p>)</span> <span class=o>+</span> <span class=p>(</span><span class=n>i</span> <span class=o>*</span> <span class=p>(</span><span class=mi>1024</span> <span class=o>*</span> <span class=mi>1024</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>mem_map</span><span class=p>(</span><span class=n>ADDRESS</span><span class=p>,</span> <span class=n>mem_size</span><span class=p>,</span> <span class=n>perms</span><span class=o>=</span><span class=n>UC_PROT_ALL</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>mem_write</span><span class=p>(</span><span class=n>ADDRESS</span><span class=p>,</span> <span class=n>ARM_CODE32</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=n>stack_address</span> <span class=o>=</span> <span class=n>ADDRESS</span> <span class=o>+</span> <span class=n>mem_size</span>
+</span></span><span class=line><span class=cl>    <span class=n>stack_size</span> <span class=o>=</span> <span class=p>(</span><span class=mi>1024</span> <span class=o>*</span> <span class=mi>1024</span><span class=p>)</span> <span class=o>*</span> <span class=mi>2</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>mem_map</span><span class=p>(</span><span class=n>stack_address</span><span class=p>,</span> <span class=n>stack_size</span><span class=p>,</span> <span class=n>perms</span><span class=o>=</span><span class=n>UC_PROT_ALL</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=n>ram_address</span> <span class=o>=</span> <span class=n>ADDRESS</span> <span class=o>+</span> <span class=n>mem_size</span> <span class=o>+</span> <span class=n>stack_size</span>
+</span></span><span class=line><span class=cl>    <span class=n>ram_size</span> <span class=o>=</span> <span class=p>(</span><span class=mi>1024</span> <span class=o>*</span> <span class=mi>1024</span><span class=p>)</span> <span class=o>*</span> <span class=mi>8</span> <span class=o>*</span> <span class=mi>8</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>mem_map</span><span class=p>(</span><span class=n>ram_address</span><span class=p>,</span> <span class=n>ram_size</span><span class=p>,</span> <span class=n>perms</span><span class=o>=</span><span class=n>UC_PROT_ALL</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>reg_write</span><span class=p>(</span><span class=n>UC_ARM_REG_SP</span><span class=p>,</span> <span class=n>stack_address</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>reg_write</span><span class=p>(</span><span class=n>UC_ARM_REG_R0</span><span class=p>,</span> <span class=n>ram_address</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>emu_start</span><span class=p>(</span><span class=mh>0xC017C6AC</span> <span class=o>|</span> <span class=mi>1</span><span class=p>,</span> <span class=mh>0xC017C720</span><span class=p>)</span> 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;Emulation done. Below is the CPU context&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>r_r0</span> <span class=o>=</span> <span class=n>mu</span><span class=o>.</span><span class=n>reg_read</span><span class=p>(</span><span class=n>UC_ARM_REG_R0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>r_r1</span> <span class=o>=</span> <span class=n>mu</span><span class=o>.</span><span class=n>reg_read</span><span class=p>(</span><span class=n>UC_ARM_REG_R1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>r_r2</span> <span class=o>=</span> <span class=n>mu</span><span class=o>.</span><span class=n>reg_read</span><span class=p>(</span><span class=n>UC_ARM_REG_R2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>r_pc</span> <span class=o>=</span> <span class=n>mu</span><span class=o>.</span><span class=n>reg_read</span><span class=p>(</span><span class=n>UC_ARM_REG_PC</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;&gt;&gt;&gt; r0 = 0x</span><span class=si>%x</span><span class=s2>&#34;</span> <span class=o>%</span><span class=n>r_r0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;&gt;&gt;&gt; r1 = 0x</span><span class=si>%x</span><span class=s2>&#34;</span> <span class=o>%</span><span class=n>r_r1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;&gt;&gt;&gt; r2 = 0x</span><span class=si>%x</span><span class=s2>&#34;</span> <span class=o>%</span><span class=n>r_r2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;&gt;&gt;&gt; pc = 0x</span><span class=si>%x</span><span class=s2>&#34;</span> <span class=o>%</span><span class=n>r_pc</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;==== BEGIN ====&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>ram_data</span> <span class=o>=</span> <span class=n>mu</span><span class=o>.</span><span class=n>mem_read</span><span class=p>(</span><span class=n>ram_address</span><span class=p>,</span> <span class=mi>16</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;==== END ====&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>with</span> <span class=nb>open</span><span class=p>(</span><span class=s2>&#34;key&#34;</span><span class=p>,</span> <span class=s2>&#34;wb&#34;</span><span class=p>)</span> <span class=k>as</span> <span class=n>f</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>f</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=n>ram_data</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;DONE!&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>except</span> <span class=n>UcError</span> <span class=k>as</span> <span class=n>e</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;ERROR: </span><span class=si>%s</span><span class=s2>&#34;</span> <span class=o>%</span> <span class=n>e</span><span class=p>)</span></span></span></code></pre></div><div hidden data-code-source>from __future__ import print_function
+from ctypes import sizeof
+from unicorn import *
+from unicorn.arm_const import *
+from unicorn.unicorn_const import *
+from capstone import *
+import struct, binascii
+from capstone.arm import *
+capmd = Cs(CS_ARCH_ARM, CS_MODE_THUMB)
+in_file = open("kernel.elf", "rb") # opening for [r]eading as [b]inary
+ARM_CODE32 = in_file.read()[0x124:]
+in_file.close()
+ADDRESS = 0xc0008000
+print("Emulate ARM code")
+print("Shielder")
+try:
+mu = Uc(UC_ARCH_ARM, UC_MODE_THUMB)
+i = len(ARM_CODE32) // (1024 * 1024)
+mem_size = (1024 * 1024) + (i * (1024 * 1024))
+mu.mem_map(ADDRESS, mem_size, perms=UC_PROT_ALL)
+mu.mem_write(ADDRESS, ARM_CODE32)
+stack_address = ADDRESS + mem_size
+stack_size = (1024 * 1024) * 2
+mu.mem_map(stack_address, stack_size, perms=UC_PROT_ALL)
+ram_address = ADDRESS + mem_size + stack_size
+ram_size = (1024 * 1024) * 8 * 8
+mu.mem_map(ram_address, ram_size, perms=UC_PROT_ALL)
+mu.reg_write(UC_ARM_REG_SP, stack_address)
+mu.reg_write(UC_ARM_REG_R0, ram_address)
+mu.emu_start(0xC017C6AC | 1, 0xC017C720)
+print("Emulation done. Below is the CPU context")
+r_r0 = mu.reg_read(UC_ARM_REG_R0)
+r_r1 = mu.reg_read(UC_ARM_REG_R1)
+r_r2 = mu.reg_read(UC_ARM_REG_R2)
+r_pc = mu.reg_read(UC_ARM_REG_PC)
+print(">>> r0 = 0x%x" %r_r0)
+print(">>> r1 = 0x%x" %r_r1)
+print(">>> r2 = 0x%x" %r_r2)
+print(">>> pc = 0x%x" %r_pc)
+print("==== BEGIN ====")
+ram_data = mu.mem_read(ram_address, 16)
+print("==== END ====")
+with open("key", "wb") as f:
+f.write(ram_data)
+print("DONE!")
+except UcError as e:
+print("ERROR: %s" % e)</div><div class="collapse-overlay to-card/90 pointer-events-none absolute inset-0 bg-linear-to-b from-transparent via-transparent opacity-0 transition-opacity duration-300" hidden><button class="collapse-overlay-btn text-muted-foreground bg-card/80 border-border/50 hover:bg-primary/10 hover:text-primary hover:border-primary/30 absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center justify-center rounded-full border p-2 backdrop-blur-sm transition-all duration-200" type=button data-code-action=expand aria-label=Expand title=Expand>
+<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button></div></div></div></div></section><section id=tabs-1-panel-1 class="tabs-panel outline-none" role=tabpanel data-tabs-panel data-tab-label=getkey2.py hidden><div class="tabs-panel-content px-4 pt-4 *:first:mt-0 *:last:mb-0 [&_.code-block-container:first-child]:mt-0 [&_.code-block-container:last-child]:mb-0"><div class="code-block-container border-border bg-card my-6 overflow-hidden rounded-xl border shadow-sm transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md" data-code-block data-code-id=code-0 data-collapsible=true data-default-state=expanded data-collapsed=false data-auto-collapse-lines=30 data-auto-collapse-height=400 data-collapsed-height=120><div class="code-block-header bg-muted/30 border-border flex items-center justify-between border-b px-4 py-3"><div class="flex items-center gap-2"><div class="text-muted-foreground shrink-0"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4 4 4-4 4M6 16l-4-4 4-4"/></svg></div><span class="text-muted-foreground text-sm font-medium">PYTHON</span></div><div class="flex items-center gap-2"><button class="collapse-code-btn text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium transition-all duration-200 ease-out focus:ring-2 focus:outline-none" type=button data-code-action=toggle-collapse data-label-expand=Expand data-label-collapse=Collapse title=Collapse aria-label=Collapse aria-controls=code-0 aria-expanded=true>
+<span class="collapse-chevron transition-transform duration-200 ease-out"><svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+</span><span class="collapse-text hidden sm:inline">Collapse</span>
+</button>
+<button class="copy-code-btn text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium transition-all duration-200 ease-out focus:ring-2 focus:outline-none" type=button data-code-action=copy data-label-copy=Copy data-label-copied=Copied title=Copy aria-label=Copy>
+<span class=copy-icon><svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+</span><span class="copy-text hidden sm:inline">Copy</span></button></div></div><div class="code-block-content relative" id=code-0><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>__future__</span> <span class=kn>import</span> <span class=n>print_function</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>ctypes</span> <span class=kn>import</span> <span class=n>sizeof</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>unicorn</span> <span class=kn>import</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>unicorn.arm_const</span> <span class=kn>import</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>unicorn.unicorn_const</span> <span class=kn>import</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>capstone</span> <span class=kn>import</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>struct</span><span class=o>,</span> <span class=nn>binascii</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>capstone.arm</span> <span class=kn>import</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>KEY_ADDR</span> <span class=o>=</span> <span class=mi>0</span>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>hook_code</span><span class=p>(</span><span class=n>uc</span><span class=p>,</span> <span class=n>addr</span><span class=p>,</span> <span class=n>size</span><span class=p>,</span> <span class=n>user_data</span><span class=p>):</span> 
+</span></span><span class=line><span class=cl>    <span class=k>global</span> <span class=n>KEY_ADDR</span>
+</span></span><span class=line><span class=cl>    <span class=n>mem</span> <span class=o>=</span> <span class=n>uc</span><span class=o>.</span><span class=n>mem_read</span><span class=p>(</span><span class=n>addr</span><span class=p>,</span> <span class=n>size</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=nb>bytes</span><span class=p>(</span><span class=n>mem</span><span class=p>)</span><span class=o>.</span><span class=n>hex</span><span class=p>())</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>addr</span> <span class=o>==</span> <span class=mh>0xC0280BBC</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;HELO&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>KEY_ADDR</span> <span class=o>=</span> <span class=n>uc</span><span class=o>.</span><span class=n>reg_read</span><span class=p>(</span><span class=n>UC_ARM_REG_R0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>addr</span> <span class=o>==</span> <span class=mh>0xC0280BC0</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>key</span> <span class=o>=</span> <span class=n>uc</span><span class=o>.</span><span class=n>mem_read</span><span class=p>(</span><span class=n>KEY_ADDR</span><span class=p>,</span> <span class=mi>32</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>with</span> <span class=nb>open</span><span class=p>(</span><span class=s1>&#39;fullkey&#39;</span><span class=p>,</span><span class=s1>&#39;wb&#39;</span><span class=p>)</span> <span class=k>as</span> <span class=n>f</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=n>f</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=n>key</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;WRITTEN KEY!&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>disas_single</span><span class=p>(</span><span class=nb>bytes</span><span class=p>(</span><span class=n>mem</span><span class=p>),</span><span class=n>addr</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>disas_single</span><span class=p>(</span><span class=n>data</span><span class=p>,</span><span class=n>addr</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>		<span class=k>for</span> <span class=n>i</span> <span class=ow>in</span> <span class=n>capmd</span><span class=o>.</span><span class=n>disasm</span><span class=p>(</span><span class=n>data</span><span class=p>,</span><span class=n>addr</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>			<span class=nb>print</span><span class=p>(</span><span class=s2>&#34;0x</span><span class=si>%x</span><span class=s2>:</span><span class=se>\t</span><span class=si>%s</span><span class=se>\t</span><span class=si>%s</span><span class=s2>&#34;</span> <span class=o>%</span> <span class=p>(</span><span class=n>i</span><span class=o>.</span><span class=n>address</span><span class=p>,</span> <span class=n>i</span><span class=o>.</span><span class=n>mnemonic</span><span class=p>,</span> <span class=n>i</span><span class=o>.</span><span class=n>op_str</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>			<span class=k>break</span>
+</span></span><span class=line><span class=cl>			
+</span></span><span class=line><span class=cl><span class=n>capmd</span> <span class=o>=</span> <span class=n>Cs</span><span class=p>(</span><span class=n>CS_ARCH_ARM</span><span class=p>,</span> <span class=n>CS_MODE_ARM</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>in_file</span> <span class=o>=</span> <span class=nb>open</span><span class=p>(</span><span class=s2>&#34;kernel.elf&#34;</span><span class=p>,</span> <span class=s2>&#34;rb&#34;</span><span class=p>)</span> <span class=c1># opening for [r]eading as [b]inary</span>
+</span></span><span class=line><span class=cl><span class=n>ARM_CODE32</span> <span class=o>=</span> <span class=n>in_file</span><span class=o>.</span><span class=n>read</span><span class=p>()[</span><span class=mh>0x124</span><span class=p>:]</span>
+</span></span><span class=line><span class=cl><span class=n>in_file</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>ADDRESS</span> <span class=o>=</span> <span class=mh>0xc0008000</span>
+</span></span><span class=line><span class=cl><span class=n>KEY</span> <span class=o>=</span> <span class=nb>open</span><span class=p>(</span><span class=s1>&#39;key&#39;</span><span class=p>,</span><span class=s1>&#39;rb&#39;</span><span class=p>)</span><span class=o>.</span><span class=n>read</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=s2>&#34;Emulate ARM code&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=s2>&#34;Shielder&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=k>try</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span> <span class=o>=</span> <span class=n>Uc</span><span class=p>(</span><span class=n>UC_ARCH_ARM</span><span class=p>,</span> <span class=n>UC_MODE_ARM</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>i</span> <span class=o>=</span> <span class=nb>len</span><span class=p>(</span><span class=n>ARM_CODE32</span><span class=p>)</span> <span class=o>//</span> <span class=p>(</span><span class=mi>1024</span> <span class=o>*</span> <span class=mi>1024</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>mem_size</span> <span class=o>=</span> <span class=p>(</span><span class=mi>1024</span> <span class=o>*</span> <span class=mi>1024</span><span class=p>)</span> <span class=o>+</span> <span class=p>(</span><span class=n>i</span> <span class=o>*</span> <span class=p>(</span><span class=mi>1024</span> <span class=o>*</span> <span class=mi>1024</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>mem_map</span><span class=p>(</span><span class=n>ADDRESS</span><span class=p>,</span> <span class=n>mem_size</span><span class=p>,</span> <span class=n>perms</span><span class=o>=</span><span class=n>UC_PROT_ALL</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>mem_write</span><span class=p>(</span><span class=n>ADDRESS</span><span class=p>,</span> <span class=n>ARM_CODE32</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=n>stack_address</span> <span class=o>=</span> <span class=n>ADDRESS</span> <span class=o>+</span> <span class=n>mem_size</span>
+</span></span><span class=line><span class=cl>    <span class=n>stack_size</span> <span class=o>=</span> <span class=p>(</span><span class=mi>1024</span> <span class=o>*</span> <span class=mi>1024</span><span class=p>)</span> <span class=o>*</span> <span class=mi>2</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>mem_map</span><span class=p>(</span><span class=n>stack_address</span><span class=p>,</span> <span class=n>stack_size</span><span class=p>,</span> <span class=n>perms</span><span class=o>=</span><span class=n>UC_PROT_ALL</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=n>ram_address</span> <span class=o>=</span> <span class=n>ADDRESS</span> <span class=o>+</span> <span class=n>mem_size</span> <span class=o>+</span> <span class=n>stack_size</span>
+</span></span><span class=line><span class=cl>    <span class=n>ram_size</span> <span class=o>=</span> <span class=p>(</span><span class=mi>1024</span> <span class=o>*</span> <span class=mi>1024</span><span class=p>)</span> <span class=o>*</span> <span class=mi>8</span> <span class=o>*</span> <span class=mi>8</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>mem_map</span><span class=p>(</span><span class=n>ram_address</span><span class=p>,</span> <span class=n>ram_size</span><span class=p>,</span> <span class=n>perms</span><span class=o>=</span><span class=n>UC_PROT_ALL</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>mem_write</span><span class=p>(</span><span class=n>ram_address</span><span class=p>,</span> <span class=n>KEY</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>reg_write</span><span class=p>(</span><span class=n>UC_ARM_REG_SP</span><span class=p>,</span> <span class=n>stack_address</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>reg_write</span><span class=p>(</span><span class=n>UC_ARM_REG_R0</span><span class=p>,</span> <span class=n>ram_address</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>reg_write</span><span class=p>(</span><span class=n>UC_ARM_REG_R1</span><span class=p>,</span> <span class=mi>16</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>reg_write</span><span class=p>(</span><span class=n>UC_ARM_REG_R2</span><span class=p>,</span> <span class=mi>1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>hook_add</span><span class=p>(</span><span class=n>UC_HOOK_CODE</span><span class=p>,</span> <span class=n>hook_code</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>emu_start</span><span class=p>(</span><span class=mh>0xC0280B60</span><span class=p>,</span> <span class=mh>0xC0280B74</span><span class=p>)</span> 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;Emulation done. Below is the CPU context&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>r_r0</span> <span class=o>=</span> <span class=n>mu</span><span class=o>.</span><span class=n>reg_read</span><span class=p>(</span><span class=n>UC_ARM_REG_R0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>r_r1</span> <span class=o>=</span> <span class=n>mu</span><span class=o>.</span><span class=n>reg_read</span><span class=p>(</span><span class=n>UC_ARM_REG_R1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>r_r2</span> <span class=o>=</span> <span class=n>mu</span><span class=o>.</span><span class=n>reg_read</span><span class=p>(</span><span class=n>UC_ARM_REG_R2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>r_pc</span> <span class=o>=</span> <span class=n>mu</span><span class=o>.</span><span class=n>reg_read</span><span class=p>(</span><span class=n>UC_ARM_REG_PC</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;&gt;&gt;&gt; r0 = 0x</span><span class=si>%x</span><span class=s2>&#34;</span> <span class=o>%</span><span class=n>r_r0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;&gt;&gt;&gt; r1 = 0x</span><span class=si>%x</span><span class=s2>&#34;</span> <span class=o>%</span><span class=n>r_r1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;&gt;&gt;&gt; r2 = 0x</span><span class=si>%x</span><span class=s2>&#34;</span> <span class=o>%</span><span class=n>r_r2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;&gt;&gt;&gt; pc = 0x</span><span class=si>%x</span><span class=s2>&#34;</span> <span class=o>%</span><span class=n>r_pc</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>except</span> <span class=n>UcError</span> <span class=k>as</span> <span class=n>e</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;ERROR: </span><span class=si>%s</span><span class=s2>&#34;</span> <span class=o>%</span> <span class=n>e</span><span class=p>)</span></span></span></code></pre></div><div hidden data-code-source>from __future__ import print_function
+from ctypes import sizeof
+from unicorn import *
+from unicorn.arm_const import *
+from unicorn.unicorn_const import *
+from capstone import *
+import struct, binascii
+from capstone.arm import *
+KEY_ADDR = 0
+def hook_code(uc, addr, size, user_data):
+global KEY_ADDR
+mem = uc.mem_read(addr, size)
+print(bytes(mem).hex())
+if addr == 0xC0280BBC:
+print("HELO")
+KEY_ADDR = uc.reg_read(UC_ARM_REG_R0)
+if addr == 0xC0280BC0:
+key = uc.mem_read(KEY_ADDR, 32)
+with open('fullkey','wb') as f:
+f.write(key)
+print("WRITTEN KEY!")
+disas_single(bytes(mem),addr)
+def disas_single(data,addr):
+for i in capmd.disasm(data,addr):
+print("0x%x:\t%s\t%s" % (i.address, i.mnemonic, i.op_str))
+break
+capmd = Cs(CS_ARCH_ARM, CS_MODE_ARM)
+in_file = open("kernel.elf", "rb") # opening for [r]eading as [b]inary
+ARM_CODE32 = in_file.read()[0x124:]
+in_file.close()
+ADDRESS = 0xc0008000
+KEY = open('key','rb').read()
+print("Emulate ARM code")
+print("Shielder")
+try:
+mu = Uc(UC_ARCH_ARM, UC_MODE_ARM)
+i = len(ARM_CODE32) // (1024 * 1024)
+mem_size = (1024 * 1024) + (i * (1024 * 1024))
+mu.mem_map(ADDRESS, mem_size, perms=UC_PROT_ALL)
+mu.mem_write(ADDRESS, ARM_CODE32)
+stack_address = ADDRESS + mem_size
+stack_size = (1024 * 1024) * 2
+mu.mem_map(stack_address, stack_size, perms=UC_PROT_ALL)
+ram_address = ADDRESS + mem_size + stack_size
+ram_size = (1024 * 1024) * 8 * 8
+mu.mem_map(ram_address, ram_size, perms=UC_PROT_ALL)
+mu.mem_write(ram_address, KEY)
+mu.reg_write(UC_ARM_REG_SP, stack_address)
+mu.reg_write(UC_ARM_REG_R0, ram_address)
+mu.reg_write(UC_ARM_REG_R1, 16)
+mu.reg_write(UC_ARM_REG_R2, 1)
+mu.hook_add(UC_HOOK_CODE, hook_code)
+mu.emu_start(0xC0280B60, 0xC0280B74)
+print("Emulation done. Below is the CPU context")
+r_r0 = mu.reg_read(UC_ARM_REG_R0)
+r_r1 = mu.reg_read(UC_ARM_REG_R1)
+r_r2 = mu.reg_read(UC_ARM_REG_R2)
+r_pc = mu.reg_read(UC_ARM_REG_PC)
+print(">>> r0 = 0x%x" %r_r0)
+print(">>> r1 = 0x%x" %r_r1)
+print(">>> r2 = 0x%x" %r_r2)
+print(">>> pc = 0x%x" %r_pc)
+except UcError as e:
+print("ERROR: %s" % e)</div><div class="collapse-overlay to-card/90 pointer-events-none absolute inset-0 bg-linear-to-b from-transparent via-transparent opacity-0 transition-opacity duration-300" hidden><button class="collapse-overlay-btn text-muted-foreground bg-card/80 border-border/50 hover:bg-primary/10 hover:text-primary hover:border-primary/30 absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center justify-center rounded-full border p-2 backdrop-blur-sm transition-all duration-200" type=button data-code-action=expand aria-label=Expand title=Expand>
+<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button></div></div></div></div></section><section id=tabs-1-panel-2 class="tabs-panel outline-none" role=tabpanel data-tabs-panel data-tab-label=romfs_decrypt.py hidden><div class="tabs-panel-content px-4 pt-4 *:first:mt-0 *:last:mb-0 [&_.code-block-container:first-child]:mt-0 [&_.code-block-container:last-child]:mb-0"><div class="code-block-container border-border bg-card my-6 overflow-hidden rounded-xl border shadow-sm transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md" data-code-block data-code-id=code-0 data-collapsible=true data-default-state=expanded data-collapsed=false data-auto-collapse-lines=30 data-auto-collapse-height=400 data-collapsed-height=120><div class="code-block-header bg-muted/30 border-border flex items-center justify-between border-b px-4 py-3"><div class="flex items-center gap-2"><div class="text-muted-foreground shrink-0"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4 4 4-4 4M6 16l-4-4 4-4"/></svg></div><span class="text-muted-foreground text-sm font-medium">PYTHON</span></div><div class="flex items-center gap-2"><button class="collapse-code-btn text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium transition-all duration-200 ease-out focus:ring-2 focus:outline-none" type=button data-code-action=toggle-collapse data-label-expand=Expand data-label-collapse=Collapse title=Collapse aria-label=Collapse aria-controls=code-0 aria-expanded=true>
+<span class="collapse-chevron transition-transform duration-200 ease-out"><svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+</span><span class="collapse-text hidden sm:inline">Collapse</span>
+</button>
+<button class="copy-code-btn text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium transition-all duration-200 ease-out focus:ring-2 focus:outline-none" type=button data-code-action=copy data-label-copy=Copy data-label-copied=Copied title=Copy aria-label=Copy>
+<span class=copy-icon><svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+</span><span class="copy-text hidden sm:inline">Copy</span></button></div></div><div class="code-block-content relative" id=code-0><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>__future__</span> <span class=kn>import</span> <span class=n>print_function</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>ctypes</span> <span class=kn>import</span> <span class=n>sizeof</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>unicorn</span> <span class=kn>import</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>unicorn.arm_const</span> <span class=kn>import</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>unicorn.unicorn_const</span> <span class=kn>import</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>capstone</span> <span class=kn>import</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>struct</span><span class=o>,</span> <span class=nn>binascii</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>capstone.arm</span> <span class=kn>import</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>capmd</span> <span class=o>=</span> <span class=n>Cs</span><span class=p>(</span><span class=n>CS_ARCH_ARM</span><span class=p>,</span> <span class=n>CS_MODE_ARM</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>in_file</span> <span class=o>=</span> <span class=nb>open</span><span class=p>(</span><span class=s2>&#34;kernel.elf&#34;</span><span class=p>,</span> <span class=s2>&#34;rb&#34;</span><span class=p>)</span> <span class=c1># opening for [r]eading as [b]inary</span>
+</span></span><span class=line><span class=cl><span class=n>ARM_CODE32</span> <span class=o>=</span> <span class=n>in_file</span><span class=o>.</span><span class=n>read</span><span class=p>()[</span><span class=mh>0x124</span><span class=p>:]</span>
+</span></span><span class=line><span class=cl><span class=n>in_file</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>in_file</span> <span class=o>=</span> <span class=nb>open</span><span class=p>(</span><span class=s2>&#34;romfs-x.squashfs.img&#34;</span><span class=p>,</span> <span class=s2>&#34;rb&#34;</span><span class=p>)</span> <span class=c1># opening for [r]eading as [b]inary</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl><span class=n>ENCRYPTED_CONTENT</span> <span class=o>=</span> <span class=n>in_file</span><span class=o>.</span><span class=n>read</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=n>FILE_TOBE_DEC</span> <span class=o>=</span> <span class=n>ENCRYPTED_CONTENT</span><span class=p>[</span><span class=mh>0x40</span><span class=p>:]</span>
+</span></span><span class=line><span class=cl><span class=n>in_file</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>KERN_START</span> <span class=o>=</span> <span class=mh>0x00000040</span>
+</span></span><span class=line><span class=cl><span class=n>KERN_END</span> <span class=o>=</span> <span class=mh>0x01364040</span>
+</span></span><span class=line><span class=cl><span class=n>SIZE</span> <span class=o>=</span> <span class=n>KERN_END</span> <span class=o>-</span> <span class=n>KERN_START</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>ADDRESS</span> <span class=o>=</span> <span class=mh>0xc0008000</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>AES_KEY</span> <span class=o>=</span> <span class=nb>open</span><span class=p>(</span><span class=s1>&#39;fullkey&#39;</span><span class=p>,</span><span class=s1>&#39;rb&#39;</span><span class=p>)</span><span class=o>.</span><span class=n>read</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=s2>&#34;Emulate ARM code&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=s2>&#34;Shielder&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=k>try</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span> <span class=o>=</span> <span class=n>Uc</span><span class=p>(</span><span class=n>UC_ARCH_ARM</span><span class=p>,</span> <span class=n>UC_MODE_ARM</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>i</span> <span class=o>=</span> <span class=nb>len</span><span class=p>(</span><span class=n>ARM_CODE32</span><span class=p>)</span> <span class=o>//</span> <span class=p>(</span><span class=mi>1024</span> <span class=o>*</span> <span class=mi>1024</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>mem_size</span> <span class=o>=</span> <span class=p>(</span><span class=mi>1024</span> <span class=o>*</span> <span class=mi>1024</span><span class=p>)</span> <span class=o>+</span> <span class=p>(</span><span class=n>i</span> <span class=o>*</span> <span class=p>(</span><span class=mi>1024</span> <span class=o>*</span> <span class=mi>1024</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>mem_map</span><span class=p>(</span><span class=n>ADDRESS</span><span class=p>,</span> <span class=n>mem_size</span><span class=p>,</span> <span class=n>perms</span><span class=o>=</span><span class=n>UC_PROT_ALL</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>mem_write</span><span class=p>(</span><span class=n>ADDRESS</span><span class=p>,</span> <span class=n>ARM_CODE32</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=n>stack_address</span> <span class=o>=</span> <span class=n>ADDRESS</span> <span class=o>+</span> <span class=n>mem_size</span>
+</span></span><span class=line><span class=cl>    <span class=n>stack_size</span> <span class=o>=</span> <span class=p>(</span><span class=mi>1024</span> <span class=o>*</span> <span class=mi>1024</span><span class=p>)</span> <span class=o>*</span> <span class=mi>2</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>mem_map</span><span class=p>(</span><span class=n>stack_address</span><span class=p>,</span> <span class=n>stack_size</span><span class=p>,</span> <span class=n>perms</span><span class=o>=</span><span class=n>UC_PROT_ALL</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=n>a5_value</span> <span class=o>=</span> <span class=mh>0x11</span>  <span class=c1># example value (adjust to your needs)</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>mem_write</span><span class=p>(</span><span class=n>stack_address</span> <span class=o>+</span> <span class=mi>0</span><span class=p>,</span> <span class=nb>bytes</span><span class=p>([</span><span class=n>a5_value</span><span class=p>]))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>a6_value</span> <span class=o>=</span> <span class=mi>2</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>mem_write</span><span class=p>(</span><span class=n>stack_address</span> <span class=o>+</span> <span class=mi>4</span><span class=p>,</span> <span class=n>a6_value</span><span class=o>.</span><span class=n>to_bytes</span><span class=p>(</span><span class=mi>4</span><span class=p>,</span> <span class=s1>&#39;little&#39;</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>counter_addr</span> <span class=o>=</span> <span class=n>stack_address</span> <span class=o>+</span> <span class=mh>0x20</span>
+</span></span><span class=line><span class=cl>    <span class=n>counter_init</span> <span class=o>=</span> <span class=mi>0</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>mem_write</span><span class=p>(</span><span class=n>counter_addr</span><span class=p>,</span> <span class=n>counter_init</span><span class=o>.</span><span class=n>to_bytes</span><span class=p>(</span><span class=mi>4</span><span class=p>,</span> <span class=s1>&#39;little&#39;</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>mem_write</span><span class=p>(</span><span class=n>stack_address</span> <span class=o>+</span> <span class=mi>8</span><span class=p>,</span> <span class=n>counter_addr</span><span class=o>.</span><span class=n>to_bytes</span><span class=p>(</span><span class=mi>4</span><span class=p>,</span> <span class=s1>&#39;little&#39;</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>ram_address</span> <span class=o>=</span> <span class=n>ADDRESS</span> <span class=o>+</span> <span class=n>mem_size</span> <span class=o>+</span> <span class=n>stack_size</span>
+</span></span><span class=line><span class=cl>    <span class=n>ram_size</span> <span class=o>=</span> <span class=p>(</span><span class=mi>1024</span> <span class=o>*</span> <span class=mi>1024</span><span class=p>)</span> <span class=o>*</span> <span class=mi>8</span> <span class=o>*</span> <span class=mi>8</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>mem_map</span><span class=p>(</span><span class=n>ram_address</span><span class=p>,</span> <span class=n>ram_size</span><span class=p>,</span> <span class=n>perms</span><span class=o>=</span><span class=n>UC_PROT_ALL</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>mem_write</span><span class=p>(</span><span class=n>ram_address</span><span class=p>,</span> <span class=n>FILE_TOBE_DEC</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>reg_write</span><span class=p>(</span><span class=n>UC_ARM_REG_SP</span><span class=p>,</span> <span class=n>stack_address</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>reg_write</span><span class=p>(</span><span class=n>UC_ARM_REG_R0</span><span class=p>,</span> <span class=n>ram_address</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>reg_write</span><span class=p>(</span><span class=n>UC_ARM_REG_R2</span><span class=p>,</span> <span class=n>ram_address</span><span class=p>)</span> 
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>reg_write</span><span class=p>(</span><span class=n>UC_ARM_REG_R1</span><span class=p>,</span> <span class=n>SIZE</span><span class=p>)</span> 
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>reg_write</span><span class=p>(</span><span class=n>UC_ARM_REG_R3</span><span class=p>,</span> <span class=n>SIZE</span><span class=p>)</span> 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>mem_write</span><span class=p>(</span><span class=mh>0xc0465738</span><span class=p>,</span> <span class=n>AES_KEY</span><span class=p>)</span> <span class=c1># write to aeskeybuf</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>mu</span><span class=o>.</span><span class=n>emu_start</span><span class=p>(</span><span class=mh>0xC0280BC8</span><span class=p>,</span> <span class=mh>0xC0280C58</span><span class=p>)</span> 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;Emulation done. Below is the CPU context&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>r_r0</span> <span class=o>=</span> <span class=n>mu</span><span class=o>.</span><span class=n>reg_read</span><span class=p>(</span><span class=n>UC_ARM_REG_R0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>r_r1</span> <span class=o>=</span> <span class=n>mu</span><span class=o>.</span><span class=n>reg_read</span><span class=p>(</span><span class=n>UC_ARM_REG_R1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>r_r2</span> <span class=o>=</span> <span class=n>mu</span><span class=o>.</span><span class=n>reg_read</span><span class=p>(</span><span class=n>UC_ARM_REG_R2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>r_pc</span> <span class=o>=</span> <span class=n>mu</span><span class=o>.</span><span class=n>reg_read</span><span class=p>(</span><span class=n>UC_ARM_REG_PC</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;&gt;&gt;&gt; r0 = 0x</span><span class=si>%x</span><span class=s2>&#34;</span> <span class=o>%</span><span class=n>r_r0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;&gt;&gt;&gt; r1 = 0x</span><span class=si>%x</span><span class=s2>&#34;</span> <span class=o>%</span><span class=n>r_r1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;&gt;&gt;&gt; r2 = 0x</span><span class=si>%x</span><span class=s2>&#34;</span> <span class=o>%</span><span class=n>r_r2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;&gt;&gt;&gt; pc = 0x</span><span class=si>%x</span><span class=s2>&#34;</span> <span class=o>%</span><span class=n>r_pc</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>ram_data</span> <span class=o>=</span> <span class=n>mu</span><span class=o>.</span><span class=n>mem_read</span><span class=p>(</span><span class=n>ram_address</span><span class=p>,</span> <span class=n>SIZE</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>with</span> <span class=nb>open</span><span class=p>(</span><span class=s2>&#34;romfs.squashfs&#34;</span><span class=p>,</span> <span class=s2>&#34;wb&#34;</span><span class=p>)</span> <span class=k>as</span> <span class=n>f</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>f</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=n>ram_data</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;DONE!&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>except</span> <span class=n>UcError</span> <span class=k>as</span> <span class=n>e</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;ERROR: </span><span class=si>%s</span><span class=s2>&#34;</span> <span class=o>%</span> <span class=n>e</span><span class=p>)</span></span></span></code></pre></div><div hidden data-code-source>from __future__ import print_function
+from ctypes import sizeof
+from unicorn import *
+from unicorn.arm_const import *
+from unicorn.unicorn_const import *
+from capstone import *
+import struct, binascii
+from capstone.arm import *
+capmd = Cs(CS_ARCH_ARM, CS_MODE_ARM)
+in_file = open("kernel.elf", "rb") # opening for [r]eading as [b]inary
+ARM_CODE32 = in_file.read()[0x124:]
+in_file.close()
+in_file = open("romfs-x.squashfs.img", "rb") # opening for [r]eading as [b]inary
+ENCRYPTED_CONTENT = in_file.read()
+FILE_TOBE_DEC = ENCRYPTED_CONTENT[0x40:]
+in_file.close()
+KERN_START = 0x00000040
+KERN_END = 0x01364040
+SIZE = KERN_END - KERN_START
+ADDRESS = 0xc0008000
+AES_KEY = open('fullkey','rb').read()
+print("Emulate ARM code")
+print("Shielder")
+try:
+mu = Uc(UC_ARCH_ARM, UC_MODE_ARM)
+i = len(ARM_CODE32) // (1024 * 1024)
+mem_size = (1024 * 1024) + (i * (1024 * 1024))
+mu.mem_map(ADDRESS, mem_size, perms=UC_PROT_ALL)
+mu.mem_write(ADDRESS, ARM_CODE32)
+stack_address = ADDRESS + mem_size
+stack_size = (1024 * 1024) * 2
+mu.mem_map(stack_address, stack_size, perms=UC_PROT_ALL)
+a5_value = 0x11 # example value (adjust to your needs)
+mu.mem_write(stack_address + 0, bytes([a5_value]))
+a6_value = 2
+mu.mem_write(stack_address + 4, a6_value.to_bytes(4, 'little'))
+counter_addr = stack_address + 0x20
+counter_init = 0
+mu.mem_write(counter_addr, counter_init.to_bytes(4, 'little'))
+mu.mem_write(stack_address + 8, counter_addr.to_bytes(4, 'little'))
+ram_address = ADDRESS + mem_size + stack_size
+ram_size = (1024 * 1024) * 8 * 8
+mu.mem_map(ram_address, ram_size, perms=UC_PROT_ALL)
+mu.mem_write(ram_address, FILE_TOBE_DEC)
+mu.reg_write(UC_ARM_REG_SP, stack_address)
+mu.reg_write(UC_ARM_REG_R0, ram_address)
+mu.reg_write(UC_ARM_REG_R2, ram_address)
+mu.reg_write(UC_ARM_REG_R1, SIZE)
+mu.reg_write(UC_ARM_REG_R3, SIZE)
+mu.mem_write(0xc0465738, AES_KEY) # write to aeskeybuf
+mu.emu_start(0xC0280BC8, 0xC0280C58)
+print("Emulation done. Below is the CPU context")
+r_r0 = mu.reg_read(UC_ARM_REG_R0)
+r_r1 = mu.reg_read(UC_ARM_REG_R1)
+r_r2 = mu.reg_read(UC_ARM_REG_R2)
+r_pc = mu.reg_read(UC_ARM_REG_PC)
+print(">>> r0 = 0x%x" %r_r0)
+print(">>> r1 = 0x%x" %r_r1)
+print(">>> r2 = 0x%x" %r_r2)
+print(">>> pc = 0x%x" %r_pc)
+ram_data = mu.mem_read(ram_address, SIZE)
+with open("romfs.squashfs", "wb") as f:
+f.write(ram_data)
+print("DONE!")
+except UcError as e:
+print("ERROR: %s" % e)</div><div class="collapse-overlay to-card/90 pointer-events-none absolute inset-0 bg-linear-to-b from-transparent via-transparent opacity-0 transition-opacity duration-300" hidden><button class="collapse-overlay-btn text-muted-foreground bg-card/80 border-border/50 hover:bg-primary/10 hover:text-primary hover:border-primary/30 absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center justify-center rounded-full border p-2 backdrop-blur-sm transition-all duration-200" type=button data-code-action=expand aria-label=Expand title=Expand>
+<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button></div></div></div></div></section></div></div></article><nav class="post-navigation mb-12"><div class="grid grid-cols-1 gap-4 md:grid-cols-2"><div class=nav-item><div class="bg-muted/30 border-border/50 flex min-h-[140px] flex-col justify-center rounded-xl border p-6"><div class="mb-3 flex items-center gap-3"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+<span class="text-muted-foreground/50 text-sm font-medium">No previous</span></div></div></div><div class=nav-item><a href=/posts/2025/cddc-finals/ropvm/ class="group bg-card border-border hover:bg-primary/5 hover:border-primary/20 focus:ring-primary/20 flex min-h-[140px] flex-col justify-between rounded-xl border p-6 transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02] hover:shadow-lg focus:ring-2 focus:outline-none"><div><div class="mb-3 flex items-center justify-end gap-3"><span class="text-muted-foreground text-sm font-medium">Next
+</span><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></div><h3 class="text-foreground group-hover:text-primary mb-3 line-clamp-2 text-right text-lg leading-tight font-semibold transition-colors duration-200">ropvm</h3></div><div class="text-muted-foreground mt-auto flex items-center justify-end gap-2 text-xs"><time datetime=2025-09-04>9/4/25
+</time><svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5A2 2 0 003 7v12a2 2 0 002 2z"/></svg></div></a></div></div></nav><section class="related-posts mb-12"><div class="mb-6 flex items-center gap-3"><svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656.0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656.0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg><h2 class="text-foreground text-2xl font-bold">Related content</h2></div><div class="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"><article class=group><a href=/posts/2025/cddc-finals/ropvm/ class=block><div class="bg-card border-border hover:bg-primary/5 hover:border-primary/20 focus:ring-primary/20 flex min-h-[120px] items-center rounded-xl border p-5 transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02] hover:shadow-lg focus:ring-2 focus:outline-none"><h3 class="text-foreground group-hover:text-primary line-clamp-3 w-full text-lg leading-snug font-semibold">ropvm</h3></div></a></article></div></section></div><footer class="px-4 py-6"><div class="flex flex-col items-center justify-between gap-4 md:flex-row"><div class="text-muted-foreground text-center text-sm md:text-left"><p class=mb-2>&copy;
+2026
+CTF Writeups</p><p class="flex flex-wrap items-center justify-center gap-1 md:justify-start"><span>Powered by</span>
+<a href=https://gohugo.io/ target=_blank rel="noopener noreferrer" class="text-primary hover:text-primary/80 font-medium transition-colors duration-200 hover:underline">Hugo
+</a><span>&</span>
+<a href=https://github.com/tom2almighty/hugo-narrow target=_blank rel="noopener noreferrer" class="text-primary hover:text-primary/80 font-medium transition-colors duration-200 hover:underline">Narrow</a></p></div><div class="flex items-center gap-3"><a href=https://github.com/yeojonghan target=_blank rel="noopener noreferrer" class="text-muted-foreground hover:text-primary focus:ring-primary/20 rounded-lg p-1 transition-all duration-300 ease-out hover:scale-110 focus:ring-2 focus:outline-none" title=GitHub aria-label=GitHub><svg class="h-6 w-6" aria-label="GitHub" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M15 22v-4a4.8 4.8.0 00-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35.0-3.5.0.0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35.0 3.5A5.4 5.4.0 004 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65S8.93 17.38 9 18v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></g></svg></a></div></div></footer><div id=dock class="pointer-events-none fixed bottom-4 left-1/2 z-9999 w-fit -translate-x-1/2 translate-y-24 opacity-0 transition-all duration-300 ease-out sm:right-0 sm:left-0 sm:mx-auto sm:translate-x-0" data-dock-mode=scroll role=toolbar aria-label="Quick actions toolbar"><nav class="border-border bg-card/80 scrollbar-hide xs:px-3 xs:py-2 mx-auto flex max-w-[calc(100vw-2rem)] min-w-fit items-center justify-center overflow-x-auto rounded-2xl border px-4 py-3 shadow-lg backdrop-blur-sm sm:px-4 sm:py-3"><button id=dock-back class="text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 xs:px-2 xs:py-1.5 flex shrink-0 items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-300 ease-out hover:-translate-y-0.5 hover:scale-105 focus:ring-2 focus:outline-none sm:px-3 sm:py-2" title=Back aria-label=Back>
+<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+<span class="hidden sm:inline">Back</span></button><div class="bg-border xs:mx-1 mx-2 h-6 w-px sm:mx-2"></div><button id=dock-search class="text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 xs:px-3 xs:py-1.5 flex shrink-0 items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all duration-300 ease-out hover:-translate-y-0.5 hover:scale-105 focus:ring-2 focus:outline-none sm:px-4 sm:py-2" title=Search aria-label=Search>
+<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-6-6m2-5A7 7 0 113 10a7 7 0 0114 0z"/></svg>
+<span class="hidden md:inline">Search</span></button><div class="bg-border xs:mx-1 mx-2 h-6 w-px sm:mx-2"></div><button id=dock-top class="text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 xs:px-2 xs:py-1.5 flex shrink-0 items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-300 ease-out hover:-translate-y-0.5 hover:scale-105 focus:ring-2 focus:outline-none sm:px-3 sm:py-2" title="Back to top" aria-label="Back to top">
+<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+<span class="hidden sm:inline">Top</span></button></nav></div><aside id=toc-container class=toc-center data-position=center><div id=toc-center class="pointer-events-none fixed top-28 right-0 left-0 z-40 mx-auto w-full max-w-4xl px-4 transition-all duration-300"><div class="pointer-events-auto relative mx-auto w-fit"><button id=toc-center-toggle class="bg-card/80 border-border text-muted-foreground hover:text-primary hover:bg-primary/10 ring-offset-background focus-visible:ring-ring flex cursor-pointer items-center gap-2 rounded-full border px-4 py-1.5 text-sm shadow-sm backdrop-blur-sm transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none">
+<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/></svg>
+<span id=toc-center-title class="max-w-[200px] truncate">Table of contents</span>
+<svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button><div id=toc-center-dropdown class="bg-card border-border scrollbar-hide absolute top-full left-1/2 mt-2 hidden max-h-[60vh] w-[280px] origin-top -translate-x-1/2 scale-95 overflow-y-auto rounded-xl border p-4 opacity-0 shadow-lg transition-all"><div id=toc-center-content class="[&_a]:text-muted-foreground [&_a:hover]:bg-primary/10 [&_a:hover]:text-primary [&_a.active]:bg-primary/10 [&_a.active]:text-primary text-sm [&_a]:block [&_a]:truncate [&_a]:rounded-md [&_a]:px-2 [&_a]:py-1 [&_a]:transition-colors [&_a.active]:font-medium [&_li]:my-1.5 [&_nav>ul]:pl-0 [&_ul]:list-none [&_ul]:pl-4"><nav id=TableOfContents><ul><li><a href=#description>Description</a></li><li><a href=#solution>Solution</a><ul><li><a href=#tldr>TL;DR</a></li></ul></li><li><a href=#analysis>Analysis</a><ul><li><a href=#getting-started-mapping-out-the-files>Getting Started: Mapping Out the Files</a></li><li><a href=#peeling-back-u-boot-decompiling-the-bootloader>Peeling Back U-Boot: Decompiling the Bootloader</a></li><li><a href=#kernel-decryption-extracting-offsets>Kernel Decryption: Extracting Offsets</a></li><li><a href=#kernel-decryption-script>Kernel Decryption Script</a></li><li><a href=#dissecting-kernel-elf-understanding-the-decryption>Dissecting Kernel ELF: Understanding the Decryption</a></li><li><a href=#deriving-the-aes-key-tracing-key-initialization>Deriving the AES Key: Tracing Key Initialization</a></li><li><a href=#emulating-kernel-decryption-romfs-decryption>Emulating Kernel Decryption: RomFS Decryption</a></li><li><a href=#romfs-decryption-scripts>Romfs Decryption Scripts</a></li></ul></li></ul></nav></div></div></div></div></aside><div id=search-overlay class="pointer-events-none fixed inset-0 z-40 bg-black/50 opacity-0 transition-opacity duration-300"></div><div id=search-modal class="bg-card border-border pointer-events-none fixed top-1/2 left-1/2 z-50 max-h-[80vh] w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 scale-95 transform overflow-hidden rounded-xl border opacity-0 shadow-xl transition-all duration-300" role=dialog aria-modal=true aria-hidden=true aria-labelledby=search-title tabindex=-1><div class="border-border flex items-center gap-3 border-b p-4"><div class="text-muted-foreground h-5 w-5 shrink-0"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-6-6m2-5A7 7 0 113 10a7 7 0 0114 0z"/></svg></div><h2 id=search-title class=sr-only>Search</h2><div class="relative flex-1"><button id=search-clear class="text-muted-foreground hover:text-foreground hover:bg-muted/50 pointer-events-none absolute top-1/2 left-0 z-10 h-5 w-5 -translate-y-1/2 rounded opacity-0 transition-all duration-200" title=Clear aria-label=Clear>
+<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 18 6M6 6l12 12"/></svg>
+</button>
+<input id=search-input type=text placeholder="Search posts..." class="text-foreground placeholder:text-muted-foreground w-full border-none bg-transparent pl-8 text-lg outline-none" autocomplete=off spellcheck=false></div><button id=search-close class="text-muted-foreground hover:text-foreground hover:bg-muted/50 flex h-6 w-6 items-center justify-center rounded-md p-0.5 transition-all duration-200" title=Close aria-label=Close>
+<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 18 6M6 6l12 12"/></svg></button></div><div id=search-results class="max-h-96 overflow-y-auto"><div id=search-empty class="flex flex-col items-center justify-center py-12 text-center"><div class="bg-muted/50 mb-4 flex h-16 w-16 items-center justify-center rounded-full"><svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-6-6m2-5A7 7 0 113 10a7 7 0 0114 0z"/></svg></div><h3 class="text-foreground mb-2 text-lg font-semibold">Start searching</h3></div><div id=search-loading class="flex items-center justify-center py-8" hidden><div class="mr-3 h-6 w-6 animate-spin rounded-full border-2 border-current border-t-transparent"></div><span class=text-muted-foreground>Searching...</span></div><div id=search-no-results class="flex flex-col items-center justify-center py-12 text-center" hidden><div class="bg-muted/50 mb-4 flex h-16 w-16 items-center justify-center rounded-full"><svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/></svg></div><h3 class="text-foreground mb-2 text-lg font-semibold">No results</h3></div><div id=search-results-list hidden><div id=search-stats class="text-muted-foreground border-border border-b px-4 py-3 text-sm" data-count-other="Found %d results"></div><div id=search-items class="divide-border divide-y" role=list></div></div></div><div class="border-border bg-muted/20 border-t px-4 py-3"><div class="text-muted-foreground flex items-center justify-between text-xs"><div class="flex items-center gap-2 md:gap-4"><div class="flex items-center gap-1"><kbd class="bg-muted border-border rounded border px-1.5 py-0.5 text-xs">↑↓</kbd>
+<span class="hidden sm:inline">Navigate</span></div><div class="flex items-center gap-1"><kbd class="bg-muted border-border rounded border px-1.5 py-0.5 text-xs">↵</kbd>
+<span class="hidden sm:inline">Select</span></div><div class="flex items-center gap-1"><kbd class="bg-muted border-border rounded border px-1.5 py-0.5 text-xs">ESC</kbd>
+<span class="hidden sm:inline">Close</span></div></div><div class="search-hint-desktop flex items-center gap-1"><kbd class="bg-muted border-border rounded border px-1.5 py-0.5 text-xs">⌘K</kbd>
+<span>Shortcut</span></div></div></div></div></main></body></html>

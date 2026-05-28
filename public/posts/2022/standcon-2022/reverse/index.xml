@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Reverse on CTF Writeups</title><link>https://ctf.jonghan.xyz/posts/2022/standcon-2022/reverse/</link><description>Recent content in Reverse on CTF Writeups</description><generator>Hugo</generator><language>en</language><lastBuildDate>Mon, 27 Jun 2022 00:00:00 +0800</lastBuildDate><atom:link href="https://ctf.jonghan.xyz/posts/2022/standcon-2022/reverse/index.xml" rel="self" type="application/rss+xml"/><item><title>Lost In the Deep</title><link>https://ctf.jonghan.xyz/posts/2022/standcon-2022/reverse/lost-in-the-deep/</link><pubDate>Mon, 27 Jun 2022 00:00:00 +0800</pubDate><guid>https://ctf.jonghan.xyz/posts/2022/standcon-2022/reverse/lost-in-the-deep/</guid><description>&lt;h2 id="description"&gt;Description&lt;a href="#description" class="heading-anchor" aria-label="Link to this section"&gt;&lt;svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"&gt;&lt;g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"&gt;&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/&gt;&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/&gt;&lt;/g&gt;&lt;/svg&gt;&lt;/a&gt;&lt;/h2&gt;
+ &lt;blockquote
+ class="border-primary bg-muted/30 hover:bg-muted/40 my-6 rounded-r-lg border-l-4 py-4 pr-4 pl-6 italic transition-all duration-200 ease-out hover:translate-x-1"
+ &gt;
+ &lt;div class="prose prose-sm max-w-none"&gt;
+ &lt;p&gt;You&amp;rsquo;ve been swimming, and encounter a submerged mangrove forest. You enter it to explore, and without knowing it, you&amp;rsquo;re lost. How do you escape?&lt;/p&gt;</description></item><item><title>New Math!</title><link>https://ctf.jonghan.xyz/posts/2022/standcon-2022/reverse/new-math/</link><pubDate>Mon, 27 Jun 2022 00:00:00 +0800</pubDate><guid>https://ctf.jonghan.xyz/posts/2022/standcon-2022/reverse/new-math/</guid><description>&lt;h2 id="description"&gt;Description&lt;a href="#description" class="heading-anchor" aria-label="Link to this section"&gt;&lt;svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"&gt;&lt;g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"&gt;&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/&gt;&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/&gt;&lt;/g&gt;&lt;/svg&gt;&lt;/a&gt;&lt;/h2&gt;
+ &lt;blockquote
+ class="border-primary bg-muted/30 hover:bg-muted/40 my-6 rounded-r-lg border-l-4 py-4 pr-4 pl-6 italic transition-all duration-200 ease-out hover:translate-x-1"
+ &gt;
+ &lt;div class="prose prose-sm max-w-none"&gt;
+ &lt;p&gt;Hooray for new math! New whoo hoo math!&lt;/p&gt;
+
+ &lt;/div&gt;
+ &lt;/blockquote&gt;&lt;script&gt;
+ function toggleAlert(alertId) {
+ const content = document.getElementById(alertId + "-content");
+ const chevron = document.getElementById(alertId + "-chevron");
+ const header = content.previousElementSibling;
+
+ if (content.classList.contains("hidden")) {
+ content.classList.remove("hidden");
+ chevron.style.transform = "rotate(0deg)";
+ header.setAttribute("aria-expanded", "true");
+ } else {
+ content.classList.add("hidden");
+ chevron.style.transform = "rotate(-90deg)";
+ header.setAttribute("aria-expanded", "false");
+ }
+ }
+
+ 
+ document.addEventListener("DOMContentLoaded", function () {
+ const collapsedAlerts = document.querySelectorAll(".alert-content.hidden");
+ collapsedAlerts.forEach(function (content) {
+ const alertId = content.id.replace("-content", "");
+ const chevron = document.getElementById(alertId + "-chevron");
+ if (chevron) {
+ chevron.style.transform = "rotate(-90deg)";
+ }
+ });
+ });
+&lt;/script&gt;
+
+ &lt;blockquote
+ class="border-primary bg-muted/30 hover:bg-muted/40 my-6 rounded-r-lg border-l-4 py-4 pr-4 pl-6 italic transition-all duration-200 ease-out hover:translate-x-1"
+ &gt;
+ &lt;div class="prose prose-sm max-w-none"&gt;
+ &lt;p&gt;Wrap the flag in STANDCON22{}&lt;/p&gt;</description></item><item><title>Wait For The Day</title><link>https://ctf.jonghan.xyz/posts/2022/standcon-2022/reverse/wait-for-the-day/</link><pubDate>Mon, 27 Jun 2022 00:00:00 +0800</pubDate><guid>https://ctf.jonghan.xyz/posts/2022/standcon-2022/reverse/wait-for-the-day/</guid><description>&lt;h2 id="description"&gt;Description&lt;a href="#description" class="heading-anchor" aria-label="Link to this section"&gt;&lt;svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"&gt;&lt;g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"&gt;&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/&gt;&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/&gt;&lt;/g&gt;&lt;/svg&gt;&lt;/a&gt;&lt;/h2&gt;
+ &lt;blockquote
+ class="border-primary bg-muted/30 hover:bg-muted/40 my-6 rounded-r-lg border-l-4 py-4 pr-4 pl-6 italic transition-all duration-200 ease-out hover:translate-x-1"
+ &gt;
+ &lt;div class="prose prose-sm max-w-none"&gt;
+ &lt;p&gt;Momma bought a Christmas gift for you. She says it&amp;rsquo;s something you love! But Christmas is like more than 6 months away :/ Try to peek in and find out what the gift is, before the Christmas eve ;)&lt;/p&gt;</description></item><item><title>Want a byte?</title><link>https://ctf.jonghan.xyz/posts/2022/standcon-2022/reverse/want-a-byte/</link><pubDate>Mon, 27 Jun 2022 00:00:00 +0800</pubDate><guid>https://ctf.jonghan.xyz/posts/2022/standcon-2022/reverse/want-a-byte/</guid><description>&lt;h2 id="description"&gt;Description&lt;a href="#description" class="heading-anchor" aria-label="Link to this section"&gt;&lt;svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"&gt;&lt;g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"&gt;&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/&gt;&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/&gt;&lt;/g&gt;&lt;/svg&gt;&lt;/a&gt;&lt;/h2&gt;
+ &lt;blockquote
+ class="border-primary bg-muted/30 hover:bg-muted/40 my-6 rounded-r-lg border-l-4 py-4 pr-4 pl-6 italic transition-all duration-200 ease-out hover:translate-x-1"
+ &gt;
+ &lt;div class="prose prose-sm max-w-none"&gt;
+ &lt;p&gt;Scrolling through my projects, I found some old project code. I remember this code had some &amp;ldquo;backdoors&amp;rdquo;. But since I mistakenly deleted utils.py, now I cannot understand my own code! Can you help me make sense out of it? You will be rewarded with a flag for your help.&lt;/p&gt;</description></item></channel></rss>
