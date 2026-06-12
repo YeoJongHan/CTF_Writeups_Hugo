@@ -30,6 +30,14 @@ jobs:
         id: pages
         uses: actions/configure-pages@v6
 
+      - name: Install Stack theme
+        run: |
+          if [ ! -d "themes/hugo-theme-stack" ]; then
+            mkdir -p themes
+            git clone https://github.com/CaiJimmy/hugo-theme-stack themes/hugo-theme-stack
+          fi
+          git -C themes/hugo-theme-stack checkout 3e123a30b79b5d52a3a8e88a9dd678fcfd28e418
+
       - name: Install Hugo
         run: |
           HUGO_VERSION=0.161.1
