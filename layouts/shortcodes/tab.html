@@ -1,0 +1,7 @@
+{{- $label := .Get "label" | default (.Get 0) | default "Tab" -}}
+<details class="stack-tab" open>
+  <summary>{{ $label }}</summary>
+  <div class="stack-tab-content">
+    {{ .Inner | markdownify }}
+  </div>
+</details>
