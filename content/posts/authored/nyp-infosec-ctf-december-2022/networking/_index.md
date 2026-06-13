@@ -1,7 +1,7 @@
 ---
 title: "Networking"
 draft: false
-weight: 480
+weight: 0
 categories: ["Authored"]
 series: ["Nyp Infosec Ctf December 2022"]
 ---

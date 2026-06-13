@@ -1,7 +1,7 @@
 ---
 title: "🧠 Brainhack's CDDC Finals 2023"
 draft: false
-weight: 110
+weight: 0
 categories: ["2023"]
 series: ["Brainhacks Cddc Finals 2023"]
 ---

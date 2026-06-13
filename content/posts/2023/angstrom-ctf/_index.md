@@ -1,7 +1,7 @@
 ---
 title: "🅰️ angstrom CTF"
 draft: false
-weight: 130
+weight: 0
 categories: ["2023"]
 series: ["Angstrom Ctf"]
 ---

@@ -1,7 +1,7 @@
 ---
 title: "Flag Shop"
 draft: false
-weight: 440
+weight: 0
 date: 2023-01-06T00:00:00+08:00
 categories: ["Authored"]
 tags: ["Pwn"]

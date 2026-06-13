@@ -1,7 +1,7 @@
 ---
 title: "Crypto"
 draft: false
-weight: 280
+weight: 0
 categories: ["2022"]
 series: ["Standcon 2022"]
 ---

@@ -1,7 +1,7 @@
 ---
 title: "Pwn"
 draft: false
-weight: 140
+weight: 0
 categories: ["2023"]
 series: ["Angstrom Ctf"]
 ---

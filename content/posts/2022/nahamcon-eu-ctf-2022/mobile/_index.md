@@ -1,7 +1,7 @@
 ---
 title: "Mobile"
 draft: false
-weight: 250
+weight: 0
 categories: ["2022"]
 series: ["Nahamcon Eu Ctf 2022"]
 ---

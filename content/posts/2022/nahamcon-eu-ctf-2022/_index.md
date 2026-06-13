@@ -1,7 +1,7 @@
 ---
 title: "🇪🇺 NahamCon EU CTF 2022"
 draft: false
-weight: 240
+weight: 0
 categories: ["2022"]
 series: ["Nahamcon Eu Ctf 2022"]
 ---

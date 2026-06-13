@@ -1,7 +1,7 @@
 ---
 title: "👀 Lag and Crash 2023"
 draft: false
-weight: 160
+weight: 0
 categories: ["2023"]
 series: ["Lag And Crash 2023"]
 ---

@@ -1,10 +1,10 @@
 ---
 title: "pwnymalloc"
 draft: false
-weight: 100
+weight: 0
 date: 2024-07-10T00:00:00+08:00
 categories: ["2024"]
-tags: ["Uiuctf 2024"]
+tags: ["Uiuctf 2024", "Pwn"]
 series: ["Uiuctf 2024"]
 ---
 

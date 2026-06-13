@@ -1,10 +1,10 @@
 ---
 title: "bashtille"
 draft: false
-weight: 30
+weight: 0
 date: 2025-10-20T00:00:00+08:00
 categories: ["2025"]
-tags: ["Buckeye 2025"]
+tags: ["Buckeye 2025", "Cloud", "System Compromise"]
 series: ["Buckeye 2025"]
 ---
 

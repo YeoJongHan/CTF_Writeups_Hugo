@@ -1,7 +1,7 @@
 ---
 title: "Broken RSA"
 draft: false
-weight: 180
+weight: 0
 date: 2023-12-21T00:00:00+08:00
 categories: ["2023"]
 tags: ["Crypto"]

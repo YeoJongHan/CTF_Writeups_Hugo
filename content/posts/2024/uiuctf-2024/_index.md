@@ -1,7 +1,7 @@
 ---
 title: "🐴 UIUCTF 2024"
 draft: false
-weight: 90
+weight: 0
 categories: ["2024"]
 series: ["Uiuctf 2024"]
 ---

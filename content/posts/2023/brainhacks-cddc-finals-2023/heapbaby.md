@@ -1,7 +1,7 @@
 ---
 title: "HeapBaby"
 draft: false
-weight: 120
+weight: 0
 date: 2023-08-05T00:00:00+08:00
 categories: ["2023"]
 tags: ["Brainhacks Cddc Finals 2023"]

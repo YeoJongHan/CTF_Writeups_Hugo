@@ -1,7 +1,7 @@
 ---
 title: "Miscellaneous"
 draft: false
-weight: 400
+weight: 0
 categories: ["Authored"]
 series: ["Nyp Infosec Ctf December 2022"]
 ---

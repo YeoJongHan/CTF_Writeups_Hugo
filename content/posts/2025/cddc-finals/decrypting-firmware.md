@@ -1,7 +1,7 @@
 ---
 title: "Decrypting Firmware"
 draft: false
-weight: 80
+weight: 0
 date: 2025-09-04T00:00:00+08:00
 categories: ["2025"]
 tags: ["Cddc Finals"]

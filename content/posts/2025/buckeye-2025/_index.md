@@ -1,7 +1,7 @@
 ---
 title: "🚩 Buckeye 2025"
 draft: false
-weight: 60
+weight: 0
 categories: ["2025"]
 series: ["Buckeye 2025"]
 ---

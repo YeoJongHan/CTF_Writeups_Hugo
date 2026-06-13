@@ -1,7 +1,7 @@
 ---
 title: "Pwn"
 draft: false
-weight: 220
+weight: 0
 categories: ["2023"]
 series: ["Ritsec Ctf"]
 ---

@@ -1,11 +1,11 @@
 ---
 title: "ropvm"
 draft: false
-weight: 70
+weight: 0
 date: 2025-09-04T00:00:00+08:00
 categories: ["2025"]
-tags: ["Cddc Finals"]
-series: ["Cddc Finals"]
+tags: ["CDDC 2025", "Pwn"]
+series: ["CDDC 2025"]
 ---
 
 ## Description

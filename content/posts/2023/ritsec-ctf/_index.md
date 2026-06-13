@@ -1,7 +1,7 @@
 ---
 title: "🐯 RITSEC CTF"
 draft: false
-weight: 210
+weight: 0
 categories: ["2023"]
 series: ["Ritsec Ctf"]
 ---

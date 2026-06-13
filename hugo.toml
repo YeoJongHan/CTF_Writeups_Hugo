@@ -91,7 +91,7 @@ rssFullContent = true
 
   [params.colorScheme]
     toggle = true
-    default = "auto"
+    default = "dark"
 
   [params.comments]
     enabled = false

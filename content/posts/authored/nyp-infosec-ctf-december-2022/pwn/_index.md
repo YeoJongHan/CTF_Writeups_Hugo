@@ -1,7 +1,7 @@
 ---
 title: "Pwn"
 draft: false
-weight: 430
+weight: 0
 categories: ["Authored"]
 series: ["Nyp Infosec Ctf December 2022"]
 ---

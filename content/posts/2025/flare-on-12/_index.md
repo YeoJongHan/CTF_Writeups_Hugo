@@ -1,9 +1,9 @@
 ---
 title: "🔥 Flare-On 12"
 draft: false
-weight: 40
+weight: 0
 categories: ["2025"]
-series: ["Flare On 12"]
+series: ["Flare-On 12"]
 ---
 
 # 🔥 Flare-On 12

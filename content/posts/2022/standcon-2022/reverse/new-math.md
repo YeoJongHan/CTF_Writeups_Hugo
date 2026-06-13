@@ -1,7 +1,7 @@
 ---
 title: "New Math!"
 draft: false
-weight: 330
+weight: 0
 date: 2022-06-27T00:00:00+08:00
 categories: ["2022"]
 tags: ["Reverse"]

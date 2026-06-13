@@ -1,7 +1,7 @@
 ---
 title: "Reverse"
 draft: false
-weight: 310
+weight: 0
 categories: ["2022"]
 series: ["Standcon 2022"]
 ---

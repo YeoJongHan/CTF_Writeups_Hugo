@@ -1,7 +1,7 @@
 ---
 title: "🔴 Got Any Games?"
 draft: false
-weight: 260
+weight: 0
 date: 2022-05-24T00:00:00+08:00
 categories: ["2022"]
 tags: ["Mobile"]

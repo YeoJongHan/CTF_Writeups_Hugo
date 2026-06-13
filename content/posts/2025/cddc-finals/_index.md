@@ -1,9 +1,9 @@
 ---
 title: "💻 CDDC Finals"
 draft: false
-weight: 20
+weight: 0
 categories: ["2025"]
-series: ["Cddc Finals"]
+series: ["CDDC 2025"]
 ---
 
 # 💻 CDDC Finals

@@ -1,7 +1,7 @@
 ---
 title: "👾 STANDCON 2022"
 draft: false
-weight: 270
+weight: 0
 categories: ["2022"]
 series: ["Standcon 2022"]
 ---
