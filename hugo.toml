@@ -160,3 +160,11 @@ rssFullContent = true
     [menus.social.params]
       icon = "brand-github"
       newTab = true
+  [[menus.social]]
+    identifier = "linkedin"
+    name = "LinkedIn"
+    url = "https://www.linkedin.com/in/yeo-jong-han-7010311b2/"
+    weight = 20
+    [menus.social.params]
+      icon = "brand-linkedin"
+      newTab = true
