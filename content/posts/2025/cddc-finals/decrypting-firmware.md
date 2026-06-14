@@ -4,8 +4,8 @@ draft: false
 weight: 0
 date: 2025-09-04T00:00:00+08:00
 categories: ["2025"]
-tags: ["Cddc Finals"]
-series: ["Cddc Finals"]
+tags: ["CDDC 2025", "Reverse"]
+series: ["CDDC 2025"]
 ---
 
 ## Description
@@ -399,11 +399,11 @@ However, if we run the emulator, we still get an unidentifiable file.
 
 <figure><img src="/gitbook/assets/image (43).png" alt=""><figcaption><p>Wrongly decrypted romfs</p></figcaption></figure>
 
-> **WARNING**
->
-One thing to note is that in **SecUnit\_EncryptFirmware**, there are mmioset function calls at **0xC0280C04**, **0xC0280C14**, and **0xC0280C24**. The function mainly runs on ARM instructions, but mmioset runs on THUMB instructions.
-
-If unicorn cannot switch from ARM to THUMB instructions, then we can circumvent this by patching these function calls out with NOPs <mark style="background-color:red;">00 F0 20 E2</mark>. (it should run fine without patching)
+> [!WARNING]
+> 
+> One thing to note is that in **SecUnit\_EncryptFirmware**, there are mmioset function calls at **0xC0280C04**, **0xC0280C14**, and **0xC0280C24**. The function mainly runs on ARM instructions, but mmioset runs on THUMB instructions.
+> 
+> If unicorn cannot switch from ARM to THUMB instructions, then we can circumvent this by patching these function calls out with NOPs <mark style="background-color:red;">00 F0 20 E2</mark>. (it should run fine without patching)
 
 
 So what can be the issue? At this point I was puzzled. I read over the functions and understood that the decryption is performed on every 3rd sector, because the sector\_skip was set to 2. Running binwalk showed that some sectors were still identifiable as "xz compressed data", diffing the result to the original also showed that it tries to decrypt every 3rd sector.

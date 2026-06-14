@@ -62,7 +62,7 @@ rssFullContent = true
     headingAnchor = true
     math = true
     toc = true
-    readingTime = true
+    readingTime = false
 
     [params.article.list]
       showTags = true
