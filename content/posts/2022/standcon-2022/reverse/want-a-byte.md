@@ -14,7 +14,7 @@ series: ["Standcon 2022"]
 
 [Download main.py](/gitbook/assets/main.py)
 
-[Download utils.pyc](/challenge_files/STANDCON_2022/Reverse/Want a byte_/challenge/utils.pyc)
+[Download utils.pyc](/challenge_files/STANDCON_2022/Reverse/Want_a_byte/challenge/utils.pyc)
 
 ### TL;DR
 

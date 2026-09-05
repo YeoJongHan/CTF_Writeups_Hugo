@@ -16,7 +16,7 @@ series: ["Nyp Infosec Ctf December 2022"]
 
 > The Defenders heard that there are some Math legends among us and have reached out for assistance in breaking one of the Uprisers' security defenses.
 
-[Download chall (3).py](/gitbook/assets/chall (3).py)
+[Download math_of_crypt.py](/gitbook/assets/math_of_crypt.py)
 
 [Download output.txt](/gitbook/assets/output.txt)
 
@@ -70,11 +70,11 @@ Recall that we need `d` to decrypt the `ct`, where `pt = pow(ct,d,n)`.
 >
 This [site](https://www.di-mgt.com.au/rsa\_alg.html) provides a recap on how to obtain `d` for decrypting RSA, where I quote:
 
-1. Generate two large random primes, $$p$$ and $$q$$, of approximately equal size such that their product $$n=pq$$ is of the required bit length, e.g. 1024 bits. \[See [note 1](https://www.di-mgt.com.au/rsa\_alg.html#note1)].
-2. Compute $$n=pq$$ and $$ϕ=(p−1)(q−1)$$. \[See [note 6](https://www.di-mgt.com.au/rsa\_alg.html#note6)].
-3. Choose an integer $$e$$, $$1<e<ϕ$$, such that $$gcd(e,ϕ)=1$$. \[See [note 2](https://www.di-mgt.com.au/rsa\_alg.html#note2)].
-4. Compute the secret exponent $$d$$, $$1<d<ϕ$$, such that $$ed≡1modϕ$$. \[See [note 3](https://www.di-mgt.com.au/rsa\_alg.html#note3)].
-5. The public key is $$(n,e)$$ and the private key $$(d,p,q)$$. Keep all the values d, p, q and ϕ secret. \[Sometimes the private key is written as $$(n,d)$$ because you need the value of n when using d. Other times we might write the key pair as $$((N,e),d)$$.]
+1. Generate two large random primes, $p$ and $q$, of approximately equal size such that their product $n=pq$ is of the required bit length, e.g. 1024 bits. \[See [note 1](https://www.di-mgt.com.au/rsa\_alg.html#note1)].
+2. Compute $n=pq$ and $ϕ=(p−1)(q−1)$. \[See [note 6](https://www.di-mgt.com.au/rsa\_alg.html#note6)].
+3. Choose an integer $e$, $1<e<ϕ$, such that $gcd(e,ϕ)=1$. \[See [note 2](https://www.di-mgt.com.au/rsa\_alg.html#note2)].
+4. Compute the secret exponent $d$, $1<d<ϕ$, such that $ed≡1modϕ$. \[See [note 3](https://www.di-mgt.com.au/rsa\_alg.html#note3)].
+5. The public key is $(n,e)$ and the private key $(d,p,q)$. Keep all the values d, p, q and ϕ secret. \[Sometimes the private key is written as $(n,d)$ because you need the value of n when using d. Other times we might write the key pair as $((N,e),d)$.]
 
 
 Our d also has to be derived from `e` and `phi`, where `phi` would be `(p-1)(q-1)` (refer to the info box above).

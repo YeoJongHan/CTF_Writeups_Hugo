@@ -14,11 +14,11 @@ series: ["Standcon 2022"]
 
 > `nc lab-1.ctf.standcon.n0h4ts.com 7903`
 
-* [chal.py](../../../challenge\_files/STANDCON\_2022/Crypto/OMG%20RNG!/challenge/chal.py)
+* [chal.py](/challenge_files/STANDCON_2022/Crypto/OMG_RNG!/challenge/chal.py)
 
 ### Overview
 
-Starting an instance and connecting to the server, the server would run [chal.py](../../../challenge\_files/STANDCON\_2022/Crypto/OMG%20RNG!/challenge/chal.py) and send you `gifts` and a `secret` containing the flag that is encrypted.
+Starting an instance and connecting to the server, the server would run [chal.py](/challenge_files/STANDCON_2022/Crypto/OMG_RNG!/challenge/chal.py) and send you `gifts` and a `secret` containing the flag that is encrypted.
 
 We have to figure out a way to decrypt the `secret` retrieved from the server using the `gifts`.
 
@@ -34,7 +34,7 @@ We have to figure out a way to decrypt the `secret` retrieved from the server us
 
 ### Analysis
 
-[chal.py](../../../challenge\_files/STANDCON\_2022/Crypto/OMG%20RNG!/challenge/chal.py)
+[chal.py](/challenge_files/STANDCON_2022/Crypto/OMG_RNG!/challenge/chal.py)
 
 ```python
 from Crypto.Util.number import bytes_to_long, getRandomRange

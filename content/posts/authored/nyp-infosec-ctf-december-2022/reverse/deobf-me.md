@@ -16,7 +16,7 @@ series: ["Nyp Infosec Ctf December 2022"]
 
 > The symbols are speaking, what do they want?
 
-[Download chall (1).py](/gitbook/assets/chall (1).py)
+[Download deobf.py](/gitbook/assets/deobf.py)
 
 [Download compiler.py](/gitbook/assets/compiler.py)
 

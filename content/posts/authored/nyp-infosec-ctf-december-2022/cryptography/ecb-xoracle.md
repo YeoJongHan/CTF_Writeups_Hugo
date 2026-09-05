@@ -18,7 +18,7 @@ series: ["Nyp Infosec Ctf December 2022"]
 
 > 34.126.175.135:8009
 
-[Download chall (2).py](/gitbook/assets/chall (2).py)
+[Download xoracle.py](/gitbook/assets/xoracle.py)
 
 ## Solution
 

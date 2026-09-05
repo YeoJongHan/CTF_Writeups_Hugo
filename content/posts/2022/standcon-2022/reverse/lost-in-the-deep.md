@@ -12,7 +12,7 @@ series: ["Standcon 2022"]
 
 > You've been swimming, and encounter a submerged mangrove forest. You enter it to explore, and without knowing it, you're lost. How do you escape?
 
-[Download chall.exe](/challenge_files/STANDCON_2022/Reverse/Lost In the Deep/challenge/chall.exe)
+[Download chall.exe](/challenge_files/STANDCON_2022/Reverse/Lost_In_the_Deep/challenge/chall.exe)
 
 ### TL:DR
 

@@ -354,7 +354,7 @@ except UcError as e:
 
 ### Dissecting Kernel ELF: Understanding the Decryption
 
-We can convert the decrypted kernel image into an elf file using [vmlinux-to-elf](https://github.com/marin-m/vmlinux-to-elf) so that we can reverse the decryption process. As there is no write-ups or articles on how to reverse the decryption of the file system, we will have to reverse it ourselves :disappointed\_relieved:. We run `vmlinux-to-elf kernel.bin kernel.elf --e-machine 40 --bit-size 32` (searching up ARM e machine gives us the number 40).
+We can convert the decrypted kernel image into an elf file using [vmlinux-to-elf](https://github.com/marin-m/vmlinux-to-elf) so that we can reverse the decryption process. As there is no write-ups or articles on how to reverse the decryption of the file system, we will have to reverse it ourselves :disappointed_relieved:. We run `vmlinux-to-elf kernel.bin kernel.elf --e-machine 40 --bit-size 32` (searching up ARM e machine gives us the number 40).
 
 Loading the binary up in IDA Pro, we are given this message that indicates there are ARM and THUMB instructions that can be switched back and forth. The instruction can be changed from ARM to THUMB in IDA by using `Alt-G` and changing the `T` register value from `0` to `1`.
 
@@ -372,7 +372,7 @@ We can see that the binary is thankfully not stripped so we can start off by sea
 
 <figure><img src="/gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
-We only see 2 functions that uses AES, so we can look into those and find out where those functions are called from. Looking at **SecUnit\_AES\_decrypt**, we find the call <mark style="background-color:blue;">SecUnit\_EncryptFirmware ⇒ SecUnit\_FirmwareAesCBCDecode ⇒ SecUnit\_AES\_decrypt, SecUnit\_EncryptFirmware</mark> also calls **SecUnit\_AES\_set\_decrypt\_key**, which we can assume just sets the AES key for decryption.
+We only see 2 functions that uses AES, so we can look into those and find out where those functions are called from. Looking at **SecUnit\_AES\_decrypt**, we find the call `SecUnit_EncryptFirmware => SecUnit_FirmwareAesCBCDecode => SecUnit_AES_decrypt, SecUnit_EncryptFirmware` also calls **SecUnit\_AES\_set\_decrypt\_key**, which we can assume just sets the AES key for decryption.
 
 However, we can't seem to find any references to **SecUnit\_EncryptFirmware** by default. Remember that the binary uses both ARM and THUMB instructions? The reason the reference cannot be found is because the call was made by a THUMB instruction and IDA doesn't know that the function is in THUMB, so no reference. This can be resolved by spinning up another IDA instance and viewing it entirely in THUMB instructions.
 
@@ -382,11 +382,11 @@ After IDA finishes analyzing the binary, we can go the **SecUnit\_EncryptFirmwar
 
 <figure><img src="/gitbook/assets/image (42).png" alt=""><figcaption><p>SecUnit_EncryptFirmware References</p></figcaption></figure>
 
-By doing this, we can find out that the function calls are <mark style="background-color:blue;">mtdblock\_readsect ⇒ block\_aes\_decrypt ⇒ SecUnit\_EncryptFirmware ⇒ SecUnit\_FirmwareAesCBCDecode</mark>. From reversing these functions, we discover a few things that can aid us in emulating the decryption:
+By doing this, we can find out that the function calls are `mtdblock_readsect => block_aes_decrypt => SecUnit_EncryptFirmware => SecUnit_FirmwareAesCBCDecode`. From reversing these functions, we discover a few things that can aid us in emulating the decryption:
 
 1. AES CBC 512 is used
 2. AES key is retrieved and used in the **SecUnit\_EncryptFirmware** function
-3. Function prototype <mark style="color:yellow;">SecUnit\_EncryptFirmware(char \*srcbuf, uint32\_t size, char \*dstbuf, uint32\_t size2, uint8\_t cryptoflags, int sector\_skip, int\* pCounter)</mark>
+3. Function prototype `SecUnit_EncryptFirmware(char *srcbuf, uint32_t size, char *dstbuf, uint32_t size2, uint8_t cryptoflags, int sector_skip, int* pCounter)`
 4. For **SecUnit\_EncryptFirmware**, there are hardcoded parameters to decrypt a sector, which is `cryptoflags = 0x11` and `sector_skip = 2`. These hardcoded parameters are passed in when **block\_aes\_decrypt** is called.
 
 With these information, we can pretty much emulate the **SecUnit\_EncryptFirmware** function and decrypt the romfs right? Well, not quite...
@@ -408,7 +408,7 @@ However, if we run the emulator, we still get an unidentifiable file.
 
 So what can be the issue? At this point I was puzzled. I read over the functions and understood that the decryption is performed on every 3rd sector, because the sector\_skip was set to 2. Running binwalk showed that some sectors were still identifiable as "xz compressed data", diffing the result to the original also showed that it tries to decrypt every 3rd sector.
 
-This can only mean that one or some of my parameters to the AES decryption is incorrect. AES decryption only has 2 important values other than the source buffer and destination buffer. It's either the IV or the KEY that is wrong. Since I know the IV starts from 0 from a buffer on the stack in the **mtdblock\_readsect**, then sure only the KEY is wrong.
+This can only mean that one or some of my parameters to the AES decryption is incorrect. AES decryption only has 2 important values other than the source buffer and destination buffer. It's either the IV or the KEY that is wrong. Since I know the IV starts from 0 from a buffer on the stack in the **mtdblock\_readsect**, then surely only the KEY is wrong.
 
 The AES key can be seen taken from a global variable `g_secUnitKey` and based on the cryptoflags passed into the function, there can be encryption and decryption and the use of 3 different AES key offset from `g_secUnitKey`. However, our cryptoflags have to be fixed to 0x11 based on the arguments passed into **block\_aes\_decrypt**.
 
@@ -418,7 +418,7 @@ Trying to see references to the AES key `g_secUnitkey`, we see one especially no
 
 <figure><img src="/gitbook/assets/image (45).png" alt=""><figcaption><p>SecUnit_SetKeyFactor</p></figcaption></figure>
 
-The function name seems to set the SecUnit key and we can see that this is called by <mark style="background-color:blue;">prepare\_namespace ⇒ block\_aes\_set\_keyfactor</mark>. Now, this **block\_aes\_set\_keyfactor** seems to be what we are finding because when we reverse it, we can determine how the key is initialized.
+The function name seems to set the SecUnit key and we can see that this is called by `prepare_namespace => block_aes_set_keyfactor`. Now, this **block\_aes\_set\_keyfactor** seems to be what we are finding because when we reverse it, we can determine how the key is initialized.
 
 The **block\_aes\_set\_keyfactor** first initializes an intermediary 16 byte buffer for the key on the stack.
 

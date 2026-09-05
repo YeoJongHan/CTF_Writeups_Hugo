@@ -12,7 +12,7 @@ series: ["Standcon 2022"]
 
 > Momma bought a Christmas gift for you. She says it's something you love! But Christmas is like more than 6 months away :/ Try to peek in and find out what the gift is, before the Christmas eve ;)
 
-[Download gift_for_you](/challenge_files/STANDCON_2022/Reverse/Wait For The Day/challenge/gift_for_you)
+[Download gift_for_you](/challenge_files/STANDCON_2022/Reverse/Wait_For_The_Day/challenge/gift_for_you)
 
 ### TL;DR
 

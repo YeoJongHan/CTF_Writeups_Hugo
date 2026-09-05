@@ -1,0 +1,16 @@
+.main-article .katex-display {
+    box-sizing: border-box;
+    margin: 1.5rem 0;
+    padding: 1rem 1.25rem;
+    overflow-x: auto;
+    border: 1px solid var(--card-separator-color);
+    border-radius: 8px;
+    background: var(--card-background);
+}
+
+.main-article :not(.katex-display) > .katex {
+    padding: 0.15rem 0.35rem;
+    border: 1px solid var(--card-separator-color);
+    border-radius: 4px;
+    background: var(--card-background);
+}

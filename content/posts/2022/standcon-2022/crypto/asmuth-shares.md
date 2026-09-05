@@ -12,8 +12,8 @@ series: ["Standcon 2022"]
 
 > Asmuth wants to share something with you!
 
-* [chal.py](../../../challenge\_files/STANDCON\_2022/Crypto/Asmuth%20Shares/challenge/chal.py)
-* [out.txt](../../../challenge\_files/STANDCON\_2022/Crypto/Asmuth%20Shares/challenge/out.txt)
+* [chal.py](/challenge_files/STANDCON_2022/Crypto/Asmuth_Shares/challenge/chal.py)
+* [out.txt](/challenge_files/STANDCON_2022/Crypto/Asmuth_Shares/challenge/out.txt)
 
 ### TL;DR
 
@@ -67,9 +67,9 @@ with open("out.txt", 'w') as f:
 {{< /tab >}}
 {{< /tabs >}}
 
-We are given the values of quite a few variables in the [out.txt](../../../challenge\_files/STANDCON\_2022/Crypto/Asmuth%20Shares/challenge/out.txt) file.
+We are given the values of quite a few variables in the [out.txt](/challenge_files/STANDCON_2022/Crypto/Asmuth_Shares/challenge/out.txt) file.
 
-Reading the code for [chal.py](../../../challenge\_files/STANDCON\_2022/Crypto/Asmuth%20Shares/challenge/chal.py), we can see that it encrypts the flag with the use of nearly all values given in [out.txt](../../../challenge\_files/STANDCON\_2022/Crypto/Asmuth%20Shares/challenge/out.txt). Should be fairly simple to decrypt the flag.
+Reading the code for [chal.py](/challenge_files/STANDCON_2022/Crypto/Asmuth_Shares/challenge/chal.py), we can see that it encrypts the flag with the use of nearly all values given in [out.txt](/challenge_files/STANDCON_2022/Crypto/Asmuth_Shares/challenge/out.txt). Should be fairly simple to decrypt the flag.
 
 #### Analyzing chal.py
 
@@ -97,7 +97,7 @@ alpha = getRandomRange(2, M)
 k = 4
 ```
 
-4 values are then generated and stored in `s`. This is the important part of the encryption. Last few lines are just to write out the values to [out.txt](../../../challenge\_files/STANDCON\_2022/Crypto/Asmuth%20Shares/challenge/out.txt).
+4 values are then generated and stored in `s`. This is the important part of the encryption. Last few lines are just to write out the values to [out.txt](/challenge_files/STANDCON_2022/Crypto/Asmuth_Shares/challenge/out.txt).
 
 ```python
 for i in range(k):

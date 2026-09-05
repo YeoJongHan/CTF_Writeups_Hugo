@@ -14,7 +14,7 @@ series: ["Standcon 2022"]
 
 > Wrap the flag in STANDCON22{}
 
-[Download NewMath](/challenge_files/STANDCON_2022/Reverse/New Math!/challenge/NewMath)
+[Download NewMath](/challenge_files/STANDCON_2022/Reverse/New_Math!/challenge/NewMath)
 
 ### Overview
 
