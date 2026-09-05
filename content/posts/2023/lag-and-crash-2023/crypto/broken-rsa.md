@@ -84,15 +84,15 @@ We know that RSA encryption goes like this:
 
 $$
 n = p*q
-\\ct=m^e \bmod n
+ct=m^e \bmod n
 $$
 
 When decrypting in normal RSA, these steps are performed:
 
 $$
 phi = (p-1)*(q-1)
-\\d = e^{-1} \bmod phi
-\\pt = ct^d \bmod n
+d = e^{-1} \bmod phi
+pt = ct^d \bmod n
 $$
 
 But why does this decryption method work?
@@ -265,7 +265,7 @@ Since we can decrypt using $$p$$ as a modulus, it means we can also decrypt usin
 
 $$
 resultp = m \bmod p
-\\resultq = m \bmod q
+resultq = m \bmod q
 $$
 
 Since $$p$$ and $$q$$ are coprime, the original message is the same but the modulus are different, we can use **Chinese Remainder Theorem (CRT)** to solve for the original message.
